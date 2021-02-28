@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{4655350C-D142-4AE3-B176-F6083C81B37F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Photory", "Photory\Photory.csproj", "{4655350C-D142-4AE3-B176-F6083C81B37F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoryModels", "PhotoryModels\PhotoryModels.csproj", "{0C5B2329-080C-486B-9CF5-375104FB380B}"
 EndProject

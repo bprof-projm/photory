@@ -21,7 +21,7 @@ namespace PhotoryData
             if (!optionsBuilder.IsConfigured)
             {
                 var builder = new SqlConnectionStringBuilder("Server=tcp:photory.database.windows.net,1433;Initial Catalog=DataPhotory;Persist Security Info=False;User ID=akosgdcsi;Password={ConnectionStrinPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                optionsBuilder
+                optionsBuilder.UseSqlServer(builder.ConnectionString);
             }
         }
 
