@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PhotoryModels
 {
-    class Photo
+    public class Photo
     {
         public string PhotoID { get; set; }
 

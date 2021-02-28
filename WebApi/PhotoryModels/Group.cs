@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PhotoryModels
 {
-    class Group
+    public class Group
     {
 
         public string GroupName { get; set; }

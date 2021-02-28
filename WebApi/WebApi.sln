@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{4655350C-D142-4AE3-B176-F6083C81B37F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{4655350C-D142-4AE3-B176-F6083C81B37F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoryModels", "PhotoryModels\PhotoryModels.csproj", "{0C5B2329-080C-486B-9CF5-375104FB380B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoryModels", "PhotoryModels\PhotoryModels.csproj", "{0C5B2329-080C-486B-9CF5-375104FB380B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoryData", "PhotoryData\PhotoryData.csproj", "{C0132598-61D5-4109-89A1-06DC51FAA7EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0C5B2329-080C-486B-9CF5-375104FB380B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C5B2329-080C-486B-9CF5-375104FB380B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C5B2329-080C-486B-9CF5-375104FB380B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0132598-61D5-4109-89A1-06DC51FAA7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0132598-61D5-4109-89A1-06DC51FAA7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0132598-61D5-4109-89A1-06DC51FAA7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0132598-61D5-4109-89A1-06DC51FAA7EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
