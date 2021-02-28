@@ -17,7 +17,7 @@ namespace PhotoryModels
 
         public List<string> PhotoIDList { get; set; }
 
-        //public List<string> MembersID { get; set; }
+        public List<string> UsersID { get; set; }
 
 
     }

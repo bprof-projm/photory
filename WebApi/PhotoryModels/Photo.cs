@@ -12,7 +12,7 @@ namespace PhotoryModels
 
         public string UserName { get; set; }
 
-        //public List<Comment> Comments{ get; set; }
+        public List<string> CommentIDs{ get; set; }
 
         public DateTime PostTime { get; set; }
 
