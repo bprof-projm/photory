@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace PhotoryRepository
 {
-    class GroupAdminRepository : IGroupAdminRepository
+    public class GroupAdminRepository : IGroupAdminRepository
     {
         private PhotoryDbContext context;
 
-        public GroupAdminRepository(PhotoryDbContext context)
+        public GroupAdminRepository(string ConnectionPassword)
         {
-            this.context = context;
+            this.context = new PhotoryDbContext(ConnectionPassword);
         }
 
-       
+
 
         public void Add(User entity)
         {

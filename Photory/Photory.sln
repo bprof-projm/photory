@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoryModels", "PhotoryMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoryData", "PhotoryData\PhotoryData.csproj", "{C0132598-61D5-4109-89A1-06DC51FAA7EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoryRepository", "PhotoryRepository\PhotoryRepository.csproj", "{0CE8FE89-C9D0-40E6-8E8F-CA4B1B0939ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoryRepository", "PhotoryRepository\PhotoryRepository.csproj", "{0CE8FE89-C9D0-40E6-8E8F-CA4B1B0939ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoryLogic", "PhotoryLogic\PhotoryLogic.csproj", "{B8EB5979-9E0D-4ADC-BECE-23B3FB4D1141}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0CE8FE89-C9D0-40E6-8E8F-CA4B1B0939ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CE8FE89-C9D0-40E6-8E8F-CA4B1B0939ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CE8FE89-C9D0-40E6-8E8F-CA4B1B0939ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8EB5979-9E0D-4ADC-BECE-23B3FB4D1141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8EB5979-9E0D-4ADC-BECE-23B3FB4D1141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8EB5979-9E0D-4ADC-BECE-23B3FB4D1141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8EB5979-9E0D-4ADC-BECE-23B3FB4D1141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace PhotoryRepository.Classes
 {
-    class AdminRepository : IAdminRepository
+    public class AdminRepository : IAdminRepository
     {
         private PhotoryDbContext context;
 
-        public AdminRepository(PhotoryDbContext context)
+        public AdminRepository(string ConnectionPassword)
         {
-            this.context = context;
+            this.context = new PhotoryDbContext(ConnectionPassword);
         }
 
         public void Add(User entity)
