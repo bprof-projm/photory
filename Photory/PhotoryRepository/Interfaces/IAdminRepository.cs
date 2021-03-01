@@ -11,10 +11,10 @@ namespace PhotoryRepository.Interfaces
     {
 
         //CREATE GROUP
-        public void CreateGroup();
+        public void CreateGroup(Group group);//CreateGroup();
 
         //ADD-MEMBER TO GROUP
-        public void AddMember(User u,string GroupID);
+        public void AddMember(string userID, string GroupID);
 
        
 
