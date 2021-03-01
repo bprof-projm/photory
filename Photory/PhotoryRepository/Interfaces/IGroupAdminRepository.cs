@@ -10,10 +10,10 @@ namespace PhotoryRepository.Interfaces
     public interface IGroupAdminRepository : IRepository<User>
     {
         //ACCEPT USER
-        public void AcceptUser(User u);
+        public void AcceptUser(string userID, string GroupID);
 
         //DENY USER
-        public void DenyUser(User u);
+        public void DenyUser(string userID, string GroupID);
 
 
 

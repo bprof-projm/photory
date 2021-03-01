@@ -20,14 +20,14 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
-            this.context.Add(entity);
+            this.context.Users.Add(entity);
             SaveDatabase();
         }
 
         public void Delete(string id)
         {
             var entity = GetOne(id);
-            this.context.Remove(entity);
+            this.context.Users.Remove(entity);
             SaveDatabase();
         }
 
