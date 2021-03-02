@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace PhotoryModels
 {
     public class Comment
     {
+        [Key]
         public string CommentID { get; set; }
 
 
@@ -15,6 +17,7 @@ namespace PhotoryModels
 
         public string PhotoID { get; set; }
 
+        public virtual Photo Photo { get; set; }
 
     }
 }

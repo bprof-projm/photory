@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PhotoryModels
 {
@@ -13,7 +15,8 @@ namespace PhotoryModels
         public string Email { get; set; }
 
         public string FullName { get; set; }
-
+        
+        [Key]
         public string UserName { get; set; }
 
         public DateTime BirthDate { get; set; }
@@ -22,6 +25,9 @@ namespace PhotoryModels
 
         public UserAccess UserAccess { get; set; }
 
+        public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ICollection<Group> Groups { get; set; }
 
     }
 }
