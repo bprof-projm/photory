@@ -1,19 +1,16 @@
+import { render } from '@testing-library/react';
 import React, {Component} from 'react';
+import {useHistory} from 'react-router-dom';
 import './Register.scss';
 
-class Register extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            data: null
-        };
-    }
+const USERNAME = null;
 
-    getData = (e) =>{
 
-    }
+function Register(props){
 
-    submit = () =>{
+    let history = useHistory();
+
+    function handleSubmit(props){
         var fullname = document.getElementById('fullname').value;
         var username = document.getElementById('username').value;
         var birthdate = document.getElementById('birthdate').value;
@@ -35,20 +32,26 @@ class Register extends Component{
         };
         fetch('http://localhost:5001/register', request)
         .then(response => response.json())
-        .then(data => this.getData(data));*/       
-        this.setState(state => {
-            const data= jsonBody;           
-            return {
-                data
-            };         
-        });
+        .then(res => this.setState(state => {
+            const user = null;
+            const data = null;
+            const error = null;
+            if (res.DidRegister == true){
+                USERNAME = res.UserName;
+                useHistory().push('/');
+            }
+            else if (res.DidRegister == false){
+                error = res.ErrorMsg;
+            }
+        }));*/    
+        history.push('/');   
     }
+   
 
-    render(){
         return(
             <div className="container">
                 <h1>Register Form</h1>
-                <form id="register">
+                <form id="register" onSubmit={handleSubmit}>
                     <ul>
                         <li>
                         <label>Full Name:</label>
@@ -75,14 +78,12 @@ class Register extends Component{
                         <input id="confpassword" type="password" name="confpassword"/>
                         </li>
                         <li>
-                            <button type="button" onClick={this.submit}>Submit</button>
+                            <input type="submit" value="submit" />
                         </li>
                     </ul>                    
-                </form>      
-                <p>{this.state.data}</p>          
+                </form>                           
             </div>
         );
-    }
 
 }
 export default Register;
