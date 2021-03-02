@@ -1,16 +1,22 @@
-import { render } from '@testing-library/react';
+import { getDefaultNormalizer, render } from '@testing-library/react';
 import React, {Component} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import './Register.scss';
 
-const USERNAME = null;
+let USERNAME = null;
+let HIDDENATTRI_REG = "";
+let HIDDENATTRI_NEXT = "hidden";
 
+class Register extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            result: false,
+            error: null                           
+        }
+    }
 
-function Register(props){
-
-    let history = useHistory();
-
-    function handleSubmit(props){
+    Validate = () =>{
         var fullname = document.getElementById('fullname').value;
         var username = document.getElementById('username').value;
         var birthdate = document.getElementById('birthdate').value;
@@ -25,33 +31,80 @@ function Register(props){
             password: password,
             confpassword: confpassword
         });
-        /*const request = {
+        const request = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: jsonBody
         };
+        //----------------------------------VALIDATION-----------------------------------
         fetch('http://localhost:5001/register', request)
         .then(response => response.json())
-        .then(res => this.setState(state => {
-            const user = null;
-            const data = null;
-            const error = null;
-            if (res.DidRegister == true){
-                USERNAME = res.UserName;
-                useHistory().push('/');
-            }
-            else if (res.DidRegister == false){
-                error = res.ErrorMsg;
-            }
-        }));*/    
-        history.push('/');   
-    }
-   
+        .then(res => this.setState(state => {  
+            var result = false;   
+            var error = null;        
+           if (res.result == "false")
+           {               
+                result = false;
+                switch(res.target)
+                {
+                    case "fullname":
+                    {
+                        document.getElementById('fullname').style.borderColor = 'red';                        
+                        break;
+                    }
+                    case "username":
+                    {
+                        document.getElementById('username').style.borderColor = 'red';                        
+                        break;
+                    }
+                    case "birthdate":
+                    {
+                        document.getElementById('birthdate').style.borderColor = 'red';                        
+                        break;
+                    }
+                    case "email":
+                    {
+                        document.getElementById('email').style.borderColor = 'red';                        
+                        break;
+                    }
+                    case "password":
+                    {
+                        document.getElementById('password').style.borderColor = 'red';    
+                        document.getElementById('confpassword').style.borderColor = 'red';                   
+                        break;
+                    }
+                }
+                error = res.error;
+           }
+           else if (res.result == "true") 
+           {
+               result = true;        
+               USERNAME = username; 
+           }  
+           return{
+            result,
+            error
+           };
+        }));
+        //-------------------------------------------------------------------------------
+        if (this.state.result == true)
+        {
+            USERNAME = "ASD";
+            HIDDENATTRI_NEXT = "";
+            HIDDENATTRI_REG = "hidden";
+        }
+        else
+        {
+            USERNAME = "Error..";
+        }
+        this.forceUpdate();
+      }
 
+    render(){
         return(
             <div className="container">
-                <h1>Register Form</h1>
-                <form id="register" onSubmit={handleSubmit}>
+                <h1>Register Form</h1>               
+                <form id="register">
                     <ul>
                         <li>
                         <label>Full Name:</label>
@@ -78,12 +131,15 @@ function Register(props){
                         <input id="confpassword" type="password" name="confpassword"/>
                         </li>
                         <li>
-                            <input type="submit" value="submit" />
+                            <button type="button" hidden={HIDDENATTRI_REG} onClick={this.Validate.bind(this)}>Register</button>
+                            <Link to="/">
+                                <button type="button" hidden={HIDDENATTRI_NEXT}>Next</button>
+                            </Link>                            
                         </li>
                     </ul>                    
-                </form>                           
+                </form>                                                     
             </div>
         );
-
+    }
 }
 export default Register;
