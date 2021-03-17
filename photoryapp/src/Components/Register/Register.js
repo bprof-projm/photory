@@ -28,16 +28,37 @@ class Register extends Component{
             username: username,
             birthdate: birthdate,
             email: email,
-            password: password,
-            confpassword: confpassword
+            password: password
+            //confpassword: confpassword
         });
-        const request = {
-            method: 'POST',
+        /*const request = {
+            method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: jsonBody
+        };*/
+        const req = {
+            method: 'get',
+            headers: 
+            { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true'
+            }
         };
+        //req.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+        //req.append('Access-Control-Allow-Credentials', 'true');
+        fetch('https://localhost:5001/Register', req)
+        .then(res => res.json())
+        .then(res => this.setState(state =>{
+            var result = res.result;
+            var error = res.error;
+            return{
+                result,
+                error
+            };
+        }));
         //----------------------------------VALIDATION-----------------------------------
-        fetch('http://localhost:5001/register', request)
+        /*fetch('https://localhost:5001/Register', request)
         .then(response => response.json())
         .then(res => this.setState(state => {  
             var result = false;   
@@ -96,7 +117,7 @@ class Register extends Component{
         else
         {
             USERNAME = "Error..";
-        }
+        }*/
         this.forceUpdate();
       }
 
@@ -137,7 +158,8 @@ class Register extends Component{
                             </Link>                            
                         </li>
                     </ul>                    
-                </form>                                                     
+                </form>   
+                <p>{this.state.error}</p>                                                  
             </div>
         );
     }
