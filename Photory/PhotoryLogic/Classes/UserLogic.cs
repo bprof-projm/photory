@@ -13,9 +13,9 @@ namespace PhotoryLogic.Classes
     public class UserLogic : IUserLogic
     {
         private IUserRepository userRepo;
-        public UserLogic(string connectionpassword)
+        public UserLogic(IUserRepository userRepo)
         {
-            this.userRepo = new UserRepository(connectionpassword);
+            this.userRepo = userRepo;
         }
         public bool CreateUser(User user)
         {
