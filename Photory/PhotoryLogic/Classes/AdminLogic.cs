@@ -12,10 +12,10 @@ namespace PhotoryLogic.Classes
 {
     public class AdminLogic : IAdminLogic
     {
-        public IAdminRepository adminRepo;
-        public AdminLogic(string connectionpassword)
+        private IAdminRepository adminRepo;
+        public AdminLogic(IAdminRepository adminRepo)
         {
-            this.adminRepo = new AdminRepository(connectionpassword);
+            this.adminRepo = adminRepo;
         }
         public bool CreateAdmin(User admin)
         {
