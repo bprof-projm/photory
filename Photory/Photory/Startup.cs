@@ -1,8 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PhotoryData;
+using PhotoryLogic.Classes;
+using PhotoryModels;
+using PhotoryRepository;
+using PhotoryRepository.Classes;
+using PhotoryRepository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +23,24 @@ namespace WebApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddControllers();
+
+            services.AddDbContext<PhotoryDbContext>();
+
+            services.AddTransient<UserLogic, UserLogic>();
+            services.AddTransient<GroupAdminLogic, GroupAdminLogic>();
+            services.AddTransient<AdminLogic, AdminLogic>();
+
+            services.AddTransient<IUserRepository, UserRepository>(); // Irepo -> iuserrepository 
+            services.AddTransient<IGroupAdminRepository, GroupAdminRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<ICommentOfPhotoRepository, CommentOfPhotoRepository>();
+            services.AddTransient<IPhotoOfGroupRepository, PhotoOfGroupRepository>();
+            services.AddTransient<IUserOfGroupRepository, UserOfGroupRepository>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,14 +51,12 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
