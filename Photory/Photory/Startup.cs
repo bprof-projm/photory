@@ -38,7 +38,7 @@ namespace WebApi
             services.AddTransient<ICommentOfPhotoRepository, CommentOfPhotoRepository>();
             services.AddTransient<IPhotoOfGroupRepository, PhotoOfGroupRepository>();
             services.AddTransient<IUserOfGroupRepository, UserOfGroupRepository>();
-
+            services.AddSwaggerGen();
 
 
         }
@@ -53,6 +53,13 @@ namespace WebApi
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {
