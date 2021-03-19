@@ -11,11 +11,11 @@ namespace PhotoryRepository
 {
     public class GroupAdminRepository : IGroupAdminRepository
     {
-        private PhotoryDbContext context;
+        private PhotoryDbContext context = new PhotoryDbContext();
 
-        public GroupAdminRepository(string ConnectionPassword)
+        public GroupAdminRepository(PhotoryDbContext context)
         {
-            this.context = new PhotoryDbContext(ConnectionPassword);
+            this.context = context;
         }
 
 
@@ -35,7 +35,7 @@ namespace PhotoryRepository
 
         }
 
-  
+
 
         public IQueryable<User> GetAll()
         {
@@ -45,8 +45,8 @@ namespace PhotoryRepository
         public User GetOne(string id)
         {
             var entity = (from x in context.Users
-                         where x.UserName == id
-                         select x).FirstOrDefault();
+                          where x.UserName == id
+                          select x).FirstOrDefault();
 
             return entity;
         }
@@ -71,24 +71,35 @@ namespace PhotoryRepository
 
         public void AcceptUser(string userID, string GroupID)//Groupid,userid //public void AcceptUser(User u)
         {
-            var groupentity = (from x in context.Groups
-                              where x.GroupName == GroupID
-                              select x).FirstOrDefault();
+            //var groupentity = (from x in context.Groups
+            //                  where x.GroupName == GroupID
+            //                  select x).FirstOrDefault();
 
-            groupentity.PendingUserIDList.Remove(userID);
+            var entity = (from x in context.UserOfGroup
+                          where x.GroupName == userID
+                          select x).FirstOrDefault();
 
-            groupentity.UsersID.Add(userID);
+            entity.IsPending = false;
 
+            //groupentity.PendingUserIDList.Remove(userID);
+            //groupentity.UsersID.Add(userID);
             SaveDatabase();
         }
 
         public void DenyUser(string userID, string GroupID) //public void DenyUser(User u)
         {
-            var groupentity = (from x in context.Groups
-                               where x.GroupName == GroupID
-                               select x).FirstOrDefault();
+            //var groupentity = (from x in context.Groups
+            //                   where x.GroupName == GroupID
+            //                   select x).FirstOrDefault();
 
-            groupentity.PendingUserIDList.Remove(userID);
+            //groupentity.PendingUserIDList.Remove(userID);
+
+
+            var entity = (from x in context.UserOfGroup
+                          where x.GroupName == userID
+                          select x).FirstOrDefault();
+
+            context.UserOfGroup.Remove(entity);
 
             SaveDatabase();
         }
