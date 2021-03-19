@@ -13,9 +13,9 @@ namespace PhotoryLogic.Classes
     public class GroupAdminLogic : IGroupAdminLogic
     {
         private IGroupAdminRepository groupadminRepo;
-        public GroupAdminLogic(string connectionpassword)
+        public GroupAdminLogic(IGroupAdminRepository groupadminRepo)
         {
-            this.groupadminRepo = new GroupAdminRepository(connectionpassword);
+            this.groupadminRepo = groupadminRepo;
         }
         public bool CreateGroupAdmin(User groupadmin)
         {
