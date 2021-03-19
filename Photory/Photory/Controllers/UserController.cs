@@ -33,6 +33,12 @@ namespace Photory.Controllers
             return userlogic.GetAllUser();
         }
 
+        [HttpDelete("{id}")]
+        public void DeleteUser(string id)
+        {
+            userlogic.DeleteUser(id);
+        }
+
     }
 }
 
