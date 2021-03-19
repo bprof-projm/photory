@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace PhotoryModels
 {
@@ -14,17 +16,23 @@ namespace PhotoryModels
 
         public string UserName { get; set; }
 
-        public List<string> CommentIDs{ get; set; }
+        //public List<string> CommentIDs{ get; set; }
 
         public DateTime PostTime { get; set; }
 
         public string GroupId { get; set; }
 
+        [NotMapped]
+        [JsonIgnore]
         public virtual User User { get; set; }
 
-        public virtual Group Group { get; set; }
+        [NotMapped]
+        [JsonIgnore]
+        public virtual PhotoOfGroup Group { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        [NotMapped]
+        [JsonIgnore]
+        public virtual ICollection<CommentOfPhoto> Comments { get; set; }
 
     }
 }
