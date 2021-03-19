@@ -11,11 +11,11 @@ namespace PhotoryRepository.Classes
 {
     public class AdminRepository : IAdminRepository
     {
-        private PhotoryDbContext context;
+        private PhotoryDbContext context = new PhotoryDbContext();
 
-        public AdminRepository(string ConnectionPassword)
+        public AdminRepository(PhotoryDbContext context)
         {
-            this.context = new PhotoryDbContext(ConnectionPassword);
+            this.context = context;
         }
 
         public void Add(User entity)
@@ -63,13 +63,18 @@ namespace PhotoryRepository.Classes
 
         public void AddMember(string userID, string GroupID)//Groupid,userid //public void AcceptUser(User u)
         {
-            var groupentity = (from x in context.Groups
-                               where x.GroupName == GroupID
+            //var groupentity = (from x in context.Groups
+            //                   where x.GroupName == GroupID
+            //                   select x).FirstOrDefault();
+
+
+            var groupentity = (from x in context.UserOfGroup
+                               where x.UserId == userID && x.GroupName == GroupID
                                select x).FirstOrDefault();
 
 
-            groupentity.UsersID.Add(userID);
 
+            context.UserOfGroup.Add(groupentity);
             SaveDatabase();
         }
 
