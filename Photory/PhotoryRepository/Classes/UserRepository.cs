@@ -8,12 +8,13 @@ namespace PhotoryRepository
 {
     public class UserRepository : IUserRepository
     {
-        private PhotoryDbContext context;
+        private PhotoryDbContext context = new PhotoryDbContext();
 
 
-        public UserRepository(string ConnectionPassword)
+
+        public UserRepository(PhotoryDbContext context)
         {
-            this.context = new PhotoryDbContext(ConnectionPassword);
+            this.context = context;
         }
 
         //CRUD
@@ -51,8 +52,8 @@ namespace PhotoryRepository
         public User GetOne(string id)
         {
             var q1 = (from x in context.Users
-                     where id == x.UserName
-                     select x).FirstOrDefault();
+                      where id == x.UserName
+                      select x).FirstOrDefault();
 
             return q1;
         }
@@ -77,13 +78,13 @@ namespace PhotoryRepository
             SaveDatabase();
         }
 
-        
+
 
         public void DeleteComment(string CommentID)
         {
             var entity = (from x in context.Comments
-                         where x.CommentID == CommentID
-                         select x).FirstOrDefault();
+                          where x.CommentID == CommentID
+                          select x).FirstOrDefault();
 
             this.context.Comments.Remove(entity);
             SaveDatabase();
@@ -99,20 +100,25 @@ namespace PhotoryRepository
             SaveDatabase();
         }
 
-       
 
-        public void RequestJoin(string userID ,string GroupID)
+
+        public void RequestJoin(string userID, string GroupID)
         {
-            
 
             var entity = (from x in context.Groups
                           where x.GroupName == GroupID
                           select x).FirstOrDefault();
 
-            entity.PendingUserIDList.Add(userID);
+            UserOfGroup uog = new UserOfGroup();
+
+            uog.UserId = userID;
+            uog.IsPending = true;
+            uog.GroupName = GroupID;
+
+
             SaveDatabase();
         }
 
-      
+
     }
 }
