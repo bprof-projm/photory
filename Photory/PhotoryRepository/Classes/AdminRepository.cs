@@ -20,6 +20,7 @@ namespace PhotoryRepository.Classes
 
         public void Add(User entity)
         {
+            entity.UserAccess = UserAccess.Admin;
             this.context.Users.Add(entity);
         }
 
@@ -32,13 +33,16 @@ namespace PhotoryRepository.Classes
 
         public IQueryable<User> GetAll()
         {
-            return context.Users;
+            var entity = from x in context.Users
+                          where  x.UserAccess == UserAccess.Admin
+                          select x;
+            return entity;
         }
 
         public User GetOne(string id)
         {
             var entity = (from x in context.Users
-                          where x.UserName == id
+                          where x.UserName == id && x.UserAccess == UserAccess.Admin
                           select x).FirstOrDefault();
 
             return entity;

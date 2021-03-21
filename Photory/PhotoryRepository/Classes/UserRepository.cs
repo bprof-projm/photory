@@ -21,6 +21,7 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
+            entity.UserAccess = UserAccess.RegularUser;
             this.context.Users.Add(entity);
             SaveDatabase();
         }
@@ -46,13 +47,17 @@ namespace PhotoryRepository
 
         public IQueryable<User> GetAll()
         {
-            return context.Users;
+            var q1 = from x in context.Users
+                      where x.UserAccess == UserAccess.RegularUser
+                      select x;
+
+            return q1;
         }
 
         public User GetOne(string id)
         {
             var q1 = (from x in context.Users
-                      where id == x.UserName
+                      where id == x.UserName && x.UserAccess==UserAccess.RegularUser
                       select x).FirstOrDefault();
 
             return q1;

@@ -22,6 +22,8 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
+            //Todo nem biztos hogy jó ez így
+            entity.UserAccess = UserAccess.GroupAdmin;
             this.context.Users.Add(entity);
             SaveDatabase();
 
@@ -39,13 +41,17 @@ namespace PhotoryRepository
 
         public IQueryable<User> GetAll()
         {
-            return context.Users;
+            var groupadmins = from x in context.Users
+                              where x.UserAccess == UserAccess.GroupAdmin
+                              select x;
+
+            return groupadmins;
         }
 
         public User GetOne(string id)
         {
             var entity = (from x in context.Users
-                          where x.UserName == id
+                          where x.UserName == id && x.UserAccess == UserAccess.GroupAdmin
                           select x).FirstOrDefault();
 
             return entity;
