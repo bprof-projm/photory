@@ -33,11 +33,60 @@ namespace Photory.Controllers
             return userlogic.GetAllUser();
         }
 
+        [HttpGet("{id}")]
+        public User GetOneUser(string id)
+        {
+            return userlogic.GetUser(id);
+        }
+
+        [HttpPut("{oldid}")]
+
+        public void UpdateUser(string oldid, [FromBody] User user)
+        {
+            userlogic.UpdateUser(oldid, user);
+        }
+
+
         [HttpDelete("{id}")]
         public void DeleteUser(string id)
         {
             userlogic.DeleteUser(id);
         }
+
+
+        [HttpPost("{userID}&{GroupID}")]
+        //[Route("RequestJoin")]
+        public void RequestJoin(string userID, string GroupID)
+        {
+            userlogic.RequestJoin(userID, GroupID);
+
+        }
+
+
+
+
+
+
+        //[HttpPost]
+        //[Route("AddComment")]
+        //public void AddComment([FromBody] Comment m)
+        //{
+        //    userlogic.AddComment(m);
+
+        //}
+
+
+
+        //[HttpDelete("{id}")]
+        //[Route("DeleteComment")]
+        //public void DeleteComment(string id)
+        //{
+        //    userlogic.DeleteComment(id);
+        //}
+
+
+
+
 
     }
 }
