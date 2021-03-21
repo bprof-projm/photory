@@ -63,26 +63,37 @@ namespace Photory.Controllers
         }
 
 
+        [HttpPost]
+        [Route("AddPhoto")]
+        public void AddPhoto([FromBody] Photo p)
+        {
+            userlogic.AddPhoto(p);
+
+        }
+
+        [HttpDelete("DeletePhoto/{id}")]
+        public void DeletePhoto(string id)
+        {
+            userlogic.DeletePhoto(id);
+        }
 
 
 
+        [HttpPost]
+        [Route("AddComment")]
+        public void AddComment([FromBody] Comment m)
+        {
+            userlogic.AddComment(m);
 
-        //[HttpPost]
-        //[Route("AddComment")]
-        //public void AddComment([FromBody] Comment m)
-        //{
-        //    userlogic.AddComment(m);
-
-        //}
-
+        }
 
 
-        //[HttpDelete("{id}")]
-        //[Route("DeleteComment")]
-        //public void DeleteComment(string id)
-        //{
-        //    userlogic.DeleteComment(id);
-        //}
+
+        [HttpDelete("DeleteComment/{id}")]
+        public void DeleteComment(string id)
+        {
+            userlogic.DeleteComment(id);
+        }
 
 
 
