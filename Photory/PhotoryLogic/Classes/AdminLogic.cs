@@ -51,7 +51,7 @@ namespace PhotoryLogic.Classes
             return this.adminRepo.GetOne(AdminID);
         }
 
-        public IQueryable<User> GetAllUser()
+        public IQueryable<User> GetAllAdmin()
         {
             return this.adminRepo.GetAll();
         }
