@@ -33,14 +33,14 @@ namespace Photory.Controllers
         [HttpGet]
         public IEnumerable<User> GetAllAdmin()
         {
-            return adminLogic.GetAllAdmin();
+            return adminLogic.GetAllUser();
         }
 
-        [HttpGet("{id}")]
-        public User GetAdmin(string id)
-        {
-            return adminLogic.GetAdmin(id);
-        }
+        //[HttpGet("{id}")]
+        //public User GetAdmin(string id)
+        //{
+        //    return adminLogic.GetAdmin(id);
+        //}
 
         [HttpPut("{oldid}")]
         public void UpdateAdmin(string oldid, [FromBody] User u)

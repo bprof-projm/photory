@@ -12,7 +12,7 @@ namespace PhotoryLogic.Interfaces
         bool CreateAdmin(User admin);
         bool DeleteAdmin(string AdminID);
         bool UpdateAdmin(string OldID, User user);
-        IQueryable<User> GetAllAdmin();
+        IQueryable<User> GetAllUser();
         User GetAdmin(string AdminID);
     }
 }
