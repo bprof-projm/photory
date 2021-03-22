@@ -10,9 +10,9 @@ namespace PhotoryLogic.Interfaces
     public interface IUserLogic
     {
 
-        bool CreateUser(User user);
-        bool DeleteUser(string UserID);
-        bool UpdateUser(string OldID , User user);
+        void CreateUser(User user);
+        void DeleteUser(string UserID);
+        void UpdateUser(string OldID , User user);
         IQueryable<User> GetAllUser();
         User GetUser(string UserID);
         //?Should we have more in here 
