@@ -34,6 +34,7 @@ namespace PhotoryRepository
             var entity = GetOne(id);
 
             this.context.Users.Remove(entity);
+            SaveDatabase();
 
         }
 

@@ -22,6 +22,7 @@ namespace PhotoryRepository.Classes
         {
             entity.UserAccess = UserAccess.Admin;
             this.context.Users.Add(entity);
+            SaveDatabase();
         }
 
         public void Delete(string id)
@@ -29,6 +30,7 @@ namespace PhotoryRepository.Classes
             var entity = GetOne(id);
 
             this.context.Users.Remove(entity);
+            SaveDatabase();
         }
 
         public IQueryable<User> GetAll()
@@ -73,7 +75,7 @@ namespace PhotoryRepository.Classes
 
 
             var groupentity = (from x in context.UserOfGroup
-                               where x.UserId == userID && x.GroupName == GroupID
+                               where x.UserName == userID && x.GroupName == GroupID
                                select x).FirstOrDefault();
 
 
