@@ -84,6 +84,17 @@ namespace PhotoryRepository
         }
 
 
+        public IQueryable<Comment> GetAllCommentsFromPhoto(string photoID)
+        {
+
+            var comments = from x in context.Comments
+                           where x.PhotoID == photoID
+                           select x;
+
+
+            return comments;
+        }
+
 
         public void DeleteComment(string CommentID)
         {
@@ -116,7 +127,7 @@ namespace PhotoryRepository
 
             UserOfGroup uog = new UserOfGroup();
 
-            uog.UserId = userID;
+            uog.ID = userID;
             uog.IsPending = true;
             uog.GroupName = GroupID;
 
