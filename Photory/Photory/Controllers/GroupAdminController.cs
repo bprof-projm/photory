@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Photory.Controllers
 {
     [ApiController]
-    [Route("{GroupAdmin}")]
+    [Route("GroupAdmin")]
     public class GroupAdminController :ControllerBase
     {
         GroupAdminLogic groupAdminLogic;

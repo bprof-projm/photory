@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Photory.Controllers
 {
     [ApiController]
-    [Route("{controller}")]
+    [Route("User")]
     public class UserController : ControllerBase
     {
         UserLogic userlogic;
