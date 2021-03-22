@@ -12,7 +12,7 @@ namespace PhotoryModels
     public class UserOfGroup
     {
         [Key]
-        public string UserId { get; set; }
+        public string ID { get; set; }
 
         public string UserName { get; set; }
 
