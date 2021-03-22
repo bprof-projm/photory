@@ -74,13 +74,12 @@ namespace PhotoryRepository.Classes
             //                   select x).FirstOrDefault();
 
 
-            var groupentity = (from x in context.UserOfGroup
-                               where x.UserName == userID && x.GroupName == GroupID
-                               select x).FirstOrDefault();
+            //var groupentity = (from x in context.UserOfGroup
+            //                   where x.UserName == userID && x.GroupName == GroupID
+            //                   select x).FirstOrDefault();
 
 
-
-            context.UserOfGroup.Add(groupentity);
+            //context.UserOfGroup.Add(groupentity);
             SaveDatabase();
         }
 
