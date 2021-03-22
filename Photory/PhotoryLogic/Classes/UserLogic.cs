@@ -17,33 +17,16 @@ namespace PhotoryLogic.Classes
         {
             this.userRepo = userRepo;
         }
-        public bool CreateUser(User user)
+        public void CreateUser(User user)
         {
-            try
-            {
                 //TODO: hashpw 
                 this.userRepo.Add(user);
-                return true;
-            }
-            catch (Exception)
-            {
 
-                return false;
-            }
         }
 
-        public bool DeleteUser(string UserID)
+        public void DeleteUser(string UserID)
         {
-            try
-            {
                 this.userRepo.Delete(UserID);
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
         }
 
         public IQueryable<User> GetAllUser()
@@ -56,78 +39,45 @@ namespace PhotoryLogic.Classes
             return this.userRepo.GetOne(UserID);
         }
 
-        public bool UpdateUser(string OldID, User user)
+        public void UpdateUser(string OldID, User user)
         {
-            try
-            {
-                this.userRepo.Update(OldID, user);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+           this.userRepo.Update(OldID, user);
         }
-        public bool AddComment(Comment m)
+        public void AddComment(Comment m)
         {
-            try
-            {
+
                 this.userRepo.AddComment(m);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
         
-        public bool DeleteComment(string CommentID)
+        public void DeleteComment(string CommentID)
         {
-            try
-            {
+
                 this.userRepo.DeleteComment(CommentID);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
-        public bool AddPhoto(Photo p)
+
+
+        public IQueryable<Comment> GetAllCommentsFromPhoto(string PhotoID)//TODO ÁKOS CALL THIS METHOD IN CONTROLLER -BY MÁTÉ
         {
-            try
-            {
+
+            return this.userRepo.GetAllCommentsFromPhoto(PhotoID);
+
+        }
+
+
+        public void AddPhoto(Photo p)
+        {
+
                 this.userRepo.AddPhoto(p);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
-        public bool DeletePhoto(string PhotoID)
+        public void DeletePhoto(string PhotoID)
         {
-            try
-            {
+
                 this.userRepo.DeletePhoto(PhotoID);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
-        public bool RequestJoin(string userID, string GroupID)
+        public void RequestJoin(string userID, string GroupID)
         {
-            try
-            {
                 this.userRepo.RequestJoin(userID,GroupID);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+
         }
     }
 }
