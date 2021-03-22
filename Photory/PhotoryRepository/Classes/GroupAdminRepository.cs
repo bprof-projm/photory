@@ -22,7 +22,7 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
-            //Todo nem biztos hogy jó ez így
+            
             entity.UserAccess = UserAccess.GroupAdmin;
             this.context.Users.Add(entity);
             SaveDatabase();
