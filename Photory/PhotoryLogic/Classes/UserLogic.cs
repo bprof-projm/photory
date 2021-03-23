@@ -13,9 +13,11 @@ namespace PhotoryLogic.Classes
     public class UserLogic : IUserLogic
     {
         private IUserRepository userRepo;
-        public UserLogic(IUserRepository userRepo)
+        private IUserOfGroupRepository userofgrouprepo;
+        public UserLogic(IUserRepository userRepo, IUserOfGroupRepository userofgrouprepo)
         {
             this.userRepo = userRepo;
+            this.userofgrouprepo = userofgrouprepo;
         }
         public void CreateUser(User user)
         {
@@ -56,7 +58,7 @@ namespace PhotoryLogic.Classes
         }
 
 
-        public IQueryable<Comment> GetAllCommentsFromPhoto(string PhotoID)//TODO ÁKOS CALL THIS METHOD IN CONTROLLER -BY MÁTÉ
+        public IQueryable<Comment> GetAllCommentsFromPhoto(string PhotoID)
         {
 
             return this.userRepo.GetAllCommentsFromPhoto(PhotoID);
@@ -78,6 +80,16 @@ namespace PhotoryLogic.Classes
         {
                 this.userRepo.RequestJoin(userID,GroupID);
 
+        }
+        public User GetUserFromGroup(string userID, string GroupID) 
+        {
+            var entity = (from x in userofgrouprepo.GetAll()
+                          where x.UserName == userID && x.GroupName == GroupID
+                          select x).FirstOrDefault();
+
+            var userentity = userRepo.GetOne(entity.UserName);
+
+            return userentity;
         }
     }
 }
