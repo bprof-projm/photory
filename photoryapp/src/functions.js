@@ -1,4 +1,4 @@
-
+const SERVER_URL = 'http://localhost:5000/';
 
 export function fetchToBackend(controller, method, jsonbody) {
     var request = null;
@@ -22,7 +22,7 @@ export function fetchToBackend(controller, method, jsonbody) {
         };
     }
     
-    return fetch('http://localhost:5000/' + controller, request).then(respond => respond.json());
+    return fetch(SERVER_URL + controller, request).then(respond => respond.json());
 }
 
 export function validateRegisterForm(){
@@ -45,4 +45,16 @@ export function validateRegisterForm(){
     });
 
     return fetchToBackend("User", "post", jsonbody);
+}
+
+export function registerRespond(target){
+    if (target != null){
+        document.getElementById(target).style.borderColor = "red";
+    }
+    else {
+        var inputs = document.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++){
+            inputs[i].style.borderColor = "none";
+        }
+    }
 }

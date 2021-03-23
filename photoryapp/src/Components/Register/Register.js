@@ -2,7 +2,7 @@ import { getDefaultNormalizer, render } from '@testing-library/react';
 import React, {Component} from 'react';
 import {useHistory, Link} from 'react-router-dom';
 import './Register.scss';
-import { validateRegisterForm } from '../../functions.js';
+import { validateRegisterForm, registerRespond } from '../../functions.js';
 
 let USERNAME = null;
 let HIDDENATTRI_REG = "";
@@ -12,17 +12,22 @@ class Register extends Component{
     constructor(props){
         super(props)
         this.state = {
-            result: false,
-            error: null                           
+            target: null,
+            warning: null                          
         }
     }
 
     validate = () =>{
         validateRegisterForm()
         .then(result => this.setState(state =>{            
-            var error = result.userName;
+            var target = result.target;
+            var warning = result.warning;
+
+            registerRespond(target);
+
             return{              
-                error
+                target,
+                warning
             };
         })); 
       }
@@ -75,7 +80,7 @@ class Register extends Component{
                         </li>
                     </ul>                    
                 </form>   
-                <p>{this.state.error}</p>                                                  
+                <p>{this.state.warning}</p>                                                  
             </div>
         );
     }
