@@ -1,3 +1,4 @@
 # photory
 Feature branch a Swagger beüzemeltetésére
--merged 
+<br/>
+# merged 
