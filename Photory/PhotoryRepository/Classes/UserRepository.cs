@@ -22,14 +22,14 @@ namespace PhotoryRepository
         public void Add(User entity)
         {
             entity.UserAccess = UserAccess.RegularUser;
-            this.context.Users.Add(entity);
+            this.context.MyUsers.Add(entity);
             SaveDatabase();
         }
 
         public void Delete(string id)
         {
             var entity = GetOne(id);
-            this.context.Users.Remove(entity);
+            this.context.MyUsers.Remove(entity);
             SaveDatabase();
         }
 
@@ -47,7 +47,7 @@ namespace PhotoryRepository
 
         public IQueryable<User> GetAll()
         {
-            var q1 = from x in context.Users
+            var q1 = from x in context.MyUsers
                       where x.UserAccess == UserAccess.RegularUser
                       select x;
 
@@ -56,7 +56,7 @@ namespace PhotoryRepository
 
         public User GetOne(string id)
         {
-            var q1 = (from x in context.Users
+            var q1 = (from x in context.MyUsers
                       where id == x.UserName && x.UserAccess==UserAccess.RegularUser
                       select x).FirstOrDefault();
 
