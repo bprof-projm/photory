@@ -19,49 +19,112 @@ namespace Photory.Controllers
             this.adminLogic = adminLogic;
         }
         [HttpPost]
-        public void CreateAdmin([FromBody] User user)
+        public IActionResult CreateAdmin([FromBody] User user)
         {
-            adminLogic.CreateAdmin(user);
+            try
+            {
+                adminLogic.CreateAdmin(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
         [HttpDelete("{id}")]
-        public void DeleteGroupAdmin(string id)
+        public IActionResult DeleteGroupAdmin(string id)
         {
 
-            adminLogic.DeleteAdmin(id);
+            try
+            {
+                adminLogic.DeleteAdmin(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
 
         }
 
         [HttpGet]
-        public IEnumerable<User> GetAllAdmin()
+        public ActionResult<IEnumerable<User>> GetAllAdmin()
         {
-            return adminLogic.GetAllUser();
+            try
+            {
+                var admins = adminLogic.GetAllUser();
+                return Ok(admins);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
         [HttpGet("{id}")]
-        public User GetGroupAdmin(string id)
+        public ActionResult<User> GetGroupAdmin(string id)
         {
-            return adminLogic.GetAdmin(id);
+            try
+            {
+                var admin = adminLogic.GetAdmin(id);
+                return Ok(admin);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
         [HttpPut("{oldid}")]
 
-        public void UpdateUser(string oldid, [FromBody] User user)
+        public IActionResult UpdateUser(string oldid, [FromBody] User user)
         {
-            adminLogic.UpdateAdmin(oldid, user);
+            try
+            {
+                adminLogic.UpdateAdmin(oldid, user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
         [HttpPost("{userID}&{GroupID}")]
-        public void AddMembers(string userID, string GroupID)
+        public IActionResult AddMembers(string userID, string GroupID)
         {
-            adminLogic.AddMember(userID, GroupID);
+            try
+            {
+                adminLogic.AddMember(userID, GroupID);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
 
         }
 
         [HttpPost("/CreateGroup")]
-        public void CreateGroup([FromBody] Group group)
+        public IActionResult CreateGroup([FromBody] Group group)
         {
-            adminLogic.CreateGroup(group);
+            try
+            {
+                adminLogic.CreateGroup(group);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
     }
 }
