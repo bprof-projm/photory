@@ -2,7 +2,7 @@ import { getDefaultNormalizer, render } from '@testing-library/react';
 import React, {Component} from 'react';
 import {useHistory, Link} from 'react-router-dom';
 import './Register.scss';
-import { fetchToBackend } from '../../functions.js';
+import { validateRegisterForm } from '../../functions.js';
 
 let USERNAME = null;
 let HIDDENATTRI_REG = "";
@@ -17,29 +17,28 @@ class Register extends Component{
         }
     }
 
-    Validate = () =>{
-        var fullname = document.getElementById('fullname').value;
-        var username = document.getElementById('username').value;
-        var birthdate = document.getElementById('birthdate').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var confpassword = document.getElementById('confpassword').value;
-        var jsonBody = JSON.stringify({
-            fullname: fullname,
-            username: username,
-            birthdate: birthdate,
-            email: email,
-            password: password
-            //confpassword: confpassword
-        });
-        fetchToBackend("Register", "get", null)
+    validate = () =>{
+        validateRegisterForm()
         .then(result => this.setState(state =>{            
-            var error = result.error;
+            var error = result.userName;
             return{              
                 error
             };
-        }));              
+        })); 
       }
+
+    showpassword = () =>{
+        var input = document.getElementById('password');
+        var btn = document.getElementById('btn-show');
+        if (input.type == "password"){
+            input.type = "text";
+            btn.innerText = "Hide";            
+        }
+        else {
+            input.type = "password";       
+            btn.innerText = "Show";     
+        }
+    }
 
     render(){
         return(
@@ -66,13 +65,10 @@ class Register extends Component{
                         <li>
                         <label>Password:</label>
                         <input id="password" type="password" name="password"/>
-                        </li>
+                        <button id="btn-show" type="button" onClick={this.showpassword}>Show</button>
+                        </li>                        
                         <li>
-                        <label>Confirm Password:</label>
-                        <input id="confpassword" type="password" name="confpassword"/>
-                        </li>
-                        <li>
-                            <button type="button" hidden={HIDDENATTRI_REG} onClick={this.Validate.bind(this)}>Register</button>
+                            <button type="button" hidden={HIDDENATTRI_REG} onClick={this.validate.bind(this)}>Register</button>
                             <Link to="/">
                                 <button type="button" hidden={HIDDENATTRI_NEXT}>Next</button>
                             </Link>                            
