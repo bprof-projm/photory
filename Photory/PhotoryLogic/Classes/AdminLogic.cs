@@ -83,5 +83,13 @@ namespace PhotoryLogic.Classes
            this.adminRepo.CreateGroup(group);
 
         }
+
+
+        public void DeleteGroup(string GroupID)
+        {
+
+            this.grouprepo.Delete(GroupID);
+
+        }
     }
 }
