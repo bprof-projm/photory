@@ -76,16 +76,7 @@ namespace PhotoryLogic.Classes
         }
 
 
-        public User GetUserFromGroup(string userID, string GroupID) //TODO ÁKOS USE THIS METHOD IN CONTROLLER AND MAKE A TRY CATCH BLOCK FOR THIS by Máté
-        {
-            var entity = (from x in userofgrouprepo.GetAll()
-                         where x.UserName == userID && x.GroupName == GroupID
-                         select x).FirstOrDefault();
-
-            var userentity = userrepo.GetOne(entity.UserName);
-
-            return userentity;
-        }
+     
         public void CreateGroup(Group group)
         {
 
