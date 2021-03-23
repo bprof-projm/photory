@@ -20,7 +20,9 @@ namespace PhotoryRepository.Classes
 
         public void Add(User entity)
         {
+            entity.UserAccess = UserAccess.Admin;
             this.context.Users.Add(entity);
+            SaveDatabase();
         }
 
         public void Delete(string id)
@@ -28,17 +30,21 @@ namespace PhotoryRepository.Classes
             var entity = GetOne(id);
 
             this.context.Users.Remove(entity);
+            SaveDatabase();
         }
 
         public IQueryable<User> GetAll()
         {
-            return context.Users;
+            var entity = from x in context.Users
+                          where  x.UserAccess == UserAccess.Admin
+                          select x;
+            return entity;
         }
 
         public User GetOne(string id)
         {
             var entity = (from x in context.Users
-                          where x.UserName == id
+                          where x.UserName == id && x.UserAccess == UserAccess.Admin
                           select x).FirstOrDefault();
 
             return entity;
@@ -68,13 +74,12 @@ namespace PhotoryRepository.Classes
             //                   select x).FirstOrDefault();
 
 
-            var groupentity = (from x in context.UserOfGroup
-                               where x.UserId == userID && x.GroupName == GroupID
-                               select x).FirstOrDefault();
+            //var groupentity = (from x in context.UserOfGroup
+            //                   where x.UserName == userID && x.GroupName == GroupID
+            //                   select x).FirstOrDefault();
 
 
-
-            context.UserOfGroup.Add(groupentity);
+            //context.UserOfGroup.Add(groupentity);
             SaveDatabase();
         }
 

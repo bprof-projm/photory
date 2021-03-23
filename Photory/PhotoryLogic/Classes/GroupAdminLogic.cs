@@ -17,33 +17,19 @@ namespace PhotoryLogic.Classes
         {
             this.groupadminRepo = groupadminRepo;
         }
-        public bool CreateGroupAdmin(User groupadmin)
+        public void CreateGroupAdmin(User groupadmin)
         {
-            try
-            {
+
                 //TODO: hashpw 
                 this.groupadminRepo.Add(groupadmin);
-                return true;
-            }
-            catch (Exception)
-            {
 
-                return false;
-            }
         }
 
-        public bool DeleteGroupAdmin(string GroupAdminID)
+        public void DeleteGroupAdmin(string GroupAdminID)
         {
-            try
-            {
+            
                 this.groupadminRepo.Delete(GroupAdminID);
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+    
         }
 
         public IQueryable<User> GetAllGroupAdmin()
@@ -56,42 +42,24 @@ namespace PhotoryLogic.Classes
             return this.groupadminRepo.GetOne(GroupAdminID);
         }
 
-        public bool UpdateGroupAdmin(string GroupAdminID, User groupadmin)
+        public void UpdateGroupAdmin(string GroupAdminID, User groupadmin)
         {
-            try
-            {
+
                 this.groupadminRepo.Update(GroupAdminID, groupadmin);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+  
         }
 
-        public bool AcceptUser(string userID, string GroupID)
+        public void AcceptUser(string userID, string GroupID)
         {
-            try
-            {
+ 
                 this.groupadminRepo.AcceptUser(userID,GroupID);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+
         }
-        public bool DenyUser(string userID, string GroupID)
+        public void DenyUser(string userID, string GroupID)
         {
-            try
-            {
+
                 this.groupadminRepo.DenyUser(userID, GroupID);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+
         }
     }
 }

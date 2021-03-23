@@ -34,7 +34,7 @@ namespace PhotoryRepository.Classes
 
         public IQueryable<UserOfGroup> GetAll()
         {
-            return context.UserOfGroup;
+            return context.UserOfGroup.AsQueryable();
         }
 
 
@@ -43,7 +43,7 @@ namespace PhotoryRepository.Classes
         public UserOfGroup GetOne(string id)
         {
             var entity = (from x in context.UserOfGroup
-                          where id == x.UserId
+                          where id == x.ID
                           select x).FirstOrDefault();
 
 

@@ -1,6 +1,7 @@
 ﻿using PhotoryModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PhotoryRepository.Interfaces
@@ -23,6 +24,8 @@ namespace PhotoryRepository.Interfaces
 
         //DELETE COMMENT
         public void DeleteComment(string CommentID);
+
+        IQueryable<Comment> GetAllCommentsFromPhoto(string photoID);
 
 
 

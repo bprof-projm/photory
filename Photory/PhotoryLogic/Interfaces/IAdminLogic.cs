@@ -9,9 +9,9 @@ namespace PhotoryLogic.Interfaces
 {
     public interface IAdminLogic
     {
-        bool CreateAdmin(User admin);
-        bool DeleteAdmin(string AdminID);
-        bool UpdateAdmin(string OldID, User user);
+        void CreateAdmin(User admin);
+        void DeleteAdmin(string AdminID);
+        void UpdateAdmin(string OldID, User user);
         IQueryable<User> GetAllUser();
         User GetAdmin(string AdminID);
     }

@@ -13,37 +13,29 @@ namespace PhotoryLogic.Classes
     public class AdminLogic : IAdminLogic
     {
         private IAdminRepository adminRepo;
-        public AdminLogic(IAdminRepository adminRepo)
+        private IUserRepository userrepo;
+        private IGroupRepository grouprepo;
+        private IUserOfGroupRepository userofgrouprepo;
+        public AdminLogic(IAdminRepository adminRepo, IGroupRepository grouprepo, IUserRepository userrepo, IUserOfGroupRepository userofgrouprepo)
         {
             this.adminRepo = adminRepo;
+            this.grouprepo = grouprepo;
+            this.userrepo = userrepo;
+            this.userofgrouprepo = userofgrouprepo;
         }
-        public bool CreateAdmin(User admin)
+        public void CreateAdmin(User admin)
         {
-            try
-            {
+ 
                 //TODO: hashpw 
-                this.adminRepo.Add(admin);
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+          this.adminRepo.Add(admin);
+ 
         }
 
-        public bool DeleteAdmin(string AdminID)
+        public void DeleteAdmin(string AdminID)
         {
-            try
-            {
-                this.adminRepo.Delete(AdminID);
-                return true;
-            }
-            catch (Exception)
-            {
 
-                return false;
-            }
+         this.adminRepo.Delete(AdminID);
+ 
         }
 
         public User GetAdmin(string AdminID)
@@ -56,43 +48,40 @@ namespace PhotoryLogic.Classes
             return this.adminRepo.GetAll();
         }
 
-        public bool UpdateAdmin(string OldID, User user)
+        public void UpdateAdmin(string OldID, User user)
         {
-            try
-            {
-                this.adminRepo.Update(OldID, user);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        public bool AddMember(string userID, string GroupID)
-        {
-            try
-            {
-                this.adminRepo.AddMember(userID,GroupID);
-                return true;
-            }
-            catch (Exception)
-            {
 
-                return false;
-            }
-        }
-        public bool CreateGroup(Group group)
-        {
-            try
-            {
-                this.adminRepo.CreateGroup(group);
-                return true;
-            }
-            catch (Exception)
-            {
+          this.adminRepo.Update(OldID, user);
 
-                return false;
-            }
+        }
+        public void AddMember(string userID, string GroupID)
+        {
+
+            var userentity = userrepo.GetOne(userID);
+            var groupentity = grouprepo.GetOne(GroupID);
+
+            UserOfGroup uog = new UserOfGroup();
+            uog.Group = groupentity;
+            uog.GroupName = groupentity.GroupName;
+            uog.User = userentity;
+            uog.UserName = userentity.UserName;
+            uog.ID = Guid.NewGuid().ToString();
+            uog.IsPending = false;
+
+
+            this.userofgrouprepo.Add(uog);
+
+            //this.adminRepo.AddMember(userID,GroupID);
+ 
+        }
+
+
+     
+        public void CreateGroup(Group group)
+        {
+
+           this.adminRepo.CreateGroup(group);
+
         }
     }
 }

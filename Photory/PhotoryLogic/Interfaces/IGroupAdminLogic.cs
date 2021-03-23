@@ -9,9 +9,9 @@ namespace PhotoryLogic.Interfaces
 {
     public interface IGroupAdminLogic
     {
-        bool CreateGroupAdmin(User groupadmin);
-        bool DeleteGroupAdmin(string GroupAdminID);
-        bool UpdateGroupAdmin(string GroupAdminID,User  groupadmin);
+        void CreateGroupAdmin(User groupadmin);
+        void DeleteGroupAdmin(string GroupAdminID);
+        void UpdateGroupAdmin(string GroupAdminID,User  groupadmin);
         IQueryable<User> GetAllGroupAdmin();
         User GetGroupAdmin(string GroupAdminID);
     }
