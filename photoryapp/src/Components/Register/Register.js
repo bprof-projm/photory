@@ -2,6 +2,7 @@ import { getDefaultNormalizer, render } from '@testing-library/react';
 import React, {Component} from 'react';
 import {useHistory, Link} from 'react-router-dom';
 import './Register.scss';
+import { fetchToBackend } from '../../functions.js';
 
 let USERNAME = null;
 let HIDDENATTRI_REG = "";
@@ -31,94 +32,13 @@ class Register extends Component{
             password: password
             //confpassword: confpassword
         });
-        /*const request = {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: jsonBody
-        };*/
-        const req = {
-            method: 'get',
-            headers: 
-            { 
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'
-            }
-        };
-        //req.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-        //req.append('Access-Control-Allow-Credentials', 'true');
-        fetch('https://localhost:5001/Register', req)
-        .then(res => res.json())
-        .then(res => this.setState(state =>{
-            var result = res.result;
-            var error = res.error;
-            return{
-                result,
+        fetchToBackend("Register", "get", null)
+        .then(result => this.setState(state =>{            
+            var error = result.error;
+            return{              
                 error
             };
-        }));
-        //----------------------------------VALIDATION-----------------------------------
-        /*fetch('https://localhost:5001/Register', request)
-        .then(response => response.json())
-        .then(res => this.setState(state => {  
-            var result = false;   
-            var error = null;        
-           if (res.result == "false")
-           {               
-                result = false;
-                switch(res.target)
-                {
-                    case "fullname":
-                    {
-                        document.getElementById('fullname').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "username":
-                    {
-                        document.getElementById('username').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "birthdate":
-                    {
-                        document.getElementById('birthdate').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "email":
-                    {
-                        document.getElementById('email').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "password":
-                    {
-                        document.getElementById('password').style.borderColor = 'red';    
-                        document.getElementById('confpassword').style.borderColor = 'red';                   
-                        break;
-                    }
-                }
-                error = res.error;
-           }
-           else if (res.result == "true") 
-           {
-               result = true;        
-               USERNAME = username; 
-           }  
-           return{
-            result,
-            error
-           };
-        }));
-        //-------------------------------------------------------------------------------
-        if (this.state.result == true)
-        {
-            USERNAME = "ASD";
-            HIDDENATTRI_NEXT = "";
-            HIDDENATTRI_REG = "hidden";
-        }
-        else
-        {
-            USERNAME = "Error..";
-        }*/
-        this.forceUpdate();
+        }));              
       }
 
     render(){
