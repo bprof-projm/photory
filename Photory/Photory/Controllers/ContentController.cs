@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("Content")]
     public class ContentController : ControllerBase
