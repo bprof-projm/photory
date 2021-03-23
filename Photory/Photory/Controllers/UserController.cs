@@ -21,78 +21,167 @@ namespace Photory.Controllers
 
 
         [HttpPost]
-        public void CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] User user)
         {
-            userlogic.CreateUser(user);
+            try
+            {
+                userlogic.CreateUser(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
         [HttpGet]
-        public IEnumerable<User> GetAllUser()
+        public ActionResult<IEnumerable<User>> GetAllUser()
         {
-            return userlogic.GetAllUser();
+            try
+            {
+                var users = userlogic.GetAllUser();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
         [HttpGet("{id}")]
-        public User GetOneUser(string id)
+        public ActionResult<User> GetOneUser(string id)
         {
-            return userlogic.GetUser(id);
+            try
+            {
+                var user = userlogic.GetUser(id);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
         [HttpPut("{oldid}")]
 
-        public void UpdateUser(string oldid, [FromBody] User user)
+        public IActionResult UpdateUser(string oldid, [FromBody] User user)
         {
-            userlogic.UpdateUser(oldid, user);
+            try
+            {
+                userlogic.UpdateUser(oldid, user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
         [HttpDelete("{id}")]
-        public void DeleteUser(string id)
-        {
-            userlogic.DeleteUser(id);
+        public IActionResult DeleteUser(string id)
+        {          
+            try
+            {
+                userlogic.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+
         }
 
 
         [HttpPost("{userID}&{GroupID}")]
-        //[Route("RequestJoin")]
-        public void RequestJoin(string userID, string GroupID)
-        {
-            userlogic.RequestJoin(userID, GroupID);
+        public IActionResult RequestJoin(string userID, string GroupID)
+        { 
+            try
+            {
+                userlogic.RequestJoin(userID, GroupID);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
 
         }
 
 
         [HttpPost]
         [Route("AddPhoto")]
-        public void AddPhoto([FromBody] Photo p)
-        {
-            userlogic.AddPhoto(p);
+        public IActionResult AddPhoto([FromBody] Photo p)
+        {  
+            try
+            {
+                userlogic.AddPhoto(p);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
 
         }
 
         [HttpDelete("DeletePhoto/{id}")]
-        public void DeletePhoto(string id)
-        {
-            userlogic.DeletePhoto(id);
+        public IActionResult DeletePhoto(string id)
+        {  
+            try
+            {
+                userlogic.DeletePhoto(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
 
         [HttpPost]
         [Route("AddComment")]
-        public void AddComment([FromBody] Comment m)
+        public IActionResult AddComment([FromBody] Comment m)
         {
-            userlogic.AddComment(m);
+            try
+            {
+                userlogic.AddComment(m);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
 
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
 
         [HttpDelete("DeleteComment/{id}")]
-        public void DeleteComment(string id)
-        {
-            userlogic.DeleteComment(id);
+        public IActionResult DeleteComment(string id)
+        {            
+            try
+            {
+                userlogic.DeleteComment(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
