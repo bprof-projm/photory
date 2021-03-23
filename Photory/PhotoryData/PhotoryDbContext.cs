@@ -4,14 +4,17 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using PhotoryModels;
 using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace PhotoryData
 {
-    public class PhotoryDbContext:DbContext
+    public class PhotoryDbContext :  IdentityDbContext<IdentityUser>
     {
         public PhotoryDbContext()
         {
             this.Database.EnsureCreated();
+            
         }
 
         public PhotoryDbContext(DbContextOptions<PhotoryDbContext> db) : base(db)
@@ -24,13 +27,138 @@ namespace PhotoryData
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseLazyLoadingProxies().
-                    UseSqlServer(@"Server=tcp:photorydata.database.windows.net,1433;Initial Catalog=PhotoryDatabase;Persist Security Info=False;User ID=HegedusMate;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                    UseSqlServer(@"Server=tcp:photorydata.database.windows.net,1433;Initial Catalog=PhotoryDatabase;Persist Security Info=False;User ID=HegedusMate;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
             }
         }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            User newUser = new User();
+
+
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new { Id = "341743f0-asd2–42de-afbf-59kmkkmk72cf6", Name = "Admin", NormalizedName = "ADMIN" },
+                new { Id = "341743f0-dee2–42de-bbbb-59kmkkmk72cf6", Name = "Customer", NormalizedName = "CUSTOMER" },
+                new { Id = "555555f0-dee2–42de-bbbb-59kmkkmk72cf6", Name = "GroupAdmin", NormalizedName = "GroupAdmin" }
+            );
+
+            
+
+            var appUser = new IdentityUser
+            {
+                Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
+                Email = "hegedus.mate@nik.uni-obuda.hu",
+                NormalizedEmail = "hegedus.mate@nik.uni-obuda.hu",
+                EmailConfirmed = true,
+                UserName = "HegedusMate",
+                NormalizedUserName = "hegedus.mate@nik.uni-obuda.hu",
+                SecurityStamp = string.Empty
+            };
+
+            var appUser2 = new IdentityUser
+            {
+                Id = "e2174cf0–9412–4cfe-afbf-59f706d72cf6",
+                Email = "gadacsi.akos@nik.uni-obuda.hu",
+                NormalizedEmail = "gadacsi.akos@nik.uni-obuda.hu",
+                EmailConfirmed = true,
+                UserName = "gadacsi.akos@nik.uni-obuda.hu",
+                NormalizedUserName = "gadacsi.akos@nik.uni-obuda.hu",
+                SecurityStamp = string.Empty
+            };
+
+            var appUser3 = new IdentityUser
+            {
+                Id = "e3894cf0–9412–4cfe-afbf-59f706d72cf6",
+                Email = "veres.levente@nik.uni-obuda.hu",
+                NormalizedEmail = "veres.levente@nik.uni-obuda.hu",
+                EmailConfirmed = true,
+                UserName = "veres.levente@nik.uni-obuda.hu",
+                NormalizedUserName = "veres.levente@nik.uni-obuda.hu",
+                SecurityStamp = string.Empty
+            };
+
+
+
+
+            appUser.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Almafa123!");
+            appUser2.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Almafa123!");
+            appUser3.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Almafa123!");
+
+
+            modelBuilder.Entity<IdentityUser>().HasData(appUser);
+            modelBuilder.Entity<IdentityUser>().HasData(appUser2);
+            modelBuilder.Entity<IdentityUser>().HasData(appUser3);
+
+
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "341743f0-asd2–42de-afbf-59kmkkmk72cf6",
+                UserId = "02174cf0–9412–4cfe-afbf-59f706d72cf6"
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "341743f0-dee2–42de-bbbb-59kmkkmk72cf6",
+                UserId = "e2174cf0–9412–4cfe-afbf-59f706d72cf6"
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "555555f0-dee2–42de-bbbb-59kmkkmk72cf6",
+                UserId = "e3894cf0–9412–4cfe-afbf-59f706d72cf6"
+            });
+
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+
+                FullName = appUser.UserName,
+                Email = appUser.Email,
+                UserAccess = UserAccess.Admin,
+                Password = appUser.PasswordHash,
+                BirthDate = new DateTime(2000, 12, 09),
+                UserName = appUser.UserName
+
+
+
+
+            });
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+
+                FullName = appUser2.UserName,
+                Email = appUser2.Email,
+                UserAccess = UserAccess.RegularUser,
+                Password = appUser2.PasswordHash,
+                BirthDate = new DateTime(2000, 12, 09),
+                UserName = appUser2.UserName
+
+
+
+
+            });
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+
+                FullName = appUser3.UserName,
+                Email = appUser3.Email,
+                UserAccess = UserAccess.GroupAdmin,
+                Password = appUser3.PasswordHash,
+                BirthDate = new DateTime(2000, 12, 09),
+                UserName = appUser3.UserName
+
+
+
+
+            });
+
 
 
             //modelBuilder.Entity<UserGroup>()
@@ -80,7 +208,8 @@ namespace PhotoryData
                 entity
                 .HasOne(c => c.Photo)
                 .WithMany(p => p.Comments)
-                .HasForeignKey(p => p.PhotoID);
+                .HasForeignKey(p => p.PhotoID)
+                .OnDelete(DeleteBehavior.Cascade);
 
             });
 
@@ -91,7 +220,8 @@ namespace PhotoryData
                 entity
                 .HasOne(p => p.Group)
                 .WithMany(g => g.Photos)
-                .HasForeignKey(p => p.GroupName);
+                .HasForeignKey(p => p.GroupName)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             });
@@ -102,7 +232,8 @@ namespace PhotoryData
                 entity
                 .HasOne(u => u.Group)
                 .WithMany(g => g.UserGroups)
-                .HasForeignKey(u => u.GroupName);
+                .HasForeignKey(u => u.GroupName)
+                .OnDelete(DeleteBehavior.Cascade);
 
             });
 
@@ -123,7 +254,7 @@ namespace PhotoryData
 
 
 
-        public DbSet<PhotoryModels.User> Users { get; set; }
+        public DbSet<PhotoryModels.User> MyUsers { get; set; }
         public virtual DbSet<PhotoryModels.Group> Groups { get; set; }
         public virtual DbSet<PhotoryModels.Photo> Photos { get; set; }
         public virtual DbSet<PhotoryModels.Comment> Comments { get; set; }
