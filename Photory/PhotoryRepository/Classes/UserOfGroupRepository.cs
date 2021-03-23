@@ -34,7 +34,7 @@ namespace PhotoryRepository.Classes
 
         public IQueryable<UserOfGroup> GetAll()
         {
-            return context.UserOfGroup;
+            return context.UserOfGroup.AsQueryable();
         }
 
 
