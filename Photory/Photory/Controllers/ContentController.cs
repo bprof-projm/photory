@@ -21,17 +21,36 @@ namespace Photory.Controllers
         }
 
         [HttpGet("GetAllCommentsFromPhoto/{photoID}")]
-        public IQueryable<Comment> GetAllCommentsFromPhoto(string photoID)
+        public ActionResult<IQueryable<Comment>> GetAllCommentsFromPhoto(string photoID)
         {
-            return userlogic.GetAllCommentsFromPhoto(photoID);
+            try
+            {
+                var comments = userlogic.GetAllCommentsFromPhoto(photoID);
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
 
         [HttpGet("GetUserFromGroup/{userID}&{GroupID}")]
 
-        public User GetUserFromGroup(string userID, string GroupID)
+        public ActionResult<User> GetUserFromGroup(string userID, string GroupID)
         {
-           return  userlogic.GetUserFromGroup(userID, GroupID);
+
+            try
+            {
+                var user = userlogic.GetUserFromGroup(userID, GroupID);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
         }
 
     }
