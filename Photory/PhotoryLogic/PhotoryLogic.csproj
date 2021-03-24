@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoryData\PhotoryData.csproj" />
+    <ProjectReference Include="..\PhotoryModels\PhotoryModels.csproj" />
+    <ProjectReference Include="..\PhotoryRepository\PhotoryRepository.csproj" />
+  </ItemGroup>
+
+</Project>

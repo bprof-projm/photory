@@ -52,3 +52,4 @@ A projektben az RBAC elvet követve teljesen elkülönülő jogosultsági szinte
 - Frontend : **Schäffer Tamás** <br/>
 
 - Csoport menedzser : **Veres Levente**
+

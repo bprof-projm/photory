@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/photory/databases/PhotoryData",
+      "type": "mssql.azure",
+      "connectionId": "Server=tcp:photory.database.windows.net,1433;InitialCatalog=PhotoryData;PersistSecurityInfo=False;UserID=akosgdcsi;Password=Akos1999;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;",
+      "secretStore": "LocalSecretsFile"
+    }
+  }
+}
