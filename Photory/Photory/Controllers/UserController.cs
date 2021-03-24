@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Customer")]
     [ApiController]
     [Route("User")]
     public class UserController : ControllerBase

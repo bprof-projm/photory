@@ -13,7 +13,7 @@ namespace Photory.Controllers
 
    
     [ApiController]
-    [Route("{Auth}")]
+    [Route("Auth")]
     public class AuthController : Controller
     {
 
