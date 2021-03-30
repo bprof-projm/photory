@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    //[Authorize(Roles ="GroupAdmin")]
+    [Authorize(Roles ="GroupAdmin")]
     [ApiController]
     [Route("GroupAdmin")]
     public class GroupAdminController :ControllerBase

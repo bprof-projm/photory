@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    //[Authorize(Roles ="Customer")]
+    [Authorize(Roles ="Customer")]
     [ApiController]
     [Route("User")]
     public class UserController : ControllerBase
@@ -221,13 +221,13 @@ namespace Photory.Controllers
             }
         }
 
-        [HttpGet("PhotoDownload/{photoID}")]
-        public FileResult Download(string photoID)
-        {
-            var p = photoOfGroup.GetOnePhoto(photoID);
-            byte[] allbytes = p.PhotoData;
-            return File(allbytes, "application/octet-stream", "teszt");
-        }
+        //[HttpGet("PhotoDownload/{photoID}")]
+        //public FileResult Download(string photoID)
+        //{
+        //    var p = photoOfGroup.GetOnePhoto(photoID);
+        //    byte[] allbytes = p.PhotoData;
+        //    return File(allbytes, "application/octet-stream", "teszt");
+        //}
 
 
 
