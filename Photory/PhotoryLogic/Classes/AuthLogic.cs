@@ -41,7 +41,7 @@ namespace PhotoryLogic.Classes
             u.Email = model.Email;
             //u.Password = model.Password;
             u.UserAccess = UserAccess.RegularUser;
-            u.UserName = model.UserName;
+            u.UserId = model.UserName;
 
             userrepo.Add(u);
 
