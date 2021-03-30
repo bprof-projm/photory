@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ImageMagick;
+using Microsoft.AspNetCore.Http;
 using PhotoryLogic.Interfaces;
 using PhotoryModels;
 using PhotoryRepository;
@@ -16,10 +17,12 @@ namespace PhotoryLogic.Classes
     {
         private IUserRepository userRepo;
         private IUserOfGroupRepository userofgrouprepo;
-        public UserLogic(IUserRepository userRepo, IUserOfGroupRepository userofgrouprepo)
+        private IGroupRepository groupRepo;
+        public UserLogic(IUserRepository userRepo, IUserOfGroupRepository userofgrouprepo, IGroupRepository groupRepo)
         {
             this.userRepo = userRepo;
             this.userofgrouprepo = userofgrouprepo;
+            this.groupRepo = groupRepo;
         }
         public void CreateUser(User user)
         {
@@ -94,17 +97,26 @@ namespace PhotoryLogic.Classes
             return userentity;
         }
 
-        public void UploadtoData(string fileName)
+        public void UploadtoData(string fileName, string groupID)
         {
             var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
-            if (File.Exists(fullpath))
+            if (File.Exists(fullpath) && groupRepo.GetOne(groupID) != null)
             {
                 Photo p = new Photo();
-                p.PhotoData = File.ReadAllBytes(fullpath); 
+                p.PhotoID = Guid.NewGuid().ToString();
                 p.PhotoTitle = fileName;
-            }
+                p.GroupId = groupID;
+                var optimizer = new ImageOptimizer();
+                FileInfo f = new FileInfo(fullpath);
+                optimizer.Compress(f);
+                f.Refresh();
+                p.PhotoData = File.ReadAllBytes(f.FullName);
+                userRepo.AddPhoto(p);
+                File.Delete(fullpath);
+                return;
+            }   
             throw new Exception("file was not found");
-            
+
         }
     }
 }
