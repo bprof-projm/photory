@@ -13,14 +13,13 @@ namespace PhotoryModels
     {
 
 
-       
+       [Key]
         public string PhotoID { get; set; }
 
         [NotMapped]
         [JsonIgnore]
         public virtual Photo Photo { get; set; }
 
-        [Key]
         public string CommentID { get; set; }
 
         [NotMapped]
