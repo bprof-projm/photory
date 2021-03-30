@@ -29,11 +29,12 @@ namespace PhotoryModels
 
         [NotMapped]
         [JsonIgnore]
-        public virtual PhotoOfGroup Group { get; set; }
+        public virtual Group Group { get; set; }
+
 
         [NotMapped]
         [JsonIgnore]
-        public virtual ICollection<CommentOfPhoto> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }
