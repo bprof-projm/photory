@@ -23,22 +23,6 @@ namespace Photory.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult AddGroupAdmin([FromBody] User u)
-        {
-            try
-            {
-                groupAdminLogic.CreateGroupAdmin(u);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, $"Internal server error : {ex}");
-            }
-
-        }
-
 
         [HttpDelete("{id}")]
         public IActionResult DeleteGroupAdmin(string id)
