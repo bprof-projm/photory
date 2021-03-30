@@ -20,6 +20,7 @@ namespace PhotoryRepository.Classes
 
         public void Add(User entity)
         {
+            entity.UserId = Guid.NewGuid().ToString();
             entity.UserAccess = UserAccess.Admin;
             this.context.MyUsers.Add(entity);
             SaveDatabase();
@@ -44,7 +45,7 @@ namespace PhotoryRepository.Classes
         public User GetOne(string id)
         {
             var entity = (from x in context.MyUsers
-                          where x.UserName == id && x.UserAccess == UserAccess.Admin
+                          where x.UserId == id && x.UserAccess == UserAccess.Admin
                           select x).FirstOrDefault();
 
             return entity;
@@ -62,7 +63,6 @@ namespace PhotoryRepository.Classes
             olduser.BirthDate = entity.BirthDate;
             olduser.Email = entity.Email;
             olduser.UserAccess = entity.UserAccess;
-            olduser.Password = entity.Password;
             SaveDatabase();
         }
 
