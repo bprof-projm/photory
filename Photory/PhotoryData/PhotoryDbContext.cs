@@ -120,9 +120,8 @@ namespace PhotoryData
                 FullName = appUser.UserName,
                 Email = appUser.Email,
                 UserAccess = UserAccess.Admin,
-                Password = appUser.PasswordHash,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserName = appUser.UserName
+                UserId = appUser.UserName
 
 
 
@@ -135,9 +134,8 @@ namespace PhotoryData
                 FullName = appUser2.UserName,
                 Email = appUser2.Email,
                 UserAccess = UserAccess.RegularUser,
-                Password = appUser2.PasswordHash,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserName = appUser2.UserName
+                UserId = appUser2.UserName
 
 
 
@@ -150,9 +148,8 @@ namespace PhotoryData
                 FullName = appUser3.UserName,
                 Email = appUser3.Email,
                 UserAccess = UserAccess.GroupAdmin,
-                Password = appUser3.PasswordHash,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserName = appUser3.UserName
+                UserId = appUser3.UserName
 
 
 
@@ -184,47 +181,29 @@ namespace PhotoryData
             });
 
 
-            //modelBuilder.Entity<Photo>(entity =>
-            //{
-            //    entity
-            //    .HasOne(p => p.Group)
-            //    .WithMany(g => g.Photos)
-            //    .HasForeignKey(p => p.GroupId);
-            //});
-
-            //modelBuilder.Entity<Comment>(entity =>
-            //{
-            //    entity
-            //    .HasOne(c => c.Photo)
-            //    .WithMany(p => p.Comments)
-            //    .HasForeignKey(c => c.PhotoID);
-
-
-            //});
-
-
-            modelBuilder.Entity<CommentOfPhoto>(entity =>
-            {
-                entity
-                .HasOne(c => c.Photo)
-                .WithMany(p => p.Comments)
-                .HasForeignKey(p => p.PhotoID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            });
-
-
-
-            modelBuilder.Entity<PhotoOfGroup>(entity =>
+            modelBuilder.Entity<Photo>(entity =>
             {
                 entity
                 .HasOne(p => p.Group)
                 .WithMany(g => g.Photos)
-                .HasForeignKey(p => p.GroupName)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(p => p.GroupId);
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity
+                .HasOne(c => c.Photo)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.PhotoID);
 
 
             });
+
+
+
+
+
+
 
 
             modelBuilder.Entity<UserOfGroup>(entity =>
@@ -258,8 +237,6 @@ namespace PhotoryData
         public virtual DbSet<PhotoryModels.Group> Groups { get; set; }
         public virtual DbSet<PhotoryModels.Photo> Photos { get; set; }
         public virtual DbSet<PhotoryModels.Comment> Comments { get; set; }
-        public virtual DbSet<PhotoryModels.CommentOfPhoto> CommentOfPhoto { get; set; }
-        public virtual DbSet<PhotoryModels.PhotoOfGroup> PhotoOfGroup { get; set; }
         public virtual DbSet<PhotoryModels.UserOfGroup> UserOfGroup { get; set; }
     }
 }
