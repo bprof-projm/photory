@@ -18,29 +18,13 @@ namespace Photory.Controllers
     public class UserController : ControllerBase
     {
         UserLogic userlogic;
-        IPhotoOfGroupRepository photoOfGroup;
+ 
 
-        public UserController(UserLogic userlogic, IPhotoOfGroupRepository photoOfGroup)
+        public UserController(UserLogic userlogic)
         {
             this.userlogic = userlogic;
-            this.photoOfGroup = photoOfGroup;
         }
 
-
-        [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
-        {
-            try
-            {
-                userlogic.CreateUser(user);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, $"Internal server error : {ex}");
-            }
-        }
 
 
         [HttpGet]
