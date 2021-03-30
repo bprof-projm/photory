@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
+using PhotoryRepository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,16 +12,18 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    [Authorize(Roles ="Customer")]
+    //[Authorize(Roles ="Customer")]
     [ApiController]
     [Route("User")]
     public class UserController : ControllerBase
     {
         UserLogic userlogic;
+        IPhotoOfGroupRepository photoOfGroup;
 
-        public UserController(UserLogic userlogic)
+        public UserController(UserLogic userlogic, IPhotoOfGroupRepository photoOfGroup)
         {
             this.userlogic = userlogic;
+            this.photoOfGroup = photoOfGroup;
         }
 
 
@@ -190,8 +193,8 @@ namespace Photory.Controllers
             }
         }
 
-        [HttpPost, DisableRequestSizeLimit]
-        public IActionResult PhotoUpload(IFormFile FileToUpload)
+        [HttpPost("PhotoUpload/{groupID}"), DisableRequestSizeLimit]
+        public IActionResult PhotoUpload(IFormFile FileToUpload , string groupID)
         {
             try
             {
@@ -206,7 +209,7 @@ namespace Photory.Controllers
                     {
                         FileToUpload.CopyTo(stream);
                     }
-                    userlogic.UploadtoData(FileToUpload.FileName);
+                    userlogic.UploadtoData(FileToUpload.FileName, groupID);
                     return Ok();
                 }
                 return BadRequest();
@@ -216,6 +219,14 @@ namespace Photory.Controllers
 
                 return StatusCode(500, $"Internal server error : {ex}");
             }
+        }
+
+        [HttpGet("PhotoDownload/{photoID}")]
+        public FileResult Download(string photoID)
+        {
+            var p = photoOfGroup.GetOnePhoto(photoID);
+            byte[] allbytes = p.PhotoData;
+            return File(allbytes, "application/octet-stream", "teszt");
         }
 
 
