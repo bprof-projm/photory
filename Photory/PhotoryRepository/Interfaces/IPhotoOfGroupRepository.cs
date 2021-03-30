@@ -9,5 +9,6 @@ namespace PhotoryRepository.Interfaces
 {
     public interface IPhotoOfGroupRepository :IRepository<PhotoOfGroup>
     {
+        Photo GetOnePhoto(string id);
     }
 }

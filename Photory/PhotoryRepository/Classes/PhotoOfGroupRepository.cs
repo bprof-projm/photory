@@ -47,6 +47,13 @@ namespace PhotoryRepository.Classes
 
             return entity;
         }
+        public Photo GetOnePhoto(string id)
+        {
+            var entity = (from x in context.Photos
+                          where x.PhotoID == id
+                          select x).FirstOrDefault();
+            return entity;
+        }
 
         public void SaveDatabase()
         {
