@@ -1,9 +1,11 @@
-﻿using PhotoryLogic.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using PhotoryLogic.Interfaces;
 using PhotoryModels;
 using PhotoryRepository;
 using PhotoryRepository.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +92,19 @@ namespace PhotoryLogic.Classes
             var userentity = userRepo.GetOne(entity.UserName);
 
             return userentity;
+        }
+
+        public void UploadtoData(string fileName)
+        {
+            var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
+            if (File.Exists(fullpath))
+            {
+                Photo p = new Photo();
+                p.PhotoData = File.ReadAllBytes(fullpath); 
+                p.PhotoTitle = fileName;
+            }
+            throw new Exception("file was not found");
+            
         }
     }
 }

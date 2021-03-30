@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\PhotoryDb\" />
+    <Folder Include="Photos\" />
   </ItemGroup>
 
 </Project>

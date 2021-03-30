@@ -12,7 +12,8 @@ namespace PhotoryModels
         [Key]
         public string PhotoID { get; set; }
 
-        public string Path { get; set; }
+        public string PhotoTitle { get; set; }
+        public byte[] PhotoData { get; set; }
 
         public string UserName { get; set; }
 

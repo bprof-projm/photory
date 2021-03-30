@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PhotoryData\PhotoryData.csproj" />
     <ProjectReference Include="..\PhotoryModels\PhotoryModels.csproj" />
     <ProjectReference Include="..\PhotoryRepository\PhotoryRepository.csproj" />
