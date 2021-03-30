@@ -40,8 +40,6 @@ namespace WebApi
             services.AddTransient<IUserRepository, UserRepository>(); // Irepo -> iuserrepository 
             services.AddTransient<IGroupAdminRepository, GroupAdminRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
-            services.AddTransient<ICommentOfPhotoRepository, CommentOfPhotoRepository>();
-            services.AddTransient<IPhotoOfGroupRepository, PhotoOfGroupRepository>();
             services.AddTransient<IUserOfGroupRepository, UserOfGroupRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
             services.AddSwaggerGen();
