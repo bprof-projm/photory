@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Photory.Migrations
 {
-    public partial class mg2 : Migration
+    public partial class mg4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,7 +80,8 @@ namespace Photory.Migrations
                 columns: table => new
                 {
                     PhotoID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -211,7 +212,7 @@ namespace Photory.Migrations
                         column: x => x.GroupName,
                         principalTable: "Groups",
                         principalColumn: "GroupName",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,7 +232,7 @@ namespace Photory.Migrations
                         column: x => x.GroupName,
                         principalTable: "Groups",
                         principalColumn: "GroupName",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -278,7 +279,8 @@ namespace Photory.Migrations
                 values: new object[,]
                 {
                     { "341743f0-asd2–42de-afbf-59kmkkmk72cf6", null, "Admin", "ADMIN" },
-                    { "341743f0-dee2–42de-bbbb-59kmkkmk72cf6", null, "Customer", "CUSTOMER" }
+                    { "341743f0-dee2–42de-bbbb-59kmkkmk72cf6", null, "Customer", "CUSTOMER" },
+                    { "555555f0-dee2–42de-bbbb-59kmkkmk72cf6", null, "GroupAdmin", "GroupAdmin" }
                 });
 
             migrationBuilder.InsertData(
@@ -286,8 +288,19 @@ namespace Photory.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "e3c9f400-8dff-434f-9089-d13ddafd17ba", "hegedus.mate@nik.uni-obuda.hu", true, false, null, "hegedus.mate@nik.uni-obuda.hu", "hegedus.mate@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEPd9pEYp7gFPbJsCJ7igwF7e+zy3UADi85VnqSOVsHY/VfJ01xi+wiX37qlCi3A6XA==", null, false, "", false, "HegedusMate" },
-                    { "e2174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "f4012bb6-a23b-48bb-ba63-7bc101a873da", "gadacsi.akos@nik.uni-obuda.hu", true, false, null, "gadacsi.akos@nik.uni-obuda.hu", "gadacsi.akos@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEEdH+bir5u7CCsP/inRTWbciHheaF3GfF+ziorN8hu3zhOXkccY5a8EpMMJ27D+H4Q==", null, false, "", false, "gadacsi.akos@nik.uni-obuda.hu" }
+                    { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "d97cde40-406d-4c0e-8bb7-059e618d1d64", "hegedus.mate@nik.uni-obuda.hu", true, false, null, "hegedus.mate@nik.uni-obuda.hu", "hegedus.mate@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEJUKTYj/42xB5VUMN1WbpEHuPWqiHYmCUpzhs3j3YQHnUcp08fYUpvccK6nuOPeJ3w==", null, false, "", false, "HegedusMate" },
+                    { "e2174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "d574de69-5ff2-4f6b-91cd-69af99641bd1", "gadacsi.akos@nik.uni-obuda.hu", true, false, null, "gadacsi.akos@nik.uni-obuda.hu", "gadacsi.akos@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEAjGbjmRUEgl+VF/1f5QTdzrngP0RPn8QPKdx7kDCGWoLfeI8vSNWag7B3ulaQp3LA==", null, false, "", false, "gadacsi.akos@nik.uni-obuda.hu" },
+                    { "e3894cf0–9412–4cfe-afbf-59f706d72cf6", 0, "39885ad8-c3d3-4707-83fb-24e9f8fc54ab", "veres.levente@nik.uni-obuda.hu", true, false, null, "veres.levente@nik.uni-obuda.hu", "veres.levente@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEOT/KkZ2nB5StboT7+Bw0Dk9oW87xHddEqLq28g634XQe5m0noyrJx3LPD58YfcbOA==", null, false, "", false, "veres.levente@nik.uni-obuda.hu" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MyUsers",
+                columns: new[] { "UserName", "BirthDate", "Email", "FullName", "Password", "UserAccess" },
+                values: new object[,]
+                {
+                    { "HegedusMate", new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "hegedus.mate@nik.uni-obuda.hu", "HegedusMate", "AQAAAAEAACcQAAAAEJUKTYj/42xB5VUMN1WbpEHuPWqiHYmCUpzhs3j3YQHnUcp08fYUpvccK6nuOPeJ3w==", 2 },
+                    { "gadacsi.akos@nik.uni-obuda.hu", new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "gadacsi.akos@nik.uni-obuda.hu", "gadacsi.akos@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEAjGbjmRUEgl+VF/1f5QTdzrngP0RPn8QPKdx7kDCGWoLfeI8vSNWag7B3ulaQp3LA==", 0 },
+                    { "veres.levente@nik.uni-obuda.hu", new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "veres.levente@nik.uni-obuda.hu", "veres.levente@nik.uni-obuda.hu", "AQAAAAEAACcQAAAAEOT/KkZ2nB5StboT7+Bw0Dk9oW87xHddEqLq28g634XQe5m0noyrJx3LPD58YfcbOA==", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -299,6 +312,11 @@ namespace Photory.Migrations
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[] { "341743f0-dee2–42de-bbbb-59kmkkmk72cf6", "e2174cf0–9412–4cfe-afbf-59f706d72cf6" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "555555f0-dee2–42de-bbbb-59kmkkmk72cf6", "e3894cf0–9412–4cfe-afbf-59f706d72cf6" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

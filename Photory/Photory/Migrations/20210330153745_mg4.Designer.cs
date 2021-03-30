@@ -10,8 +10,8 @@ using PhotoryData;
 namespace Photory.Migrations
 {
     [DbContext(typeof(PhotoryDbContext))]
-    [Migration("20210323202608_mg2")]
-    partial class mg2
+    [Migration("20210330153745_mg4")]
+    partial class mg4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,12 @@ namespace Photory.Migrations
                             Id = "341743f0-dee2–42de-bbbb-59kmkkmk72cf6",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "555555f0-dee2–42de-bbbb-59kmkkmk72cf6",
+                            Name = "GroupAdmin",
+                            NormalizedName = "GroupAdmin"
                         });
                 });
 
@@ -155,13 +161,13 @@ namespace Photory.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e3c9f400-8dff-434f-9089-d13ddafd17ba",
+                            ConcurrencyStamp = "d97cde40-406d-4c0e-8bb7-059e618d1d64",
                             Email = "hegedus.mate@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "hegedus.mate@nik.uni-obuda.hu",
                             NormalizedUserName = "hegedus.mate@nik.uni-obuda.hu",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPd9pEYp7gFPbJsCJ7igwF7e+zy3UADi85VnqSOVsHY/VfJ01xi+wiX37qlCi3A6XA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJUKTYj/42xB5VUMN1WbpEHuPWqiHYmCUpzhs3j3YQHnUcp08fYUpvccK6nuOPeJ3w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -171,17 +177,33 @@ namespace Photory.Migrations
                         {
                             Id = "e2174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f4012bb6-a23b-48bb-ba63-7bc101a873da",
+                            ConcurrencyStamp = "d574de69-5ff2-4f6b-91cd-69af99641bd1",
                             Email = "gadacsi.akos@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "gadacsi.akos@nik.uni-obuda.hu",
                             NormalizedUserName = "gadacsi.akos@nik.uni-obuda.hu",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEdH+bir5u7CCsP/inRTWbciHheaF3GfF+ziorN8hu3zhOXkccY5a8EpMMJ27D+H4Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAjGbjmRUEgl+VF/1f5QTdzrngP0RPn8QPKdx7kDCGWoLfeI8vSNWag7B3ulaQp3LA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "gadacsi.akos@nik.uni-obuda.hu"
+                        },
+                        new
+                        {
+                            Id = "e3894cf0–9412–4cfe-afbf-59f706d72cf6",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "39885ad8-c3d3-4707-83fb-24e9f8fc54ab",
+                            Email = "veres.levente@nik.uni-obuda.hu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "veres.levente@nik.uni-obuda.hu",
+                            NormalizedUserName = "veres.levente@nik.uni-obuda.hu",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOT/KkZ2nB5StboT7+Bw0Dk9oW87xHddEqLq28g634XQe5m0noyrJx3LPD58YfcbOA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "veres.levente@nik.uni-obuda.hu"
                         });
                 });
 
@@ -255,6 +277,11 @@ namespace Photory.Migrations
                         {
                             UserId = "e2174cf0–9412–4cfe-afbf-59f706d72cf6",
                             RoleId = "341743f0-dee2–42de-bbbb-59kmkkmk72cf6"
+                        },
+                        new
+                        {
+                            UserId = "e3894cf0–9412–4cfe-afbf-59f706d72cf6",
+                            RoleId = "555555f0-dee2–42de-bbbb-59kmkkmk72cf6"
                         });
                 });
 
@@ -335,7 +362,10 @@ namespace Photory.Migrations
                     b.Property<string>("GroupId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Path")
+                    b.Property<byte[]>("PhotoData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PhotoTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PostTime")
@@ -387,6 +417,35 @@ namespace Photory.Migrations
                     b.HasKey("UserName");
 
                     b.ToTable("MyUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            UserName = "HegedusMate",
+                            BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "hegedus.mate@nik.uni-obuda.hu",
+                            FullName = "HegedusMate",
+                            Password = "AQAAAAEAACcQAAAAEJUKTYj/42xB5VUMN1WbpEHuPWqiHYmCUpzhs3j3YQHnUcp08fYUpvccK6nuOPeJ3w==",
+                            UserAccess = 2
+                        },
+                        new
+                        {
+                            UserName = "gadacsi.akos@nik.uni-obuda.hu",
+                            BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "gadacsi.akos@nik.uni-obuda.hu",
+                            FullName = "gadacsi.akos@nik.uni-obuda.hu",
+                            Password = "AQAAAAEAACcQAAAAEAjGbjmRUEgl+VF/1f5QTdzrngP0RPn8QPKdx7kDCGWoLfeI8vSNWag7B3ulaQp3LA==",
+                            UserAccess = 0
+                        },
+                        new
+                        {
+                            UserName = "veres.levente@nik.uni-obuda.hu",
+                            BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "veres.levente@nik.uni-obuda.hu",
+                            FullName = "veres.levente@nik.uni-obuda.hu",
+                            Password = "AQAAAAEAACcQAAAAEOT/KkZ2nB5StboT7+Bw0Dk9oW87xHddEqLq28g634XQe5m0noyrJx3LPD58YfcbOA==",
+                            UserAccess = 1
+                        });
                 });
 
             modelBuilder.Entity("PhotoryModels.UserOfGroup", b =>
@@ -485,7 +544,8 @@ namespace Photory.Migrations
                 {
                     b.HasOne("PhotoryModels.Group", "Group")
                         .WithMany("Photos")
-                        .HasForeignKey("GroupName");
+                        .HasForeignKey("GroupName")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Group");
                 });
@@ -494,7 +554,8 @@ namespace Photory.Migrations
                 {
                     b.HasOne("PhotoryModels.Group", "Group")
                         .WithMany("UserGroups")
-                        .HasForeignKey("GroupName");
+                        .HasForeignKey("GroupName")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Group");
                 });
