@@ -36,12 +36,14 @@ namespace WebApi
             services.AddTransient<GroupAdminLogic, GroupAdminLogic>();
             services.AddTransient<AdminLogic, AdminLogic>();
             services.AddTransient<AuthLogic, AuthLogic>();
+            services.AddTransient<ContentLogic, ContentLogic>();
 
             services.AddTransient<IUserRepository, UserRepository>(); // Irepo -> iuserrepository 
             services.AddTransient<IGroupAdminRepository, GroupAdminRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
             services.AddTransient<IUserOfGroupRepository, UserOfGroupRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<IPhotoRepository, PhotoRepository>();
             services.AddSwaggerGen();
 
             services.AddDbContext<PhotoryDbContext>();
