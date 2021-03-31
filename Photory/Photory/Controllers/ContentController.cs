@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("Content")]
     public class ContentController : ControllerBase
