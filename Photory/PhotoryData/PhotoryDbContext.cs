@@ -27,7 +27,7 @@ namespace PhotoryData
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseLazyLoadingProxies().
-                    UseSqlServer(@"Server=tcp:photorydata.database.windows.net,1433;Initial Catalog=PhotoryDatabase;Persist Security Info=False;User ID=HegedusMate;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
+                    UseSqlServer(@"Server=tcp:photorydatabase.database.windows.net,1433;Initial Catalog=PhotoryDataBase;Persist Security Info=False;User ID=PhotoryAdmin;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
             }
         }
 
@@ -116,12 +116,12 @@ namespace PhotoryData
 
             modelBuilder.Entity<User>().HasData(new User
             {
-
+                UserName = appUser.UserName,
                 FullName = appUser.UserName,
                 Email = appUser.Email,
                 UserAccess = UserAccess.Admin,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserId = appUser.UserName
+                UserId = appUser.Id
 
 
 
@@ -130,12 +130,12 @@ namespace PhotoryData
 
             modelBuilder.Entity<User>().HasData(new User
             {
-
+                UserName = appUser2.UserName,
                 FullName = appUser2.UserName,
                 Email = appUser2.Email,
                 UserAccess = UserAccess.RegularUser,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserId = appUser2.UserName
+                UserId = appUser2.Id
 
 
 
@@ -144,12 +144,12 @@ namespace PhotoryData
 
             modelBuilder.Entity<User>().HasData(new User
             {
-
+                UserName = appUser3.UserName,
                 FullName = appUser3.UserName,
                 Email = appUser3.Email,
                 UserAccess = UserAccess.GroupAdmin,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserId = appUser3.UserName
+                UserId = appUser3.Id
 
 
 
@@ -176,7 +176,7 @@ namespace PhotoryData
                 entity
                 .HasOne(comment => comment.User)
                 .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.UserID);
+                .HasForeignKey(c => c.UserId);
 
             });
 
