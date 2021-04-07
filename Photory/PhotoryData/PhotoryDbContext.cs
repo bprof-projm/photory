@@ -200,12 +200,6 @@ namespace PhotoryData
             });
 
 
-
-
-
-
-
-
             modelBuilder.Entity<UserOfGroup>(entity =>
             {
                 entity
