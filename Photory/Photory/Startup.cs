@@ -111,9 +111,11 @@ namespace WebApi
                     ValidIssuer = "http://www.security.org",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Paris Berlin Cairo Sydney Tokyo Beijing Rome London Athens"))
                 };
+            }).AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "287947399346523";
+                facebookOptions.AppSecret = "248cb1d0529819d6cd2530995a09b00b";
             });
-
-
 
 
 
