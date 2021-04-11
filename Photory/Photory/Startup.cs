@@ -73,16 +73,16 @@ namespace WebApi
 
                 services.AddDbContext<PhotoryDbContext>();
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder =>
-            //        {
-            //            builder.WithOrigins("http://localhost:3000/%22")
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod();
-            //        });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000/%22")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
 
             services.AddIdentity<IdentityUser, IdentityRole>(
                      option =>
@@ -131,8 +131,8 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-            //app.UseCors("CorsPolicy");
+            //app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseRouting();
             app.UseSwagger();
 
