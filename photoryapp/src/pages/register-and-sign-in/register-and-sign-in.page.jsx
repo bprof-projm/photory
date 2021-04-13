@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { GetAllUsers_fetch } from '../../backendCom.js';
+
 import './register-and-sign-in.styles.scss';
 
 class RegisterAndSignInPage extends React.Component{
@@ -32,7 +34,18 @@ class RegisterAndSignInPage extends React.Component{
     componentDidMount(){
         let modeBtn = document.getElementsByClassName('rs-mode')[0];
         modeBtn.innerText = 'On';
-        modeBtn.style.backgroundColor = 'green';        
+        modeBtn.style.backgroundColor = 'green';     
+        
+        const result = GetAllUsers_fetch();
+        if (result === null){
+            console.log('SERVER ERROR');
+        }
+        else if (result.error){
+            console.log(result.statusText);
+        }
+        else {
+            console.log(result.users);
+        }
     }
 
     render(){
