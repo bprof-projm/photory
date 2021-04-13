@@ -45,10 +45,16 @@ namespace PhotoryRepository.Classes
         public User GetOne(string id)
         {
             var entity = (from x in context.MyUsers
-                          where x.UserId == id && x.UserAccess == UserAccess.Admin
+                          where x.UserId == id                  //&& x.UserAccess == UserAccess.Admin
                           select x).FirstOrDefault();
 
-            return entity;
+
+            if (entity.UserAccess == UserAccess.Admin)
+            {
+                return entity;
+            }
+            return null;
+            
         }
 
         public void SaveDatabase()
