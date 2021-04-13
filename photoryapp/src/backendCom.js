@@ -2,13 +2,14 @@
 const SERVER_URL = 'http://localhost:5000/';
 
 export const GetAllUsers_fetch = async () =>{  //-------------------------GETALLUSERS
-    const request = {
-        mode: 'no-cors',
+    const request = {        
         method: 'GET',
-        headers: { 
+        /*headers: { 
             'Content-Type': 'application/json',
             //'Authorization': 'Roles, Customer'
-        },        
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*'
+        },*/     
     };
     
     const controller = 'User';

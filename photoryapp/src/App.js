@@ -5,10 +5,11 @@ import RegisterAndSignInPage from './pages/register-and-sign-in/register-and-sig
 import SignInPage from './pages/sign-in/sign-in.page.jsx';
 
 function App() {
-  return (
+  return (    
     <Switch>
       <Route exact path='/' component={RegisterAndSignInPage}></Route>
       <Route exact path='/signin' component={SignInPage} />
+      <Route exact path='/groups' component={SignInPage} />
     </Switch> 
   );
 }
