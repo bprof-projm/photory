@@ -4,7 +4,7 @@ import React from 'react';
 import './custom-form.styles.scss';
 
 const CustomForm = ({ inputs, buttons, onSubmition, ...otherProps }) => (
-    <form onSubmit={onSubmition} {...otherProps}>
+    <form {...otherProps}>
         {
             inputs.map(({ id, label, style, ...otherInputProps }) => (
                 <li key={id}>                    
@@ -16,7 +16,7 @@ const CustomForm = ({ inputs, buttons, onSubmition, ...otherProps }) => (
         {
             buttons.map(({ id, children, otherButtonProps }) => (
                 <li key={id}>
-                    <Button color="primary" {...otherButtonProps} >{children}</Button>
+                    <Button onClick={onSubmition} color="primary" {...otherButtonProps} >{children}</Button>
                 </li>
             ))
         }
