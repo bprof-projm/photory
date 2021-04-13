@@ -58,10 +58,15 @@ namespace PhotoryRepository
         public User GetOne(string id)
         {
             var q1 = (from x in context.MyUsers
-                      where id == x.UserId && x.UserAccess==UserAccess.RegularUser
+                      where id == x.UserId                  //&& x.UserAccess == UserAccess.RegularUser
                       select x).FirstOrDefault();
 
-            return q1;
+            if (q1.UserAccess == UserAccess.RegularUser)
+            {
+                return q1;
+            }
+            return null;
+           
         }
 
 
