@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Picture from '../Models/Picture.js';
+import Picture from '../../Models/Picture.js';
 import Thumbnail from './Thumbnail.js';
 import Navbar from '../Navbar/Navbar';
 import './Browser.scss';

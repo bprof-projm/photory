@@ -2,6 +2,7 @@ import { getDefaultNormalizer, render } from '@testing-library/react';
 import React, {Component} from 'react';
 import {useHistory, Link} from 'react-router-dom';
 import './Register.scss';
+import { validateRegisterForm, registerRespond } from '../../functions.js';
 
 let USERNAME = null;
 let HIDDENATTRI_REG = "";
@@ -11,115 +12,38 @@ class Register extends Component{
     constructor(props){
         super(props)
         this.state = {
-            result: false,
-            error: null                           
+            target: null,
+            warning: null                          
         }
     }
 
-    Validate = () =>{
-        var fullname = document.getElementById('fullname').value;
-        var username = document.getElementById('username').value;
-        var birthdate = document.getElementById('birthdate').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var confpassword = document.getElementById('confpassword').value;
-        var jsonBody = JSON.stringify({
-            fullname: fullname,
-            username: username,
-            birthdate: birthdate,
-            email: email,
-            password: password
-            //confpassword: confpassword
-        });
-        /*const request = {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: jsonBody
-        };*/
-        const req = {
-            method: 'get',
-            headers: 
-            { 
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-                'Access-Control-Allow-Credentials': 'true'
-            }
-        };
-        //req.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-        //req.append('Access-Control-Allow-Credentials', 'true');
-        fetch('https://localhost:5001/Register', req)
-        .then(res => res.json())
-        .then(res => this.setState(state =>{
-            var result = res.result;
-            var error = res.error;
-            return{
-                result,
-                error
+    validate = () =>{
+        validateRegisterForm()
+        .then(result => this.setState(state =>{            
+            var target = result.target;
+            var warning = result.warning;
+
+            registerRespond(target);
+
+            return{              
+                target,
+                warning
             };
-        }));
-        //----------------------------------VALIDATION-----------------------------------
-        /*fetch('https://localhost:5001/Register', request)
-        .then(response => response.json())
-        .then(res => this.setState(state => {  
-            var result = false;   
-            var error = null;        
-           if (res.result == "false")
-           {               
-                result = false;
-                switch(res.target)
-                {
-                    case "fullname":
-                    {
-                        document.getElementById('fullname').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "username":
-                    {
-                        document.getElementById('username').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "birthdate":
-                    {
-                        document.getElementById('birthdate').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "email":
-                    {
-                        document.getElementById('email').style.borderColor = 'red';                        
-                        break;
-                    }
-                    case "password":
-                    {
-                        document.getElementById('password').style.borderColor = 'red';    
-                        document.getElementById('confpassword').style.borderColor = 'red';                   
-                        break;
-                    }
-                }
-                error = res.error;
-           }
-           else if (res.result == "true") 
-           {
-               result = true;        
-               USERNAME = username; 
-           }  
-           return{
-            result,
-            error
-           };
-        }));
-        //-------------------------------------------------------------------------------
-        if (this.state.result == true)
-        {
-            USERNAME = "ASD";
-            HIDDENATTRI_NEXT = "";
-            HIDDENATTRI_REG = "hidden";
-        }
-        else
-        {
-            USERNAME = "Error..";
-        }*/
-        this.forceUpdate();
+        })); 
       }
+
+    showpassword = () =>{
+        var input = document.getElementById('password');
+        var btn = document.getElementById('btn-show');
+        if (input.type == "password"){
+            input.type = "text";
+            btn.innerText = "Hide";            
+        }
+        else {
+            input.type = "password";       
+            btn.innerText = "Show";     
+        }
+    }
 
     render(){
         return(
@@ -146,20 +70,17 @@ class Register extends Component{
                         <li>
                         <label>Password:</label>
                         <input id="password" type="password" name="password"/>
-                        </li>
+                        <button id="btn-show" type="button" onClick={this.showpassword}>Show</button>
+                        </li>                        
                         <li>
-                        <label>Confirm Password:</label>
-                        <input id="confpassword" type="password" name="confpassword"/>
-                        </li>
-                        <li>
-                            <button type="button" hidden={HIDDENATTRI_REG} onClick={this.Validate.bind(this)}>Register</button>
+                            <button type="button" hidden={HIDDENATTRI_REG} onClick={this.validate.bind(this)}>Register</button>
                             <Link to="/">
                                 <button type="button" hidden={HIDDENATTRI_NEXT}>Next</button>
                             </Link>                            
                         </li>
                     </ul>                    
                 </form>   
-                <p>{this.state.error}</p>                                                  
+                <p>{this.state.warning}</p>                                                  
             </div>
         );
     }
