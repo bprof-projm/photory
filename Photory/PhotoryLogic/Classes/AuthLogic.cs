@@ -48,6 +48,7 @@ namespace PhotoryLogic.Classes
 
             var user = new IdentityUser
             {
+                Id= u.UserId,//update
                 Email = model.Email,
                 UserName = model.UserName,
                 SecurityStamp = Guid.NewGuid().ToString()
