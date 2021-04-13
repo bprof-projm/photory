@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using PhotoryData;
 using PhotoryModels;
@@ -21,6 +22,7 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
+            entity.UserId = Guid.NewGuid().ToString();
             entity.UserAccess = UserAccess.RegularUser;
             this.context.MyUsers.Add(entity);
             SaveDatabase();
@@ -41,7 +43,6 @@ namespace PhotoryRepository
             olduser.BirthDate = entity.BirthDate;
             olduser.Email = entity.Email;
             olduser.UserAccess = entity.UserAccess;
-            olduser.Password = entity.Password;
             SaveDatabase();
         }
 
@@ -57,7 +58,7 @@ namespace PhotoryRepository
         public User GetOne(string id)
         {
             var q1 = (from x in context.MyUsers
-                      where id == x.UserName && x.UserAccess==UserAccess.RegularUser
+                      where id == x.UserId && x.UserAccess==UserAccess.RegularUser
                       select x).FirstOrDefault();
 
             return q1;

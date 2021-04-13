@@ -13,7 +13,7 @@ namespace PhotoryModels
         public string CommentID { get; set; }
 
 
-        public string UserID { get; set; }
+        public string UserId { get; set; }
 
         public string CommentContent { get; set; }
 

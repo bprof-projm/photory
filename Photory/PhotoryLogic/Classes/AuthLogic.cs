@@ -32,7 +32,7 @@ namespace PhotoryLogic.Classes
             return _userManager.Users;
         }
 
-        public async Task<string> RegisterUser(RegisterViewModel model)
+        public async Task<string []> RegisterUser(RegisterViewModel model)
         {
             //Aki beregisztál, az bekerül a User táblába is (szinkron)
             User u = new User();
@@ -41,34 +41,57 @@ namespace PhotoryLogic.Classes
             u.Email = model.Email;
             //u.Password = model.Password;
             u.UserAccess = UserAccess.RegularUser;
+            u.UserId = Guid.NewGuid().ToString();
             u.UserName = model.UserName;
 
             userrepo.Add(u);
 
             var user = new IdentityUser
             {
+                Id= u.UserId,//update
                 Email = model.Email,
-                UserName = model.Email,
+                UserName = model.UserName,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            string psswrd = Guid.NewGuid().ToString();
+            var result = await _userManager.CreateAsync(user, psswrd);
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "Customer");
             }
-            return user.UserName;
+
+            string[] returnarray = new string[3];
+            returnarray[0] = user.UserName;
+            returnarray[1] = user.Email;
+            returnarray[2] = psswrd;
+            return returnarray;
         }
 
         public async Task<TokenViewModel> LoginUser(LoginViewModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            IdentityUser user;
+            bool validemail = IsValidEmail(model.ValidationName);
+
+            if (validemail)
+            {
+                 user = await _userManager.FindByEmailAsync(model.ValidationName);
+            }
+            else
+            { 
+            
+              user = await _userManager.FindByNameAsync(model.ValidationName);
+            }
+
+           
+           
+
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
 
 
                 var claims = new List<Claim>
                 {
-                  new Claim(JwtRegisteredClaimNames.Sub, model.Username),
+                  new Claim(JwtRegisteredClaimNames.Sub, model.ValidationName),
                   new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                   new Claim(ClaimTypes.NameIdentifier, user.Id)
                 };
@@ -96,6 +119,21 @@ namespace PhotoryLogic.Classes
                 };
             }
             throw new ArgumentException("Login failed");
+        }
+
+
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

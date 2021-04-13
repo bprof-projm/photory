@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("Admin")]
     public class AdminController : ControllerBase
@@ -20,20 +20,7 @@ namespace Photory.Controllers
         {
             this.adminLogic = adminLogic;
         }
-        [HttpPost]
-        public IActionResult CreateAdmin([FromBody] User user)
-        {
-            try
-            {
-                adminLogic.CreateAdmin(user);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, $"Internal server error : {ex}");
-            }
-        }
+       
         [HttpDelete("{id}")]
         public IActionResult DeleteGroupAdmin(string id)
         {

@@ -24,11 +24,11 @@ namespace Photory.Controllers
             _authLogic = authLogic;
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<ActionResult> InsertUser([FromBody] RegisterViewModel model)
         {
-            string result = await _authLogic.RegisterUser(model);
-            return Ok(new { UserName = result });
+            string [] result = await _authLogic.RegisterUser(model);
+            return Ok(new { User = result });
         }
 
 
@@ -39,7 +39,7 @@ namespace Photory.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("Login")]
         public async Task<ActionResult> Login([FromBody] LoginViewModel model)
         {
             try

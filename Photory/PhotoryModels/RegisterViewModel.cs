@@ -22,8 +22,8 @@ namespace PhotoryModels
         [Required]
         public DateTime BirthDate { get; set; }
 
-        [Required]
-        public string Password { get; set; }
+        //[Required]
+        //public string Password { get; set; }
 
 
 

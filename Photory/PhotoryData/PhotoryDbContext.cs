@@ -27,7 +27,7 @@ namespace PhotoryData
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseLazyLoadingProxies().
-                    UseSqlServer(@"Server=tcp:photorydata.database.windows.net,1433;Initial Catalog=PhotoryDatabase;Persist Security Info=False;User ID=HegedusMate;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
+                    UseSqlServer(@"Server=tcp:photorydatabase.database.windows.net,1433;Initial Catalog=PhotoryDataBase;Persist Security Info=False;User ID=PhotoryAdmin;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
             }
         }
 
@@ -116,13 +116,12 @@ namespace PhotoryData
 
             modelBuilder.Entity<User>().HasData(new User
             {
-
+                UserName = appUser.UserName,
                 FullName = appUser.UserName,
                 Email = appUser.Email,
                 UserAccess = UserAccess.Admin,
-                Password = appUser.PasswordHash,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserName = appUser.UserName
+                UserId = appUser.Id
 
 
 
@@ -131,13 +130,12 @@ namespace PhotoryData
 
             modelBuilder.Entity<User>().HasData(new User
             {
-
+                UserName = appUser2.UserName,
                 FullName = appUser2.UserName,
                 Email = appUser2.Email,
                 UserAccess = UserAccess.RegularUser,
-                Password = appUser2.PasswordHash,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserName = appUser2.UserName
+                UserId = appUser2.Id
 
 
 
@@ -146,13 +144,12 @@ namespace PhotoryData
 
             modelBuilder.Entity<User>().HasData(new User
             {
-
+                UserName = appUser3.UserName,
                 FullName = appUser3.UserName,
                 Email = appUser3.Email,
                 UserAccess = UserAccess.GroupAdmin,
-                Password = appUser3.PasswordHash,
                 BirthDate = new DateTime(2000, 12, 09),
-                UserName = appUser3.UserName
+                UserId = appUser3.Id
 
 
 
@@ -179,49 +176,25 @@ namespace PhotoryData
                 entity
                 .HasOne(comment => comment.User)
                 .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.UserID);
+                .HasForeignKey(c => c.UserId);
 
             });
 
 
-            //modelBuilder.Entity<Photo>(entity =>
-            //{
-            //    entity
-            //    .HasOne(p => p.Group)
-            //    .WithMany(g => g.Photos)
-            //    .HasForeignKey(p => p.GroupId);
-            //});
-
-            //modelBuilder.Entity<Comment>(entity =>
-            //{
-            //    entity
-            //    .HasOne(c => c.Photo)
-            //    .WithMany(p => p.Comments)
-            //    .HasForeignKey(c => c.PhotoID);
-
-
-            //});
-
-
-            modelBuilder.Entity<CommentOfPhoto>(entity =>
-            {
-                entity
-                .HasOne(c => c.Photo)
-                .WithMany(p => p.Comments)
-                .HasForeignKey(p => p.PhotoID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            });
-
-
-
-            modelBuilder.Entity<PhotoOfGroup>(entity =>
+            modelBuilder.Entity<Photo>(entity =>
             {
                 entity
                 .HasOne(p => p.Group)
                 .WithMany(g => g.Photos)
-                .HasForeignKey(p => p.GroupName)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(p => p.GroupId);
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity
+                .HasOne(c => c.Photo)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.PhotoID);
 
 
             });
@@ -258,8 +231,6 @@ namespace PhotoryData
         public virtual DbSet<PhotoryModels.Group> Groups { get; set; }
         public virtual DbSet<PhotoryModels.Photo> Photos { get; set; }
         public virtual DbSet<PhotoryModels.Comment> Comments { get; set; }
-        public virtual DbSet<PhotoryModels.CommentOfPhoto> CommentOfPhoto { get; set; }
-        public virtual DbSet<PhotoryModels.PhotoOfGroup> PhotoOfGroup { get; set; }
         public virtual DbSet<PhotoryModels.UserOfGroup> UserOfGroup { get; set; }
     }
 }

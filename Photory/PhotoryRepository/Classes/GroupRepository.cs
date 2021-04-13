@@ -59,5 +59,16 @@ namespace PhotoryRepository.Classes
         {
             throw new NotImplementedException();
         }
+
+
+        public IQueryable<Photo> GetPhotosFromGroup(string GroupID)
+        {
+            var entities = from x in context.Photos
+                           where x.GroupId == GroupID
+                           select x;
+
+
+            return entities;
+        }
     }
 }

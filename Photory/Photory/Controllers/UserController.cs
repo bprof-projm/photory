@@ -1,41 +1,30 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
+using PhotoryRepository.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-    [Authorize(Roles ="Customer")]
+    [Authorize(Roles = "Customer")]
     [ApiController]
     [Route("User")]
     public class UserController : ControllerBase
     {
         UserLogic userlogic;
+ 
 
         public UserController(UserLogic userlogic)
         {
             this.userlogic = userlogic;
         }
 
-
-        [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
-        {
-            try
-            {
-                userlogic.CreateUser(user);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, $"Internal server error : {ex}");
-            }
-        }
 
 
         [HttpGet]
@@ -136,6 +125,8 @@ namespace Photory.Controllers
 
         }
 
+        
+
         [HttpDelete("DeletePhoto/{id}")]
         public IActionResult DeletePhoto(string id)
         {  
@@ -186,6 +177,41 @@ namespace Photory.Controllers
             }
         }
 
+        [HttpPost("PhotoUpload/{groupID}"), DisableRequestSizeLimit]
+        public IActionResult PhotoUpload(IFormFile FileToUpload , string groupID)
+        {
+            try
+            {
+
+                var folderName = "Photos";
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (FileToUpload != null || FileToUpload.Length > 0)
+                {
+                    var fullpath = Path.Combine(pathToSave, FileToUpload.FileName);
+
+                    using (var stream = new FileStream(fullpath, FileMode.Create))
+                    {
+                        FileToUpload.CopyTo(stream);
+                    }
+                    userlogic.UploadtoData(FileToUpload.FileName, groupID);
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
+
+        //[HttpGet("PhotoDownload/{photoID}")]
+        //public FileResult Download(string photoID)
+        //{
+        //    var p = photoOfGroup.GetOnePhoto(photoID);
+        //    byte[] allbytes = p.PhotoData;
+        //    return File(allbytes, "application/octet-stream", "teszt");
+        //}
 
 
 

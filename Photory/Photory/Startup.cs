@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using PhotoryData;
 using PhotoryLogic.Classes;
 using PhotoryModels;
@@ -36,27 +37,49 @@ namespace WebApi
             services.AddTransient<GroupAdminLogic, GroupAdminLogic>();
             services.AddTransient<AdminLogic, AdminLogic>();
             services.AddTransient<AuthLogic, AuthLogic>();
+            services.AddTransient<ContentLogic, ContentLogic>();
 
             services.AddTransient<IUserRepository, UserRepository>(); // Irepo -> iuserrepository 
             services.AddTransient<IGroupAdminRepository, GroupAdminRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
-            services.AddTransient<ICommentOfPhotoRepository, CommentOfPhotoRepository>();
-            services.AddTransient<IPhotoOfGroupRepository, PhotoOfGroupRepository>();
             services.AddTransient<IUserOfGroupRepository, UserOfGroupRepository>();
             services.AddTransient<IGroupRepository, GroupRepository>();
-            services.AddSwaggerGen();
+            services.AddTransient<IPhotoRepository, PhotoRepository>();
+            services.AddSwaggerGen(c =>
+            {
+                // configure SwaggerDoc and others
 
-            services.AddDbContext<PhotoryDbContext>();
+                // add JWT Authentication
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Name = "JWT Authentication",
+                Description = "Enter JWT Bearer token **_only_**",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer", // must be lower case
+                BearerFormat = "JWT",
+                Reference = new OpenApiReference
+                {
+                    Id = JwtBearerDefaults.AuthenticationScheme,
+                    Type = ReferenceType.SecurityScheme
+                }
+            };
+                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+            {securityScheme, new string[] { }}
+            });
+            });
+
+                services.AddDbContext<PhotoryDbContext>();
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000/%22")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                    });
+                options.AddDefaultPolicy(
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                                  });
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(
@@ -86,9 +109,11 @@ namespace WebApi
                     ValidIssuer = "http://www.security.org",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Paris Berlin Cairo Sydney Tokyo Beijing Rome London Athens"))
                 };
+            }).AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "287947399346523";
+                facebookOptions.AppSecret = "248cb1d0529819d6cd2530995a09b00b";
             });
-
-
 
 
 
@@ -104,6 +129,7 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
             app.UseRouting();
             app.UseSwagger();

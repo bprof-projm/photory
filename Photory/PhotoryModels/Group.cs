@@ -29,6 +29,8 @@ namespace PhotoryModels
 
         [NotMapped]
         [JsonIgnore]
-        public virtual ICollection<PhotoOfGroup> Photos { get; set; }
+        public virtual ICollection<Photo>  Photos { get; set; }
+
+
     }
 }
