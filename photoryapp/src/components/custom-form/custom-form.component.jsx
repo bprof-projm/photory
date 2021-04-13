@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './custom-form.styles.scss';
+
 const CustomForm = ({ inputs, buttons, onSubmition, ...otherProps }) => (
     <form onSubmit={onSubmition} {...otherProps}>
         {

@@ -61,7 +61,7 @@ class SignIn extends React.Component{
 
         return(
             <div className='sign-in'>
-               <h2>Sign in with your account</h2>
+               <h2 style={{ marginLeft: '30px' }}>Sign in with your account</h2>
                 <CustomForm inputs={inputs} buttons={buttons} onSubmition={this.handleSubmit} />
             </div>
         )
