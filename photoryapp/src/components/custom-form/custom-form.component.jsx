@@ -9,14 +9,14 @@ const CustomForm = ({ inputs, buttons, onSubmition, ...otherProps }) => (
             inputs.map(({ id, label, style, ...otherInputProps }) => (
                 <li key={id}>                    
                     {/* <label style={style} >{label}</label> */}
-                    <TextField label={label} style={style}  {...otherInputProps} />
+                    <TextField className='input' label={label} style={style}  {...otherInputProps} />
                 </li>
             ))
         }
         {
             buttons.map(({ id, children, otherButtonProps }) => (
                 <li key={id}>
-                    <Button onClick={onSubmition} color="primary" {...otherButtonProps} >{children}</Button>
+                    <Button className='button' onClick={onSubmition} color="primary" {...otherButtonProps} >{children}</Button>
                 </li>
             ))
         }

@@ -8,7 +8,7 @@ import CustomForm from "../custom-form/custom-form.component.jsx";
 
 import USERS_DATA from "../../pages/sign-in/users.data.js";
 import { signIn_fetch, GetAllUsers_fetch } from "../../backendCom.js";
-import { getMode, validateUser, setToken, setUser } from "../../functions.js";
+import { getMode, validateUser, setToken, setUser, getNewPass } from "../../functions.js";
 
 import './sign-in.styles.scss';
 
@@ -24,6 +24,7 @@ class SignIn extends React.Component {
     };
     this.history = this.props.history;
     this.mode = getMode();
+    this.newpass = null;    
   } 
 
   handleChange = (e) => {
@@ -85,13 +86,11 @@ class SignIn extends React.Component {
             .then(res => {
                 console.log(res.data);
                 setUser(res.data);
+                this.history.push("/groups");   
             })
             .catch(error => {
                 console.log(error);
-            })
-
-
-            this.history.push("/groups");      
+            })               
         })
         .catch(error => {
             console.log(error);
@@ -113,7 +112,15 @@ class SignIn extends React.Component {
     }
   };
 
-  componentDidMount() {
+  componentDidMount() {   
+    const reload = JSON.parse(window.localStorage.getItem('reload'));
+    if (reload)
+    {
+        console.log('get new pass');
+        this.newpass = getNewPass();
+        window.localStorage.setItem('reload', JSON.stringify(false));
+        window.location.reload(false);
+    }
 
     axios
         .get("/Auth")
@@ -181,6 +188,7 @@ class SignIn extends React.Component {
           buttons={buttons}
           onSubmition={this.handleSubmit}
         />
+        {this.newpass !== null && this.newpass !== undefined ? (<span>Your new password: {this.newpass}</span>) : null}
       </div>
     );
   }

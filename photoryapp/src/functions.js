@@ -34,6 +34,15 @@ export const getUser = () => {
 }
 
 
+export const setNewPass = pass => {
+    window.localStorage.setItem('password', JSON.stringify(pass));
+}
+
+export const getNewPass = () => {
+    return JSON.parse(window.localStorage.getItem('password'));
+}
+
+
 
 const USER_COLLECTION = USERS_DATA;
 

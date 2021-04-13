@@ -9,13 +9,13 @@ form{
         padding: 6px;
         margin-left: 30px;
 
-        input{
+        .input{
             display: block;
             width: 24vw;
         }
 
-        label{
-            display: block;
+        .button{
+            margin-top: 13px;
         }
     }
 }

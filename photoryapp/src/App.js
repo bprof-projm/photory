@@ -8,15 +8,26 @@ import GroupsPage from './pages/groups/groups.page.jsx';
 
 import './App.scss';
 
-function App() {
-  return (    
-    <Switch>
-      <Route exact path='/' component={RegisterAndSignInPage}></Route>
-      <Route exact path='/signin' component={SignInPage} />
-      <Route exact path='/register' component={RegisterPage} />
-      <Route exact path='/groups' component={GroupsPage} />
-    </Switch> 
-  );
+class App extends React.Component {
+  constructor(){
+    super();
+  }
+
+  componentDidMount(){
+    window.localStorage.setItem('reload', JSON.stringify(false));
+  }
+
+  render(){
+    return (    
+      <Switch>
+        <Route exact path='/' component={RegisterAndSignInPage}></Route>
+        <Route exact path='/signin' component={SignInPage} />
+        <Route exact path='/register' component={RegisterPage} />
+        <Route exact path='/groups' component={GroupsPage} />
+      </Switch> 
+    );
+  }
+
 }
 
 export default App;
