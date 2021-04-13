@@ -44,7 +44,7 @@ class RegisterAndSignInPage extends React.Component{
             <div className='register-and-sign-in-page'>
                 <div className='rs-options-container'>
                     <button className='rs-option' onClick={() => this.history.push('signin')}>Sign in</button>
-                    <button className='rs-option'>Register</button>
+                    <button className='rs-option' onClick={() => this.history.push('register')}>Register</button>
                 </div>
                 <div className='rs-mode-container'>
                     <label>with server:</label>
