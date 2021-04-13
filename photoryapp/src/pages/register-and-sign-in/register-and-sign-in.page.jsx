@@ -36,16 +36,18 @@ class RegisterAndSignInPage extends React.Component{
         modeBtn.innerText = 'On';
         modeBtn.style.backgroundColor = 'green';     
         
-        const result = GetAllUsers_fetch();
-        if (result === null){
-            console.log('SERVER ERROR');
-        }
-        else if (result.error){
-            console.log(result.statusText);
-        }
-        else {
-            console.log(result.users);
-        }
+        GetAllUsers_fetch().then(result => {
+            console.log(result);
+            if (result === null){
+                console.log('SERVER ERROR');
+            }
+            else if (result.error){
+                console.log(result.statusText);
+            }
+            else {
+                console.log(result.users);
+            }
+        })        
     }
 
     render(){

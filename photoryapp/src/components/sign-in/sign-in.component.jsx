@@ -3,13 +3,16 @@ import { withRouter } from 'react-router-dom';
 
 import CustomForm from '../custom-form/custom-form.component.jsx';
 
+import { signIn_fetch } from '../../backendCom.js';
+
 class SignIn extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
             email_name: '',
-            password: '',            
+            password: '', 
+            error: ''           
         };
         this.history = this.props.history;       
     }
@@ -21,6 +24,23 @@ class SignIn extends React.Component{
 
     handleSubmit = e => {       
         e.preventDefault();
+
+        signIn_fetch().then(result => {
+            console.log(result);
+            if (result === null){
+                this.setState({ email_name: '', password: '', error: 'The communication with the server was failed!' });
+            }
+            else if (result.error){
+                this.setState({ email_name: '', password: '', error: result.statusText });
+            }
+            else if (result.user === null){
+                this.setState({ email_name: '', password: '', error: 'The email/username or the password was wrong!' });
+            } 
+            else {            
+                this.setState({ email_name: '', password: '', error: '' });
+                this.history.push('/groups');
+            }
+        });        
     }
 
     componentDidMount(){
