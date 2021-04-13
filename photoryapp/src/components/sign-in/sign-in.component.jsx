@@ -42,6 +42,7 @@ class SignIn extends React.Component{
                 } 
                 else {            
                     this.setState({ email_name: '', password: '', error: '' });
+                    //console.log(result.user.userName);
                     this.history.push('/groups');
                 }
             });

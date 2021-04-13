@@ -1,7 +1,7 @@
 
 const SERVER_URL = 'http://localhost:5000/';
 
-export const GetAllUsers_fetch = async () =>{
+export const GetAllUsers_fetch = async () =>{  //-------------------------GETALLUSERS
     const request = {
         mode: 'no-cors',
         method: 'GET',
@@ -38,7 +38,7 @@ export const GetAllUsers_fetch = async () =>{
     }
 }
 
-export const signIn_fetch = async (email_name, password) => {
+export const signIn_fetch = async (email_name, password) => {  //-------------------------SIGNIN
     const elements = {
         validationName: email_name,
         password: password
@@ -78,8 +78,9 @@ export const signIn_fetch = async (email_name, password) => {
                 return result;
             } 
             else {
-                result.user = response; 
+                //result.user = response; 
                 console.log('fetch RESULT');
+                console.log(response);                
                 return result;  
             }
         }               
