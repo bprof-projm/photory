@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import './register-and-sign-in.styles.scss';
+
 class RegisterAndSignInPage extends React.Component{
     constructor(props){
         super(props);
@@ -12,11 +14,25 @@ class RegisterAndSignInPage extends React.Component{
 
     handleModChange = e =>{
         e.preventDefault();
-        
+        this.setState(state => {            
+            if (!state.withServer === false){
+                e.target.innerText = 'Off';
+                e.target.style.backgroundColor = 'red';
+            }
+            else {
+                e.target.innerText = 'On';
+                e.target.style.backgroundColor = 'green';
+            }
+            return{
+                withServer: !state.withServer
+            };
+        });
     }
 
     componentDidMount(){
-       
+        let modeBtn = document.getElementsByClassName('rs-mode')[0];
+        modeBtn.innerText = 'On';
+        modeBtn.style.backgroundColor = 'green';        
     }
 
     render(){
