@@ -7,7 +7,7 @@ import CustomForm from "../custom-form/custom-form.component.jsx";
 
 import USERS_DATA from "../../pages/sign-in/users.data.js";
 import { signIn_fetch, GetAllUsers_fetch } from "../../backendCom.js";
-import { getMode, validateUser } from "../../functions.js";
+import { getMode, validateUser, setToken } from "../../functions.js";
 
 import './sign-in.styles.scss';
 
@@ -59,7 +59,8 @@ class SignIn extends React.Component {
         .then(res => {
             console.log(res);  
             this.setState({ token: res.data?.token });
-            console.log(this.state.token);   
+            console.log(this.state.token);  
+            setToken(this.state.token); 
             this.history.push("/groups");      
         })
         .catch(error => {

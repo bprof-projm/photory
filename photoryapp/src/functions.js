@@ -9,6 +9,14 @@ export const getMode = () => {
     return JSON.parse(window.localStorage.getItem('liveMode'));
 }
 
+export const setToken = (token) => {
+    window.localStorage.setItem('Token', JSON.stringify(token));
+}
+
+export const getToken = () => {
+    return JSON.parse(window.localStorage.getItem('Token'));
+}
+
 
 const USER_COLLECTION = USERS_DATA;
 
