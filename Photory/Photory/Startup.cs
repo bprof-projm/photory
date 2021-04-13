@@ -75,13 +75,11 @@ namespace WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000/%22")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                    });
+                options.AddDefaultPolicy(
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                                  });
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(
