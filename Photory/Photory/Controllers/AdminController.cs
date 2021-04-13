@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("Admin")]
     public class AdminController : ControllerBase
@@ -18,20 +20,7 @@ namespace Photory.Controllers
         {
             this.adminLogic = adminLogic;
         }
-        [HttpPost]
-        public IActionResult CreateAdmin([FromBody] User user)
-        {
-            try
-            {
-                adminLogic.CreateAdmin(user);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, $"Internal server error : {ex}");
-            }
-        }
+       
         [HttpDelete("{id}")]
         public IActionResult DeleteGroupAdmin(string id)
         {
@@ -126,5 +115,27 @@ namespace Photory.Controllers
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
+
+
+
+
+
+        [HttpPost("DeletePhoto/{groupid}")]
+        public IActionResult DeleteGroup(string groupid)
+        {
+            try
+            {
+                adminLogic.DeleteGroup(groupid);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
+
+
+
     }
 }

@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace PhotoryRepository.Interfaces
 {
-    public interface ICommentOfPhotoRepository :IRepository<CommentOfPhoto>
+    public interface IPhotoRepository
     {
+
+        Photo GetOnePhoto(string PhotoID);
+         IQueryable<Comment> GetAllCommentsFromPhoto(string PhotoID);
     }
 }

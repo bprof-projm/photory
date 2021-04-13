@@ -22,9 +22,9 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
-            
+            entity.UserId = Guid.NewGuid().ToString();
             entity.UserAccess = UserAccess.GroupAdmin;
-            this.context.Users.Add(entity);
+            this.context.MyUsers.Add(entity);
             SaveDatabase();
 
         }
@@ -33,7 +33,7 @@ namespace PhotoryRepository
         {
             var entity = GetOne(id);
 
-            this.context.Users.Remove(entity);
+            this.context.MyUsers.Remove(entity);
             SaveDatabase();
 
         }
@@ -42,7 +42,7 @@ namespace PhotoryRepository
 
         public IQueryable<User> GetAll()
         {
-            var groupadmins = from x in context.Users
+            var groupadmins = from x in context.MyUsers
                               where x.UserAccess == UserAccess.GroupAdmin
                               select x;
 
@@ -51,8 +51,8 @@ namespace PhotoryRepository
 
         public User GetOne(string id)
         {
-            var entity = (from x in context.Users
-                          where x.UserName == id && x.UserAccess == UserAccess.GroupAdmin
+            var entity = (from x in context.MyUsers
+                          where x.UserId == id && x.UserAccess == UserAccess.GroupAdmin
                           select x).FirstOrDefault();
 
             return entity;
@@ -72,7 +72,6 @@ namespace PhotoryRepository
             olduser.BirthDate = entity.BirthDate;
             olduser.Email = entity.Email;
             olduser.UserAccess = entity.UserAccess;
-            olduser.Password = entity.Password;
             SaveDatabase();
         }
 

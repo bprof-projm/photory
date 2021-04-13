@@ -20,8 +20,9 @@ namespace PhotoryRepository.Classes
 
         public void Add(User entity)
         {
+            entity.UserId = Guid.NewGuid().ToString();
             entity.UserAccess = UserAccess.Admin;
-            this.context.Users.Add(entity);
+            this.context.MyUsers.Add(entity);
             SaveDatabase();
         }
 
@@ -29,13 +30,13 @@ namespace PhotoryRepository.Classes
         {
             var entity = GetOne(id);
 
-            this.context.Users.Remove(entity);
+            this.context.MyUsers.Remove(entity);
             SaveDatabase();
         }
 
         public IQueryable<User> GetAll()
         {
-            var entity = from x in context.Users
+            var entity = from x in context.MyUsers
                           where  x.UserAccess == UserAccess.Admin
                           select x;
             return entity;
@@ -43,8 +44,8 @@ namespace PhotoryRepository.Classes
 
         public User GetOne(string id)
         {
-            var entity = (from x in context.Users
-                          where x.UserName == id && x.UserAccess == UserAccess.Admin
+            var entity = (from x in context.MyUsers
+                          where x.UserId == id && x.UserAccess == UserAccess.Admin
                           select x).FirstOrDefault();
 
             return entity;
@@ -62,7 +63,6 @@ namespace PhotoryRepository.Classes
             olduser.BirthDate = entity.BirthDate;
             olduser.Email = entity.Email;
             olduser.UserAccess = entity.UserAccess;
-            olduser.Password = entity.Password;
             SaveDatabase();
         }
 
@@ -83,10 +83,42 @@ namespace PhotoryRepository.Classes
             SaveDatabase();
         }
 
-        public void CreateGroup(Group group)
+        public void CreateGroup(Group groupp)
         {
-            this.context.Groups.Add(group);
+            var entity = (from x in context.UserRoles
+                         where x.UserId == groupp.GroupAdminID
+                         select x).FirstOrDefault();
+
+
+            this.context.UserRoles.Remove(entity);
+            SaveDatabase();
+            var roleid = (from x in this.context.Roles
+                         where x.Name == "GroupAdmin"
+                          select x.Id).FirstOrDefault();
+
+
+            var modififedentity = entity;
+            modififedentity.RoleId = roleid;
+
+            this.context.UserRoles.Add(modififedentity);
+            SaveDatabase();
+
+
+
+            var userentity = (from x in context.MyUsers
+                             where x.UserId == groupp.GroupAdminID
+                             select x).FirstOrDefault();
+
+            userentity.UserAccess = UserAccess.GroupAdmin;
+            this.context.MyUsers.Update(userentity);
+            SaveDatabase();
+
+
+
+            this.context.Groups.Add(groupp);
             SaveDatabase();
         }
+
+      
     }
 }

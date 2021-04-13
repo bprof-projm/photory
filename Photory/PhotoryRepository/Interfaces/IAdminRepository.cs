@@ -18,5 +18,7 @@ namespace PhotoryRepository.Interfaces
 
        
 
+       
+
     }
 }

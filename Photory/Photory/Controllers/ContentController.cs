@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
@@ -8,16 +9,18 @@ using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("Content")]
     public class ContentController : ControllerBase
     {
         UserLogic userlogic;
+        ContentLogic ContentLogic;
 
-        public ContentController(UserLogic userlogic)
+        public ContentController(UserLogic userlogic, ContentLogic ContentLogic)
         {
             this.userlogic = userlogic;
+            this.ContentLogic = ContentLogic;
         }
 
         [HttpGet("GetAllCommentsFromPhoto/{photoID}")]
@@ -25,7 +28,7 @@ namespace Photory.Controllers
         {
             try
             {
-                var comments = userlogic.GetAllCommentsFromPhoto(photoID);
+                var comments = ContentLogic.GetAllCommentsFromPhoto(photoID);
                 return Ok(comments);
             }
             catch (Exception ex)
@@ -34,6 +37,62 @@ namespace Photory.Controllers
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
+
+
+
+
+
+        [HttpGet("/GetAllGroup")]
+        public ActionResult<IQueryable<Group>> GetAllGroup()
+        {
+            try
+            {
+                
+                return Ok(ContentLogic.GetAllGroup());
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
+
+
+
+        [HttpGet("/GetOnePhoto/{photoid}")]
+        public ActionResult<Photo> GetOnePhoto(string photoid)
+        {
+            try
+            {
+
+                return Ok(ContentLogic.GetOnePhoto(photoid));
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
+
+
+
+        [HttpGet("/GetPhotosFromGroup/{GroupID}")]
+        public ActionResult<IQueryable<Photo>> GetPhotosFromGroup(string GroupID)
+        {
+            try
+            {
+
+                return Ok(ContentLogic.GetPhotosFromGroup(GroupID));
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
+
+
+
 
 
         [HttpGet("GetUserFromGroup/{userID}&{GroupID}")]

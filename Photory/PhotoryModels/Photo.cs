@@ -12,7 +12,8 @@ namespace PhotoryModels
         [Key]
         public string PhotoID { get; set; }
 
-        public string Path { get; set; }
+        public string PhotoTitle { get; set; }
+        public byte[] PhotoData { get; set; }
 
         public string UserName { get; set; }
 
@@ -28,11 +29,12 @@ namespace PhotoryModels
 
         [NotMapped]
         [JsonIgnore]
-        public virtual PhotoOfGroup Group { get; set; }
+        public virtual Group Group { get; set; }
+
 
         [NotMapped]
         [JsonIgnore]
-        public virtual ICollection<CommentOfPhoto> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }

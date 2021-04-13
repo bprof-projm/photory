@@ -64,7 +64,7 @@ namespace PhotoryLogic.Classes
             uog.Group = groupentity;
             uog.GroupName = groupentity.GroupName;
             uog.User = userentity;
-            uog.UserName = userentity.UserName;
+            uog.UserName = userentity.UserId;
             uog.ID = Guid.NewGuid().ToString();
             uog.IsPending = false;
 
@@ -81,6 +81,14 @@ namespace PhotoryLogic.Classes
         {
 
            this.adminRepo.CreateGroup(group);
+
+        }
+
+
+        public void DeleteGroup(string GroupID)
+        {
+
+            this.grouprepo.Delete(GroupID);
 
         }
     }
