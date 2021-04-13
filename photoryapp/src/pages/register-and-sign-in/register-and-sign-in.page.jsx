@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { setMode } from '../../functions.js';
 import { GetAllUsers_fetch } from '../../backendCom.js';
 
 import './register-and-sign-in.styles.scss';
@@ -11,12 +12,13 @@ class RegisterAndSignInPage extends React.Component{
         this.state = {
             withServer: true
         };
-        this.history = this.props.history;
+        this.history = this.props.history;        
     }
 
     handleModChange = e =>{
         e.preventDefault();
-        this.setState(state => {            
+        this.setState(state => { 
+            setMode(!state.withServer);           
             if (!state.withServer === false){
                 e.target.innerText = 'Off';
                 e.target.style.backgroundColor = 'red';
@@ -34,7 +36,8 @@ class RegisterAndSignInPage extends React.Component{
     componentDidMount(){
         let modeBtn = document.getElementsByClassName('rs-mode')[0];
         modeBtn.innerText = 'On';
-        modeBtn.style.backgroundColor = 'green';     
+        modeBtn.style.backgroundColor = 'green';    
+        setMode(true); 
         
         GetAllUsers_fetch().then(result => {
             console.log(result);

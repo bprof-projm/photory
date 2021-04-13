@@ -3,7 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import CustomForm from '../custom-form/custom-form.component.jsx';
 
+import USERS_DATA from '../../pages/sign-in/users.data.js';
 import { signIn_fetch } from '../../backendCom.js';
+import { getMode } from '../../functions.js';
 
 class SignIn extends React.Component{
     constructor(props){
@@ -14,7 +16,8 @@ class SignIn extends React.Component{
             password: '', 
             error: ''           
         };
-        this.history = this.props.history;       
+        this.history = this.props.history;    
+        this.mode = getMode();   
     }
 
     handleChange = e => {
@@ -25,22 +28,28 @@ class SignIn extends React.Component{
     handleSubmit = e => {       
         e.preventDefault();
 
-        signIn_fetch().then(result => {
-            console.log(result);
-            if (result === null){
-                this.setState({ email_name: '', password: '', error: 'The communication with the server was failed!' });
-            }
-            else if (result.error){
-                this.setState({ email_name: '', password: '', error: result.statusText });
-            }
-            else if (result.user === null){
-                this.setState({ email_name: '', password: '', error: 'The email/username or the password was wrong!' });
-            } 
-            else {            
-                this.setState({ email_name: '', password: '', error: '' });
-                this.history.push('/groups');
-            }
-        });        
+        if (this.mode){
+            signIn_fetch().then(result => {
+                console.log(result);
+                if (result === null){
+                    this.setState({ email_name: '', password: '', error: 'The communication with the server was failed!' });
+                }
+                else if (result.error){
+                    this.setState({ email_name: '', password: '', error: result.statusText });
+                }
+                else if (result.user === null){
+                    this.setState({ email_name: '', password: '', error: 'The email/username or the password was wrong!' });
+                } 
+                else {            
+                    this.setState({ email_name: '', password: '', error: '' });
+                    this.history.push('/groups');
+                }
+            });
+       }
+       else{
+           
+       }
+         
     }
 
     componentDidMount(){
