@@ -1,0 +1,21 @@
+form{
+    overflow: hidden;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;     
+
+    li{
+        list-style: none;       
+        padding: 6px;
+        margin-left: 30px;
+
+        .input{
+            display: block;
+            width: 24vw;
+        }
+
+        .button{
+            margin-top: 13px;
+        }
+    }
+}
