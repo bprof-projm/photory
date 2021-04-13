@@ -4,6 +4,8 @@ import axios from '../../axios';
 
 import { getToken } from '../../functions';
 
+import GroupItem from '../items/group-item.component';
+
 class Directory extends React.Component{
     constructor(){
         super();
@@ -47,7 +49,7 @@ class Directory extends React.Component{
                 {
                     this.state.groups !== [] ? (
                         this.state.groups.map((group) => (
-                            <h2>{group.groupName}</h2>
+                            <GroupItem key={group.groupName} group={group} />
                         ))
                     )
                     :null
