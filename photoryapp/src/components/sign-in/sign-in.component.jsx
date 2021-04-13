@@ -5,7 +5,7 @@ import CustomForm from '../custom-form/custom-form.component.jsx';
 
 import USERS_DATA from '../../pages/sign-in/users.data.js';
 import { signIn_fetch } from '../../backendCom.js';
-import { getMode } from '../../functions.js';
+import { getMode, validateUser } from '../../functions.js';
 
 class SignIn extends React.Component{
     constructor(props){
@@ -47,7 +47,14 @@ class SignIn extends React.Component{
             });
        }
        else{
-           
+            const result = validateUser(this.state.email_name, this.state.password);
+            if (result){
+                this.setState({ email_name: '', password: '', error: '' });
+                this.history.push('/groups');
+            }
+            else {
+                this.setState({ email_name: '', password: '', error: 'The email/username or the password was wrong!' });
+            }
        }
          
     }
