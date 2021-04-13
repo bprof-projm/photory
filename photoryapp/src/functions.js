@@ -1,4 +1,6 @@
 import USERS_DATA from './pages/sign-in/users.data.js';
+import jwt_decode from 'jwt-decode';
+
 
 
 export const setMode = mode => {
@@ -9,6 +11,9 @@ export const getMode = () => {
     return JSON.parse(window.localStorage.getItem('liveMode'));
 }
 
+
+
+
 export const setToken = (token) => {
     window.localStorage.setItem('Token', JSON.stringify(token));
 }
@@ -16,6 +21,18 @@ export const setToken = (token) => {
 export const getToken = () => {
     return JSON.parse(window.localStorage.getItem('Token'));
 }
+
+
+
+
+export const setUser = user => {
+    window.localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+export const getUser = () => {
+    return JSON.parse(window.localStorage.getItem('currentUser'));
+}
+
 
 
 const USER_COLLECTION = USERS_DATA;

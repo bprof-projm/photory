@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import jwt_decode from 'jwt-decode';
 
 import axios from "../../axios";
 
@@ -7,7 +8,7 @@ import CustomForm from "../custom-form/custom-form.component.jsx";
 
 import USERS_DATA from "../../pages/sign-in/users.data.js";
 import { signIn_fetch, GetAllUsers_fetch } from "../../backendCom.js";
-import { getMode, validateUser, setToken } from "../../functions.js";
+import { getMode, validateUser, setToken, setUser } from "../../functions.js";
 
 import './sign-in.styles.scss';
 
@@ -61,6 +62,35 @@ class SignIn extends React.Component {
             this.setState({ token: res.data?.token });
             console.log(this.state.token);  
             setToken(this.state.token); 
+            var decoded = jwt_decode(this.state.token);
+            console.log(decoded);
+            var userId = '';
+            var role = '';
+            Object.keys(decoded).forEach(function (key) {
+                let res = key.split("/");
+                if (res.length > 1) {
+                    if (res[res.length - 1] === 'nameidentifier') {
+                        userId = decoded[key];                       
+                    }     
+                    else if (res[res.length - 1] === 'role') {
+                        role = decoded[key];                       
+                    }              
+                }
+            });
+                        
+            const headers={
+                'Authorization': 'Bearer ' + this.state.token
+            };
+            axios.get(`/${role}/${userId}`, { headers: headers })
+            .then(res => {
+                console.log(res.data);
+                setUser(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+
             this.history.push("/groups");      
         })
         .catch(error => {
