@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { setMode } from '../../functions.js';
-import { GetAllUsers_fetch } from '../../backendCom.js';
 
 import './register-and-sign-in.styles.scss';
 
@@ -37,20 +36,7 @@ class RegisterAndSignInPage extends React.Component{
         let modeBtn = document.getElementsByClassName('rs-mode')[0];
         modeBtn.innerText = 'On';
         modeBtn.style.backgroundColor = 'green';    
-        setMode(true); 
-        
-        GetAllUsers_fetch().then(result => {
-            console.log(result);
-            if (result === null){
-                console.log('SERVER ERROR');
-            }
-            else if (result.error){
-                console.log(result.statusText);
-            }
-            else {
-                console.log(result.users);
-            }
-        })        
+        setMode(true);                         
     }
 
     render(){

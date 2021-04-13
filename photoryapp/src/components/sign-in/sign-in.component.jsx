@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import CustomForm from '../custom-form/custom-form.component.jsx';
 
 import USERS_DATA from '../../pages/sign-in/users.data.js';
-import { signIn_fetch } from '../../backendCom.js';
+import { signIn_fetch, GetAllUsers_fetch } from '../../backendCom.js';
 import { getMode, validateUser } from '../../functions.js';
 
 class SignIn extends React.Component{
@@ -60,7 +60,23 @@ class SignIn extends React.Component{
     }
 
     componentDidMount(){
-     
+        if (this.mode){
+            GetAllUsers_fetch().then(result => {
+                console.log(result);
+                if (result === null){
+                    console.log('SERVER ERROR');
+                }
+                else if (result.error){
+                    console.log(result.statusText);
+                }
+                else {
+                    console.log(result.users);
+                }
+            });
+        }
+        else{
+            console.log(USERS_DATA);
+        }
     }
 
     render(){   
