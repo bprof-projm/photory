@@ -52,10 +52,14 @@ namespace PhotoryRepository
         public User GetOne(string id)
         {
             var entity = (from x in context.MyUsers
-                          where x.UserId == id && x.UserAccess == UserAccess.GroupAdmin
+                          where x.UserId == id                 //&& x.UserAccess == UserAccess.GroupAdmin
                           select x).FirstOrDefault();
 
-            return entity;
+            if (entity.UserAccess == UserAccess.GroupAdmin)
+            {
+                return entity;
+            }
+            return null;
         }
 
         public void SaveDatabase()
