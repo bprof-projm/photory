@@ -14,6 +14,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 
 namespace Photory.Controllers
 {
@@ -51,8 +53,19 @@ namespace Photory.Controllers
                 return BadRequest("Invalid Facebook token");
             }
 
+
+            //var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy" };
+
             var userInfoResponse = await Client.GetStringAsync($"https://graph.facebook.com/v10.0/me?fields=id,name,birthday,email,picture,gender&access_token={model.AccessToken}");
             var userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
+
+
+            //JSON DATE TIME CONVERT ULRTACZIBBÁNY MÓD
+            JObject jObject = Newtonsoft.Json.JsonConvert.DeserializeObject(userInfoResponse) as JObject;
+            jObject.SelectToken("birthday").Replace(Convert.ToDateTime(jObject.SelectToken("birthday")));
+            var vmi2 = jObject.SelectToken("birthday");
+            userInfo.Birthdate = Convert.ToDateTime(vmi2);
+
 
             var user = await _userManager.FindByEmailAsync(userInfo.Email);
 
