@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using PhotoryData;
 using PhotoryModels;
 using PhotoryRepository.Interfaces;

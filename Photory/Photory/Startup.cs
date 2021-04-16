@@ -30,8 +30,9 @@ namespace WebApi
         {
 
             services.AddControllers();
+            services.AddMvc().AddNewtonsoftJson();
 
-           
+
 
             services.AddTransient<UserLogic, UserLogic>();
             services.AddTransient<GroupAdminLogic, GroupAdminLogic>();
@@ -113,6 +114,7 @@ namespace WebApi
             {
                 facebookOptions.AppId = "287947399346523";
                 facebookOptions.AppSecret = "248cb1d0529819d6cd2530995a09b00b";
+                
             });
 
 
