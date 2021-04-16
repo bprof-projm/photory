@@ -1,21 +1,29 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PhotoryModels
 {
+
+
     public class FacebookUserData
     {
         public long Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
+ 
         public DateTime Birthdate { get; set; }
+      
         public FacebookPictureData Picture { get; set; }
     }
+
+
 
     public class FacebookPictureData
     {
