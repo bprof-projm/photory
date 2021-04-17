@@ -39,6 +39,7 @@ namespace WebApi
             services.AddTransient<AdminLogic, AdminLogic>();
             services.AddTransient<AuthLogic, AuthLogic>();
             services.AddTransient<ContentLogic, ContentLogic>();
+            services.AddTransient<ExternalAuthLogic, ExternalAuthLogic>();
 
             services.AddTransient<IUserRepository, UserRepository>(); // Irepo -> iuserrepository 
             services.AddTransient<IGroupAdminRepository, GroupAdminRepository>();
@@ -95,11 +96,13 @@ namespace WebApi
                  ).AddEntityFrameworkStores<PhotoryDbContext>()
                  .AddDefaultTokenProviders();
 
-            services.AddAuthentication(option => {
+            services.AddAuthentication(option =>
+            {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
@@ -110,12 +113,14 @@ namespace WebApi
                     ValidIssuer = "http://www.security.org",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Paris Berlin Cairo Sydney Tokyo Beijing Rome London Athens"))
                 };
-            }).AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = "287947399346523";
-                facebookOptions.AppSecret = "248cb1d0529819d6cd2530995a09b00b";
-                
             });
+            
+            //.AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = "287947399346523";
+            //    facebookOptions.AppSecret = "248cb1d0529819d6cd2530995a09b00b";
+                
+            //});
 
 
 
