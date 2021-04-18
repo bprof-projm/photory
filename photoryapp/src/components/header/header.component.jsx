@@ -23,9 +23,10 @@ function Header({ currentUser, setCurrentUser }){
                         Sign out
                     </Link>
                 </div>   
-                <Link className={`option${currentUser.userAccess === 2 ? '-admin' : ''}`} to='/creategroup'>
+                {currentUser.userAccess === 2 && (
+                <Link className='option-admin' to='/creategroup'>
                     Create group
-                </Link>       
+                </Link>)}       
             </div>
         </div>
     );    
