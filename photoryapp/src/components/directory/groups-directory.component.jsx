@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 import GroupItem from '../items/group-item.component';
 
+import './groups-directory.styles.scss';
+
 class Directory extends React.Component{
     constructor(){
         super();
