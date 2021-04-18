@@ -24,16 +24,6 @@ export const getToken = () => {
 
 
 
-
-export const setUser = user => {
-    window.localStorage.setItem('currentUser', JSON.stringify(user));
-}
-
-export const getUser = () => {
-    return JSON.parse(window.localStorage.getItem('currentUser'));
-}
-
-
 export const setNewPass = pass => {
     window.localStorage.setItem('password', JSON.stringify(pass));
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import RegisterAndSignInPage from './pages/register-and-sign-in/register-and-sign-in.page.jsx';
 import SignInPage from './pages/sign-in/sign-in.page.jsx';
@@ -21,7 +22,7 @@ class App extends React.Component {
     return (    
       <Switch>
         <Route exact path='/' component={RegisterAndSignInPage}></Route>
-        <Route exact path='/signin' component={SignInPage} />
+        <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/groups' />) : (<SignInPage />)} />
         <Route exact path='/register' component={RegisterPage} />
         <Route exact path='/groups' component={GroupsPage} />
       </Switch> 
@@ -30,4 +31,8 @@ class App extends React.Component {
 
 }
 
-export default App;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser
+});
+
+export default connect(mapStateToProps)(App);

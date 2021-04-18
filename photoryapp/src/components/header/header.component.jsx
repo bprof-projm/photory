@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { getUser, setUser } from '../../functions.js';
+import { connect } from 'react-redux';
+import { setCurrentUser } from '../../redux/user/user.actions';
 
 import './header.styles.scss';
 
-function Header(){
-    const currentUser = getUser();
+function Header({ currentUser, setCurrentUser }){    
     return(
         <div className='header' style={{ backgroundColor: (currentUser.userAccess === 2 ? 'black' : 'rgb(248, 248, 248)')}}>
             <div className='logo-container' style={{ color: (currentUser.userAccess === 2 ? 'white' : '')}}>
@@ -19,7 +19,7 @@ function Header(){
                     <div className={`option${currentUser.userAccess === 2 ? '-admin' : ''}`}>
                     {currentUser.userName}
                     </div>
-                    <Link className={`option-dropdown${currentUser.userAccess === 2 ? '-admin' : ''}`} to='/signin' onClick={() => setUser(null)} >
+                    <Link className={`option-dropdown${currentUser.userAccess === 2 ? '-admin' : ''}`} to='/signin' onClick={() => setCurrentUser(null)} >
                         Sign out
                     </Link>
                 </div>          
@@ -27,4 +27,13 @@ function Header(){
         </div>
     );    
 }
-export default Header;
+
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

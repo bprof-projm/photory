@@ -1,12 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { getUser } from '../../functions.js';
-
 import './group-item.styles.scss';
 
-function GroupItem({ group }){       
-    const currentUser = getUser();    
+function GroupItem({ group }){            
     return(
     <div className='group-item-container'>                
         <div 

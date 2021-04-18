@@ -2,13 +2,15 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 
+import { connect } from 'react-redux';
+import { setCurrentUser } from '../../redux/user/user.actions';
+
 import axios from "../../axios";
 
 import CustomForm from "../custom-form/custom-form.component.jsx";
 
 import USERS_DATA from "../../pages/sign-in/users.data.js";
-import { signIn_fetch, GetAllUsers_fetch } from "../../backendCom.js";
-import { getMode, validateUser, setToken, setUser, getNewPass } from "../../functions.js";
+import { getMode, validateUser, setToken, getNewPass } from "../../functions.js";
 
 import './sign-in.styles.scss';
 
@@ -85,7 +87,7 @@ class SignIn extends React.Component {
             axios.get(`/${role}/${userId}`, { headers: headers })
             .then(res => {
                 console.log(res.data);
-                setUser(res.data);
+                this.props.setCurrentUser(res.data);
                 this.history.push("/groups");   
             })
             .catch(error => {
@@ -193,4 +195,9 @@ class SignIn extends React.Component {
     );
   }
 }
-export default withRouter(SignIn);
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignIn));
