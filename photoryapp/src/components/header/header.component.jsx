@@ -26,7 +26,7 @@ function Header({ currentUser, setCurrentUser }){
                 {currentUser.userAccess === 2 && (
                 <Link className='option-admin' to='/creategroup'>
                     Create group
-                </Link>)}       
+                </Link>)}   
             </div>
         </div>
     );    

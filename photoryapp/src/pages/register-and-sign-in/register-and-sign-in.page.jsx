@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import FacebookLogin from 'react-facebook-login';
+
 import { setMode } from '../../functions.js';
 
 import './register-and-sign-in.styles.scss';
@@ -39,6 +41,10 @@ class RegisterAndSignInPage extends React.Component{
         setMode(true);                         
     }
 
+    responseFacebook = (response) => {
+        console.log(response);
+    }
+
     render(){
         return(
             <div className='register-and-sign-in-page'>
@@ -50,6 +56,11 @@ class RegisterAndSignInPage extends React.Component{
                     <label>with server:</label>
                     <button className='rs-mode' onClick={this.handleModChange}>On</button>
                 </div>
+                <FacebookLogin
+                    appId="1088597931155576"
+                    autoLoad={true}
+                    fields="name,email,picture"                    
+                    callback={this.responseFacebook} />
             </div>
         );
     }
