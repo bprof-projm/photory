@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import axios from '../../axios';
 
 import CustomForm from '../custom-form/custom-form.component.jsx';
+import UploadFiles from '../upload-files/upload-files.component';
 
 import './create-group.styles.scss';
 
@@ -42,7 +43,22 @@ class CreateGroup extends React.Component{
             this.setState({ error: true })
         }
         else{
-            //axios            
+            const headers={
+                'Authorization': 'Bearer ' + this.props.token
+            }
+            const data = {
+                GroupName: this.state.name,
+                GroupAdminID: this.state.groupAdmin,
+                Age: this.state.age
+            }
+            axios.post('/CreateGroup', data, { headers: headers })
+            .then(res => {
+                console.log(res);
+                this.props.history.push('/groups');           
+            })
+            .catch(error => {
+                console.log(error);
+            })            
         }
     }
 
@@ -52,7 +68,9 @@ class CreateGroup extends React.Component{
     }
 
     saveImage = (file) =>{
-            
+        const imgUrl = URL.createObjectURL(file);
+        this.setState({ imageFile: file, imageUrl: imgUrl });
+        console.log(imgUrl);    
     }
 
 
@@ -127,7 +145,7 @@ class CreateGroup extends React.Component{
                     value: this.state.groupAdmin,
                     children: (
                         this.state.admins.map(admin => (
-                            <MenuItem key={admin.userId} value={admin.userName}>{admin.userName}</MenuItem>
+                            <MenuItem key={admin.userId} value={admin.userId}>{admin.userName}</MenuItem>
                         ))
                     ),
                     onChange: this.handleChange
@@ -164,10 +182,15 @@ class CreateGroup extends React.Component{
                     <li className='with-image'>
                         <input id='img' name='image' type='radio' onChange={this.handleRadioChange} />
                         <label>with image</label>
-                    </li>
-                    
-                    {/*DRAG AND DROP */}
-
+                    </li>                    
+                    {this.state.selectedInput === 'img' ? (                   
+                        <UploadFiles
+                            className='drag-n-drop' 
+                            arraySize={1} 
+                            imgWith={500} imgHeight={150} 
+                            imageHandler={this.saveImage} 
+                        />                
+                    ) : null}
                     {this.state.selectedInput === 'img' ? this.state.error === true ? (<label style={{ color:'red' }}>Drop a jpeg or a png file above</label>) : null : null}                                    
                 </div>
             </div>
@@ -178,4 +201,4 @@ const mapStateToProps = state => ({
     token: state.user.token
 });
 
-export default connect(mapStateToProps)(CreateGroup);
+export default withRouter(connect(mapStateToProps)(CreateGroup));
