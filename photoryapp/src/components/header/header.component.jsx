@@ -14,15 +14,18 @@ function Header({ currentUser, setCurrentUser }){
             </div> 
             {currentUser.userAccess === 2 ? (<span className='notif-rank-admin'>Admin UI</span>) : (
             currentUser.userAccess === 1 ? (<span className='notif-rank-group-admin'>Group-admin UI</span>) : null)}            
-            <div className='options'>
+            <div className='options'>                
                 <div className='dropdown'>
-                    <div className={`option${currentUser.userAccess === 2 ? '-admin' : ''}`}>
+                    <div style={{ marginLeft: '60px' }} className={`option${currentUser.userAccess === 2 ? '-admin' : ''}`}>
                     {currentUser.userName}
                     </div>
                     <Link className={`option-dropdown${currentUser.userAccess === 2 ? '-admin' : ''}`} to='/signin' onClick={() => setCurrentUser(null)} >
                         Sign out
                     </Link>
-                </div>          
+                </div>   
+                <Link className={`option${currentUser.userAccess === 2 ? '-admin' : ''}`}>
+                    Create group
+                </Link>       
             </div>
         </div>
     );    
