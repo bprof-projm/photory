@@ -1,5 +1,10 @@
 import React from 'react';
+import { MenuItem } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+
+import axios from '../../axios';
 
 import CustomForm from '../custom-form/custom-form.component.jsx';
 
@@ -14,6 +19,8 @@ class CreateGroup extends React.Component{
             //description: '',
             groupAdmin: '',
             age: 0,
+
+            admins:[],
 
             selectedInput: '',
 
@@ -48,6 +55,20 @@ class CreateGroup extends React.Component{
             
     }
 
+
+    componentDidMount() {
+        const headers={
+            'Authorization': 'Bearer ' + this.props.token
+        }
+        axios.get('/Admin',{ headers: headers })
+        .then(res => {
+            console.log(res);
+            this.setState({ admins: res.data });            
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
 
     render(){
         
@@ -94,7 +115,27 @@ class CreateGroup extends React.Component{
                 }
              );
          }
-        
+
+        const selectors = [];     
+        if (this.state.admins?.length > 0){
+            selectors.push(
+                {
+                    id: '7b61acd9-3cd7-45e9-8ba6-4f5025ae7620',
+                    name: 'groupAdmin',
+                    label: 'GroupAdmin',
+                    labelId: '7b61acd9-3cd7-45e9-8ba6-4f5025ae7621',
+                    value: this.state.groupAdmin,
+                    children: (
+                        this.state.admins.map(admin => (
+                            <MenuItem key={admin.userId} value={admin.userName}>{admin.userName}</MenuItem>
+                        ))
+                    ),
+                    onChange: this.handleChange
+                }
+            );
+        }  
+        console.log(selectors);
+                        
 
         const buttons = [
             {
@@ -108,7 +149,7 @@ class CreateGroup extends React.Component{
         return(
             <div className='create-group'>
                 <h2 style={{ marginLeft: `30px`, marginTop: '25px'}}>Create a new group</h2>
-                <CustomForm inputs={inputs} buttons={buttons} onSubmition={this.handleSubmit} className='text-inputs' />
+                <CustomForm inputs={inputs} selectors={selectors} buttons={buttons} onSubmition={this.handleSubmit} className='text-inputs' />
                 <div className='input-selector'>
                     <label style={{ display: 'block' }}>
                         cover image
@@ -133,4 +174,8 @@ class CreateGroup extends React.Component{
         );
     }
 }
-export default withRouter(CreateGroup);
+const mapStateToProps = state => ({
+    token: state.user.token
+});
+
+export default connect(mapStateToProps)(CreateGroup);
