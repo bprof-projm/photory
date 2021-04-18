@@ -2,7 +2,7 @@ import React from 'react';
 
 import axios from '../../axios';
 
-import { getToken } from '../../functions';
+import { connect } from 'react-redux';
 
 import GroupItem from '../items/group-item.component';
 
@@ -20,7 +20,7 @@ class Directory extends React.Component{
         //curl -X GET "https://localhost:44336/GetAllGroup" -H  "accept: text/plain" -H  "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJoZWdlZHVzLm1hdGVAbmlrLnVuaS1vYnVkYS5odSIsImp0aSI6IjA2ODZkNDQ0LTE1MDMtNGNlOC1hMTc5LTBhNDg0MTM3ZTU4NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMDIxNzRjZjDigJM5NDEy4oCTNGNmZS1hZmJmLTU5ZjcwNmQ3MmNmNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNjE4MzM1ODY1LCJpc3MiOiJodHRwOi8vd3d3LnNlY3VyaXR5Lm9yZyIsImF1ZCI6Imh0dHA6Ly93d3cuc2VjdXJpdHkub3JnIn0.56ImgZjlxdy-t2P2Bx2h-S99QOZbNoWptLGuVQDCOyg"
         
         const headers={
-            'Authorization': 'Bearer ' + getToken()
+            'Authorization': 'Bearer ' + this.props.token
         }
         
         axios.get('/GetAllGroup',{ headers: headers })
@@ -37,7 +37,7 @@ class Directory extends React.Component{
     render(){                
         return(
             <>            
-            <h2>Groups</h2> 
+            <h2 style={{ marginLeft: '15px' }}>Groups</h2> 
             <div className='group-directory'>
                 {
                     this.state.groups !== [] ? (
@@ -52,4 +52,9 @@ class Directory extends React.Component{
         );
     }
 }
-export default Directory;
+
+const mapStateToProps = state => ({
+    token: state.user.token
+});
+
+export default connect(mapStateToProps)(Directory);

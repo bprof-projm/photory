@@ -3,14 +3,14 @@ import { withRouter } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 
 import { connect } from 'react-redux';
-import { setCurrentUser, setNewPassword } from '../../redux/user/user.actions';
+import { setCurrentUser, setNewPassword, setToken } from '../../redux/user/user.actions';
 
 import axios from "../../axios";
 
 import CustomForm from "../custom-form/custom-form.component.jsx";
 
 import USERS_DATA from "../../pages/sign-in/users.data.js";
-import { getMode, validateUser, setToken } from "../../functions.js";
+import { getMode, validateUser } from "../../functions.js";
 
 import './sign-in.styles.scss';
 
@@ -63,7 +63,7 @@ class SignIn extends React.Component {
             console.log(res);  
             this.setState({ token: res.data?.token });
             console.log(this.state.token);  
-            setToken(this.state.token); 
+            this.props.setToken(res.data?.token); 
             var decoded = jwt_decode(this.state.token);
             console.log(decoded);
             var userId = '';
@@ -200,7 +200,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
-  setNewPassword: password => dispatch(setNewPassword(password))
+  setNewPassword: password => dispatch(setNewPassword(password)),
+  setToken: token => dispatch(setToken(token))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));

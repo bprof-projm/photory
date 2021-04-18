@@ -13,17 +13,6 @@ export const getMode = () => {
 
 
 
-
-export const setToken = (token) => {
-    window.localStorage.setItem('Token', JSON.stringify(token));
-}
-
-export const getToken = () => {
-    return JSON.parse(window.localStorage.getItem('Token'));
-}
-
-
-
 const USER_COLLECTION = USERS_DATA;
 
 export const validateUser = (email_name, password) => {
