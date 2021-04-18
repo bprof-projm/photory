@@ -1,0 +1,43 @@
+.create-group{
+    width: 100%;
+}
+
+.text-inputs{
+    width: 50%;
+    float: left;
+}
+
+.input-selector{
+    overflow: hidden;
+    width: 50%;
+    float: right;
+    
+    li{
+        list-style-type: none;
+        display: inline-block;
+    }
+
+    .with-url{
+        label{
+            margin-left: 10px;
+        }
+    }
+
+    .ds{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    
+    .with-image{
+        label{
+            margin-left: 10px;
+        }
+    }
+
+    .drag-n-drop{
+        width: 80%;
+        height: 40vh;
+        background-color: rgb(240, 240, 240);       
+    }
+}
+

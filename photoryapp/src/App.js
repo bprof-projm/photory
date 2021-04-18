@@ -6,6 +6,7 @@ import RegisterAndSignInPage from './pages/register-and-sign-in/register-and-sig
 import SignInPage from './pages/sign-in/sign-in.page.jsx';
 import RegisterPage from './pages/register/register.page.jsx';
 import GroupsPage from './pages/groups/groups.page.jsx';
+import CreateGroup from './pages/create-group/create-group.page.jsx';
 
 import './App.scss';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
         <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/groups' />) : (<SignInPage />)} />
         <Route exact path='/register' component={RegisterPage} />
         <Route exact path='/groups' component={GroupsPage} />
+        <Route exact path='/creategroup' component={CreateGroup} />
       </Switch> 
     );
   }
