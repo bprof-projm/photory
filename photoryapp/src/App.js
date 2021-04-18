@@ -10,14 +10,6 @@ import GroupsPage from './pages/groups/groups.page.jsx';
 import './App.scss';
 
 class App extends React.Component {
-  constructor(){
-    super();
-  }
-
-  componentDidMount(){
-    window.localStorage.setItem('reload', JSON.stringify(false));
-  }
-
   render(){
     return (    
       <Switch>
@@ -28,7 +20,6 @@ class App extends React.Component {
       </Switch> 
     );
   }
-
 }
 
 const mapStateToProps = state => ({

@@ -1,11 +1,12 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
+import { connect } from 'react-redux';
+import { setNewPassword } from '../../redux/user/user.actions';
+
 import axios from "../../axios";
 
 import CustomForm from "../custom-form/custom-form.component.jsx";
-
-import { setNewPass } from '../../functions.js';
 
 class Register extends React.Component{
     constructor(props){
@@ -34,10 +35,11 @@ class Register extends React.Component{
             BirthDate: this.state.birthdate
         }
         axios.post('/Auth/Register', data)
-        .then(res => {
-            window.localStorage.setItem('reload', JSON.stringify(true));
+        .then(res => {            
             console.log(res);
-            setNewPass(res[2]);            
+            console.log(res.data.user[2]);
+            this.props.setNewPassword(res.data.user[2]);
+            this.history.push('/signin');                                  
         })
         .catch(error => {
             console.log(error);
@@ -107,4 +109,10 @@ class Register extends React.Component{
         );
     }
 }
-export default withRouter(Register);
+
+const mapDispatchToProps = dispatch => ({
+    setNewPassword: password => dispatch(setNewPassword(password))
+});
+
+
+export default withRouter(connect(null, mapDispatchToProps)(Register));

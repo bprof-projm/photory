@@ -1,7 +1,8 @@
 import { UserActionTypes } from './user.types';
 
 const INITIAL_STATE = {
-    currentUser: null
+    currentUser: null,
+    password: ''
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -11,6 +12,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 currentUser: action.payload
             };
+        
+        case UserActionTypes.SET_NEW_PASSWORD:
+            return {
+                ...state,
+                password: action.payload
+            };
+        
         default:
             return state;
     }

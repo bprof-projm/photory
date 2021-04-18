@@ -3,14 +3,14 @@ import { withRouter } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 
 import { connect } from 'react-redux';
-import { setCurrentUser } from '../../redux/user/user.actions';
+import { setCurrentUser, setNewPassword } from '../../redux/user/user.actions';
 
 import axios from "../../axios";
 
 import CustomForm from "../custom-form/custom-form.component.jsx";
 
 import USERS_DATA from "../../pages/sign-in/users.data.js";
-import { getMode, validateUser, setToken, getNewPass } from "../../functions.js";
+import { getMode, validateUser, setToken } from "../../functions.js";
 
 import './sign-in.styles.scss';
 
@@ -25,8 +25,7 @@ class SignIn extends React.Component {
       token:''
     };
     this.history = this.props.history;
-    this.mode = getMode();
-    this.newpass = null;    
+    this.mode = getMode();   
   } 
 
   handleChange = (e) => {
@@ -73,10 +72,15 @@ class SignIn extends React.Component {
                 let res = key.split("/");
                 if (res.length > 1) {
                     if (res[res.length - 1] === 'nameidentifier') {
-                        userId = decoded[key];                       
+                      userId = decoded[key];                       
                     }     
                     else if (res[res.length - 1] === 'role') {
-                        role = decoded[key];                       
+                      if (decoded[key] === 'Customer'){
+                        role = 'User';
+                      }
+                      else {
+                        role = decoded[key];
+                      }                                           
                     }              
                 }
             });
@@ -88,6 +92,7 @@ class SignIn extends React.Component {
             .then(res => {
                 console.log(res.data);
                 this.props.setCurrentUser(res.data);
+                this.props.setNewPassword('');
                 this.history.push("/groups");   
             })
             .catch(error => {
@@ -114,16 +119,7 @@ class SignIn extends React.Component {
     }
   };
 
-  componentDidMount() {   
-    const reload = JSON.parse(window.localStorage.getItem('reload'));
-    if (reload)
-    {
-        console.log('get new pass');
-        this.newpass = getNewPass();
-        window.localStorage.setItem('reload', JSON.stringify(false));
-        window.location.reload(false);
-    }
-
+  componentDidMount() {       
     axios
         .get("/Auth")
         .then((response) => {
@@ -152,6 +148,8 @@ class SignIn extends React.Component {
   }
 
   render() {
+    console.log(this.props.password);
+
     const inputs = [
       {
         id: "a10ff0c6-4113-4ad2-9a0a-4f5b5aca0595",
@@ -190,14 +188,19 @@ class SignIn extends React.Component {
           buttons={buttons}
           onSubmition={this.handleSubmit}
         />
-        {this.newpass !== null && this.newpass !== undefined ? (<span>Your new password: {this.newpass}</span>) : null}
+        {this.props.password ? (<span style={{ marginLeft: "30px", marginTop: '100px', zIndex: '10' }}>Your new password: {this.props.password}</span>) : null}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+const mapStateToProps = state => ({
+  password: state.user.password
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(SignIn));
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  setNewPassword: password => dispatch(setNewPassword(password))
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));
