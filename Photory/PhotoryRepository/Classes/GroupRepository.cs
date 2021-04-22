@@ -2,10 +2,7 @@
 using PhotoryModels;
 using PhotoryRepository.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoryRepository.Classes
 {
@@ -17,9 +14,6 @@ namespace PhotoryRepository.Classes
         {
             this.context = context;
         }
-
-
-
 
         public void Add(Group entity)
         {
@@ -43,9 +37,8 @@ namespace PhotoryRepository.Classes
         public Group GetOne(string id)
         {
             var entity = (from x in context.Groups
-                         where x.GroupName == id
-                         select x).FirstOrDefault();
-
+                          where x.GroupName == id
+                          select x).FirstOrDefault();
 
             return entity;
         }
@@ -60,13 +53,11 @@ namespace PhotoryRepository.Classes
             throw new NotImplementedException();
         }
 
-
         public IQueryable<Photo> GetPhotosFromGroup(string GroupID)
         {
             var entities = from x in context.Photos
                            where x.GroupId == GroupID
                            select x;
-
 
             return entities;
         }
