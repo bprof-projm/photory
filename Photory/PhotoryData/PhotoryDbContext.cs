@@ -1,25 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
-using PhotoryModels;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PhotoryModels;
+using System;
 
 namespace PhotoryData
 {
-    public class PhotoryDbContext :  IdentityDbContext<IdentityUser>
+    public class PhotoryDbContext : IdentityDbContext<IdentityUser>
     {
         public PhotoryDbContext()
         {
             this.Database.EnsureCreated();
-            
         }
 
         public PhotoryDbContext(DbContextOptions<PhotoryDbContext> db) : base(db)
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,22 +26,17 @@ namespace PhotoryData
             }
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             User newUser = new User();
 
-
             base.OnModelCreating(modelBuilder);
-
 
             modelBuilder.Entity<IdentityRole>().HasData(
                 new { Id = "341743f0-asd2–42de-afbf-59kmkkmk72cf6", Name = "Admin", NormalizedName = "ADMIN" },
                 new { Id = "341743f0-dee2–42de-bbbb-59kmkkmk72cf6", Name = "Customer", NormalizedName = "CUSTOMER" },
                 new { Id = "555555f0-dee2–42de-bbbb-59kmkkmk72cf6", Name = "GroupAdmin", NormalizedName = "GroupAdmin" }
             );
-
-            
 
             var appUser = new IdentityUser
             {
@@ -81,19 +71,13 @@ namespace PhotoryData
                 SecurityStamp = string.Empty
             };
 
-
-
-
             appUser.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Almafa123!");
             appUser2.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Almafa123!");
             appUser3.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Almafa123!");
 
-
             modelBuilder.Entity<IdentityUser>().HasData(appUser);
             modelBuilder.Entity<IdentityUser>().HasData(appUser2);
             modelBuilder.Entity<IdentityUser>().HasData(appUser3);
-
-
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
@@ -113,7 +97,6 @@ namespace PhotoryData
                 UserId = "e3894cf0–9412–4cfe-afbf-59f706d72cf6"
             });
 
-
             modelBuilder.Entity<User>().HasData(new User
             {
                 UserName = appUser.UserName,
@@ -122,10 +105,6 @@ namespace PhotoryData
                 UserAccess = UserAccess.Admin,
                 BirthDate = new DateTime(2000, 12, 09),
                 UserId = appUser.Id
-
-
-
-
             });
 
             modelBuilder.Entity<User>().HasData(new User
@@ -136,10 +115,6 @@ namespace PhotoryData
                 UserAccess = UserAccess.RegularUser,
                 BirthDate = new DateTime(2000, 12, 09),
                 UserId = appUser2.Id
-
-
-
-
             });
 
             modelBuilder.Entity<User>().HasData(new User
@@ -150,13 +125,7 @@ namespace PhotoryData
                 UserAccess = UserAccess.GroupAdmin,
                 BirthDate = new DateTime(2000, 12, 09),
                 UserId = appUser3.Id
-
-
-
-
             });
-
-
 
             //modelBuilder.Entity<UserGroup>()
             //    .HasKey(ug => new { ug.UserName, ug.GroupName });
@@ -169,17 +138,13 @@ namespace PhotoryData
             //    .WithMany(g => g.UserGroups)
             //    .HasForeignKey(ug => ug.GroupName);
 
-
             modelBuilder.Entity<Comment>(entity =>
             {
-
                 entity
                 .HasOne(comment => comment.User)
                 .WithMany(u => u.Comments)
                 .HasForeignKey(c => c.UserId);
-
             });
-
 
             modelBuilder.Entity<Photo>(entity =>
             {
@@ -195,10 +160,7 @@ namespace PhotoryData
                 .HasOne(c => c.Photo)
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PhotoID);
-
-
             });
-
 
             modelBuilder.Entity<UserOfGroup>(entity =>
             {
@@ -207,25 +169,14 @@ namespace PhotoryData
                 .WithMany(g => g.UserGroups)
                 .HasForeignKey(u => u.GroupName)
                 .OnDelete(DeleteBehavior.Cascade);
-
             });
 
             /*modelBuilder.Entity<User>(entity =>
             {
                 entity.HasMany(user => user.Groups)
                 .WithMany(groups => groups.Users)
-         
-
-
-
-
             });*/
-
-
-
         }
-
-
 
         public DbSet<PhotoryModels.User> MyUsers { get; set; }
         public virtual DbSet<PhotoryModels.Group> Groups { get; set; }
