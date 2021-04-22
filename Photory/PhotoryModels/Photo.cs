@@ -21,7 +21,9 @@ namespace PhotoryModels
         public int Height { get; set; }
         public int Width { get; set; }
 
-        //public bool IsRescaled { get; set; }
+        public bool IsRescaled { get; set; }
+
+        public string ConnectionId { get; set; }
 
 
         //public List<string> CommentIDs{ get; set; }
