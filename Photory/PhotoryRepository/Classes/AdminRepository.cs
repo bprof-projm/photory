@@ -2,10 +2,7 @@
 using PhotoryModels;
 using PhotoryRepository.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoryRepository.Classes
 {
@@ -37,8 +34,8 @@ namespace PhotoryRepository.Classes
         public IQueryable<User> GetAll()
         {
             var entity = from x in context.MyUsers
-                          where  x.UserAccess == UserAccess.Admin
-                          select x;
+                         where x.UserAccess == UserAccess.Admin
+                         select x;
             return entity;
         }
 
@@ -48,13 +45,11 @@ namespace PhotoryRepository.Classes
                           where x.UserId == id                  //&& x.UserAccess == UserAccess.Admin
                           select x).FirstOrDefault();
 
-
             if (entity.UserAccess == UserAccess.Admin)
             {
                 return entity;
             }
             return null;
-            
         }
 
         public void SaveDatabase()
@@ -72,18 +67,15 @@ namespace PhotoryRepository.Classes
             SaveDatabase();
         }
 
-
         public void AddMember(string userID, string GroupID)//Groupid,userid //public void AcceptUser(User u)
         {
             //var groupentity = (from x in context.Groups
             //                   where x.GroupName == GroupID
             //                   select x).FirstOrDefault();
 
-
             //var groupentity = (from x in context.UserOfGroup
             //                   where x.UserName == userID && x.GroupName == GroupID
             //                   select x).FirstOrDefault();
-
 
             //context.UserOfGroup.Add(groupentity);
             SaveDatabase();
@@ -92,16 +84,14 @@ namespace PhotoryRepository.Classes
         public void CreateGroup(Group groupp)
         {
             var entity = (from x in context.UserRoles
-                         where x.UserId == groupp.GroupAdminID
-                         select x).FirstOrDefault();
-
+                          where x.UserId == groupp.GroupAdminID
+                          select x).FirstOrDefault();
 
             this.context.UserRoles.Remove(entity);
             SaveDatabase();
             var roleid = (from x in this.context.Roles
-                         where x.Name == "GroupAdmin"
+                          where x.Name == "GroupAdmin"
                           select x.Id).FirstOrDefault();
-
 
             var modififedentity = entity;
             modififedentity.RoleId = roleid;
@@ -109,22 +99,16 @@ namespace PhotoryRepository.Classes
             this.context.UserRoles.Add(modififedentity);
             SaveDatabase();
 
-
-
             var userentity = (from x in context.MyUsers
-                             where x.UserId == groupp.GroupAdminID
-                             select x).FirstOrDefault();
+                              where x.UserId == groupp.GroupAdminID
+                              select x).FirstOrDefault();
 
             userentity.UserAccess = UserAccess.GroupAdmin;
             this.context.MyUsers.Update(userentity);
             SaveDatabase();
 
-
-
             this.context.Groups.Add(groupp);
             SaveDatabase();
         }
-
-      
     }
 }
