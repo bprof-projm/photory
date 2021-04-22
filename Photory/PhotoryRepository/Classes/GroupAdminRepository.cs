@@ -86,7 +86,7 @@ namespace PhotoryRepository
             //                  select x).FirstOrDefault();
 
             var entity = (from x in context.UserOfGroup
-                          where x.GroupName == userID
+                          where x.GroupName == GroupID && x.ID == userID
                           select x).FirstOrDefault();
 
             entity.IsPending = false;

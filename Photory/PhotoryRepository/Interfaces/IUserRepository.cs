@@ -27,6 +27,8 @@ namespace PhotoryRepository.Interfaces
 
         IQueryable<Comment> GetAllCommentsFromPhoto(string photoID);
 
+        void LeaveGroup(string userID, string GroupID);
+
 
 
     }

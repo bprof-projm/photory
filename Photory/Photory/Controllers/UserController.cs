@@ -107,6 +107,23 @@ namespace Photory.Controllers
 
         }
 
+        [HttpPost]
+        [Route("LeaveGroup")]
+        public IActionResult LeaveGroup([FromBody] UserOfGroup uog)
+        {
+            try
+            {
+                userlogic.LeaveGroup(uog.ID, uog.GroupName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+
+        }
+
 
         [HttpPost]
         [Route("AddPhoto")]

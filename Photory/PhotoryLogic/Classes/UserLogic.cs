@@ -86,6 +86,12 @@ namespace PhotoryLogic.Classes
                 this.userRepo.RequestJoin(userID,GroupID);
 
         }
+
+        public void LeaveGroup(string userID, string GroupID)
+        {
+            this.userRepo.LeaveGroup(userID, GroupID);
+        }
+
         public User GetUserFromGroup(string userID, string GroupID) 
         {
             var entity = (from x in userofgrouprepo.GetAll()

@@ -128,6 +128,12 @@ namespace PhotoryRepository
         public void RequestJoin(string userID, string GroupID)
         {
 
+            var userentity = (from x in context.MyUsers
+                              where x.UserId == userID
+                              select x).FirstOrDefault();
+
+
+
             var entity = (from x in context.Groups
                           where x.GroupName == GroupID
                           select x).FirstOrDefault();
@@ -136,12 +142,27 @@ namespace PhotoryRepository
 
             uog.ID = userID;
             uog.IsPending = true;
+            uog.UserName = userentity.UserName;
             uog.GroupName = GroupID;
 
+            this.context.UserOfGroup.Add(uog);
 
             SaveDatabase();
         }
 
+
+        public void LeaveGroup(string userID, string GroupID)
+        {
+            var entity = (from x in context.UserOfGroup
+                          where x.ID == userID && x.GroupName == GroupID
+                          select x).FirstOrDefault();
+
+            this.context.UserOfGroup.Remove(entity);
+
+            SaveDatabase();
+        
+        
+        }
 
     }
 }
