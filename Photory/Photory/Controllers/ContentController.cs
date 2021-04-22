@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
+using PhotoryRepository.Interfaces;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,11 +20,13 @@ namespace Photory.Controllers
     {
         UserLogic userlogic;
         ContentLogic ContentLogic;
+        IPhotoRepository photo;
 
-        public ContentController(UserLogic userlogic, ContentLogic ContentLogic)
+        public ContentController(UserLogic userlogic, ContentLogic contentLogic, IPhotoRepository photo)
         {
             this.userlogic = userlogic;
-            this.ContentLogic = ContentLogic;
+            ContentLogic = contentLogic;
+            this.photo = photo;
         }
 
         [HttpGet("GetAllCommentsFromPhoto/{photoID}")]
@@ -127,7 +133,19 @@ namespace Photory.Controllers
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
+        [HttpGet("PhotoDownload/{photoID}")]
+        public FileResult Download(string photoID)
+        {
+            var p = photo.GetOnePhoto(photoID);
+            var image = Image.Load(p.PhotoData);
+            image.Mutate(x => x.Resize(p.Width, p.Height));
+            var tmppath = Path.Combine(Environment.CurrentDirectory + @"\Photos",  p.PhotoTitle);
+            image.Save(tmppath);
 
+            var bytes = System.IO.File.ReadAllBytes(tmppath);
+            System.IO.File.Delete(tmppath);
+            return File(bytes, "application/octet-stream", $"{p.PhotoTitle}.jpg");
+        }
 
 
     }

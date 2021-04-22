@@ -4,12 +4,18 @@ using PhotoryLogic.Interfaces;
 using PhotoryModels;
 using PhotoryRepository;
 using PhotoryRepository.Interfaces;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Advanced;
+using SixLabors.ImageSharp.Memory;
+using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SixLabors.ImageSharp.Formats;
 
 namespace PhotoryLogic.Classes
 {
@@ -18,6 +24,7 @@ namespace PhotoryLogic.Classes
         private IUserRepository userRepo;
         private IUserOfGroupRepository userofgrouprepo;
         private IGroupRepository groupRepo;
+     
         public UserLogic(IUserRepository userRepo, IUserOfGroupRepository userofgrouprepo, IGroupRepository groupRepo)
         {
             this.userRepo = userRepo;
@@ -120,17 +127,34 @@ namespace PhotoryLogic.Classes
             var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
             if (File.Exists(fullpath) && groupRepo.GetOne(groupID) != null)
             {
+                var image = Image.Load(fullpath);
+                
+                
+                
                 Photo p = new Photo();
                 p.PhotoID = Guid.NewGuid().ToString();
                 p.PhotoTitle = fileName;
                 p.GroupId = groupID;
                 p.UserID = userid;
-                var optimizer = new ImageOptimizer();
-                FileInfo f = new FileInfo(fullpath);
-                optimizer.Compress(f);
+                p.Height = image.Height;
+                p.Width = image.Width;
+
+
+                image.Mutate(x => x.Resize(200, 200));
+
+                var tmppath = Path.Combine(Environment.CurrentDirectory + @"\Photos", "Data_"+fileName);
+                image.Save(tmppath);
+                FileInfo f = new FileInfo(tmppath);
                 f.Refresh();
                 p.PhotoData = File.ReadAllBytes(f.FullName);
+                
+                //var optimizer = new ImageOptimizer();
+                //FileInfo f = new FileInfo();
+                //optimizer.Compress(f);
+                //f.Refresh();
+                //p.PhotoData = File.ReadAllBytes(f.FullName);
                 userRepo.AddPhoto(p);
+                File.Delete(tmppath);
                 File.Delete(fullpath);
                 return;
             }   

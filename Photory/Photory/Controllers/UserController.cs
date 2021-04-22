@@ -18,11 +18,12 @@ namespace Photory.Controllers
     public class UserController : ControllerBase
     {
         UserLogic userlogic;
- 
+        IPhotoRepository photo;
 
-        public UserController(UserLogic userlogic)
+        public UserController(UserLogic userlogic, IPhotoRepository photo)
         {
             this.userlogic = userlogic;
+            this.photo = photo;
         }
 
 
@@ -222,13 +223,13 @@ namespace Photory.Controllers
             }
         }
 
-        //[HttpGet("PhotoDownload/{photoID}")]
-        //public FileResult Download(string photoID)
-        //{
-        //    var p = photoOfGroup.GetOnePhoto(photoID);
-        //    byte[] allbytes = p.PhotoData;
-        //    return File(allbytes, "application/octet-stream", "teszt");
-        //}
+        [HttpGet("PhotoDownload/{photoID}")]
+        public FileResult Download(string photoID)
+        {
+            var p = photo.GetOnePhoto(photoID);
+            byte[] allbytes = p.PhotoData;
+            return File(allbytes, "application/octet-stream", "teszt.jpg");
+        }
 
 
 
