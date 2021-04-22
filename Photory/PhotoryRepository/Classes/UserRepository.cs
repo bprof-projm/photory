@@ -1,18 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using PhotoryData;
+﻿using PhotoryData;
 using PhotoryModels;
 using PhotoryRepository.Interfaces;
+using System;
+using System.Linq;
 
 namespace PhotoryRepository
 {
     public class UserRepository : IUserRepository
     {
         private PhotoryDbContext context = new PhotoryDbContext();
-
-
 
         public UserRepository(PhotoryDbContext context)
         {
@@ -36,7 +32,6 @@ namespace PhotoryRepository
             SaveDatabase();
         }
 
-
         public void Update(string oldid, User entity)
         {
             var olduser = GetOne(oldid);
@@ -50,8 +45,8 @@ namespace PhotoryRepository
         public IQueryable<User> GetAll()
         {
             var q1 = from x in context.MyUsers
-                      where x.UserAccess == UserAccess.RegularUser
-                      select x;
+                     where x.UserAccess == UserAccess.RegularUser
+                     select x;
 
             return q1;
         }
@@ -67,16 +62,12 @@ namespace PhotoryRepository
                 return q1;
             }
             return null;
-           
         }
-
 
         public void SaveDatabase()
         {
             this.context.SaveChanges();
         }
-
-
 
         public void AddComment(Comment m)
         {
@@ -90,18 +81,14 @@ namespace PhotoryRepository
             SaveDatabase();
         }
 
-
         public IQueryable<Comment> GetAllCommentsFromPhoto(string photoID)
         {
-
             var comments = from x in context.Comments
                            where x.PhotoID == photoID
                            select x;
 
-
             return comments;
         }
-
 
         public void DeleteComment(string CommentID)
         {
@@ -123,16 +110,11 @@ namespace PhotoryRepository
             SaveDatabase();
         }
 
-
-
         public void RequestJoin(string userID, string GroupID)
         {
-
             var userentity = (from x in context.MyUsers
                               where x.UserId == userID
                               select x).FirstOrDefault();
-
-
 
             var entity = (from x in context.Groups
                           where x.GroupName == GroupID
@@ -150,7 +132,6 @@ namespace PhotoryRepository
             SaveDatabase();
         }
 
-
         public void LeaveGroup(string userID, string GroupID)
         {
             var entity = (from x in context.UserOfGroup
@@ -160,9 +141,6 @@ namespace PhotoryRepository
             this.context.UserOfGroup.Remove(entity);
 
             SaveDatabase();
-        
-        
         }
-
     }
 }
