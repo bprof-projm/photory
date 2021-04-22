@@ -55,7 +55,7 @@ namespace PhotoryData
                 NormalizedEmail = "hegedus.mate@nik.uni-obuda.hu",
                 EmailConfirmed = true,
                 UserName = "HegedusMate",
-                NormalizedUserName = "hegedus.mate@nik.uni-obuda.hu",
+                NormalizedUserName = "HEGEDUSMATE",
                 SecurityStamp = string.Empty
             };
 
@@ -65,8 +65,8 @@ namespace PhotoryData
                 Email = "gadacsi.akos@nik.uni-obuda.hu",
                 NormalizedEmail = "gadacsi.akos@nik.uni-obuda.hu",
                 EmailConfirmed = true,
-                UserName = "gadacsi.akos@nik.uni-obuda.hu",
-                NormalizedUserName = "gadacsi.akos@nik.uni-obuda.hu",
+                UserName = "GadacsiAkos",
+                NormalizedUserName = "GADACSIAKOS",
                 SecurityStamp = string.Empty
             };
 
@@ -76,8 +76,8 @@ namespace PhotoryData
                 Email = "veres.levente@nik.uni-obuda.hu",
                 NormalizedEmail = "veres.levente@nik.uni-obuda.hu",
                 EmailConfirmed = true,
-                UserName = "veres.levente@nik.uni-obuda.hu",
-                NormalizedUserName = "veres.levente@nik.uni-obuda.hu",
+                UserName = "VeresLevente",
+                NormalizedUserName = "VERESLEVENTE",
                 SecurityStamp = string.Empty
             };
 
