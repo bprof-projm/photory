@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,19 +15,20 @@ namespace PhotoryModels
 
     public class User
     {
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required]
+        [Unique]
         public string Email { get; set; }
 
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required]
         public string FullName { get; set; }
         
         [Key]
         public string UserId { get; set; }
 
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required]
         public string UserName { get; set; }
 
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required]
         public DateTime BirthDate { get; set; }
 
         public UserAccess UserAccess { get; set; }
