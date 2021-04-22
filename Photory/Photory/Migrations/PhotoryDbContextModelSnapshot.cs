@@ -159,13 +159,13 @@ namespace Photory.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e0a079b4-ccb1-4142-bdc3-993e312158c8",
+                            ConcurrencyStamp = "4b03caa6-ae33-4b4b-8e5e-287b7f0d07c6",
                             Email = "hegedus.mate@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "hegedus.mate@nik.uni-obuda.hu",
                             NormalizedUserName = "HEGEDUSMATE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDJ9n6OlyjXr38jfJ8EAjpwWvrYYPkRGr1PGiRe/g/ijjRS04+dkUCcd+t3nvzvtAQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBaAZ9LWnILrzfqr7ZIk3JpnDrP0iODl7TW8PY2JyCQ5mpYxFduzm9PWPrBWRi+CTw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -175,13 +175,13 @@ namespace Photory.Migrations
                         {
                             Id = "e2174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "64a1c7c3-aa62-4cf7-81e3-0c222c990136",
+                            ConcurrencyStamp = "43a6da35-0d82-4f4d-953d-47656e800afc",
                             Email = "gadacsi.akos@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "gadacsi.akos@nik.uni-obuda.hu",
                             NormalizedUserName = "GADACSIAKOS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDlKr/84d3zVVj1xn/UpFBR6z+pkh+hYQrNh/2a86W8AojyzcI+7fJzdUwI1bzGGBg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAUTW78HrNe5g4baLf8I/OU4aXloNDsWh0bLmEnYSTuhdnjS9RC1Rbg0A3huOAklxQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -191,13 +191,13 @@ namespace Photory.Migrations
                         {
                             Id = "e3894cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "948d4000-7f15-423c-9ba2-c240ec6ce605",
+                            ConcurrencyStamp = "6ab95efc-5189-4284-863d-07d0e5b4a06c",
                             Email = "veres.levente@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "veres.levente@nik.uni-obuda.hu",
                             NormalizedUserName = "VERESLEVENTE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFe1pfFGJVKBq7pJnIbmW16rdE68932Rc6MEgWJ83CsNOiZ3xLLhmcnCbjfdy/AjxA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMBc46eRSiVVTJBFo7KRns9Kj0+zE8pki84j0IBUMgzg9p9oaEz5OjzUYtzH8MZ4hw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -361,6 +361,9 @@ namespace Photory.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("PhotoData")
                         .HasColumnType("varbinary(max)");
 
@@ -373,6 +376,9 @@ namespace Photory.Migrations
                     b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
 
                     b.HasKey("PhotoID");
 

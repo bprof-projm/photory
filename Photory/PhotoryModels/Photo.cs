@@ -18,6 +18,12 @@ namespace PhotoryModels
         [Required]
         public string UserID { get; set; }
 
+        public int Height { get; set; }
+        public int Width { get; set; }
+
+        //public bool IsRescaled { get; set; }
+
+
         //public List<string> CommentIDs{ get; set; }
 
         public DateTime PostTime { get; set; }
