@@ -7,10 +7,9 @@ using System.Text.Json.Serialization;
 
 namespace PhotoryModels
 {
-
-    public enum UserAccess 
+    public enum UserAccess
     {
-        RegularUser,GroupAdmin,Admin
+        RegularUser, GroupAdmin, Admin
     }
 
     public class User
@@ -21,7 +20,7 @@ namespace PhotoryModels
 
         [System.ComponentModel.DataAnnotations.Required]
         public string FullName { get; set; }
-        
+
         [Key]
         public string UserId { get; set; }
 
@@ -33,7 +32,6 @@ namespace PhotoryModels
 
         public UserAccess UserAccess { get; set; }
 
-
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
@@ -41,6 +39,5 @@ namespace PhotoryModels
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<UserOfGroup> UserGroups { get; set; }
-
     }
 }
