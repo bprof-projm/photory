@@ -1,11 +1,7 @@
 ﻿using PhotoryLogic.Interfaces;
 using PhotoryModels;
 using PhotoryRepository.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoryLogic.Classes
 {
@@ -13,7 +9,6 @@ namespace PhotoryLogic.Classes
     {
         private IGroupRepository grouprepo;
         private IPhotoRepository photorepo;
-
 
         public ContentLogic(IGroupRepository grouprepo, IPhotoRepository photorepo)
         {
@@ -23,7 +18,7 @@ namespace PhotoryLogic.Classes
 
         public IQueryable<Comment> GetAllCommentsFromPhoto(string PhotoID)
         {
-           return photorepo.GetAllCommentsFromPhoto(PhotoID);
+            return photorepo.GetAllCommentsFromPhoto(PhotoID);
         }
 
         public IQueryable<Group> GetAllGroup()
@@ -38,7 +33,7 @@ namespace PhotoryLogic.Classes
 
         public IQueryable<Photo> GetPhotosFromGroup(string GroupID)
         {
-           return grouprepo.GetPhotosFromGroup(GroupID);
+            return grouprepo.GetPhotosFromGroup(GroupID);
         }
     }
 }

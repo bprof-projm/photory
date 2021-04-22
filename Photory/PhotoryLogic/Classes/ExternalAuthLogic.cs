@@ -18,9 +18,9 @@ namespace PhotoryLogic.Classes
 {
     public class ExternalAuthLogic
     {
-        FacebookOptions facebookOptions;
-        UserManager<IdentityUser> _userManager;
-        IUserRepository userrepo;
+        private FacebookOptions facebookOptions;
+        private UserManager<IdentityUser> _userManager;
+        private IUserRepository userrepo;
         private static readonly HttpClient Client = new HttpClient();
 
         public ExternalAuthLogic(UserManager<IdentityUser> userManager, IUserRepository userrepo)
@@ -34,7 +34,6 @@ namespace PhotoryLogic.Classes
 
         public async Task<TokenViewModel> FacebookLogin(FacebookLoginViewModel model)
         {
-            
             var appAccessTokenResponse = await Client.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id={facebookOptions.AppId}&client_secret={facebookOptions.AppSecret}&grant_type=client_credentials");
             var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
@@ -54,7 +53,6 @@ namespace PhotoryLogic.Classes
             jObject.SelectToken("birthday").Replace(Convert.ToDateTime(jObject.SelectToken("birthday")));
             var vmi2 = jObject.SelectToken("birthday");
             userInfo.Birthdate = Convert.ToDateTime(vmi2);
-
 
             var user = await _userManager.FindByEmailAsync(userInfo.Email);
 
@@ -94,7 +92,7 @@ namespace PhotoryLogic.Classes
 
             if (localUser == null)
             {
-                    throw new ArgumentException("login failed local user not found");
+                throw new ArgumentException("login failed local user not found");
             }
 
             var claims = new List<Claim>
@@ -104,11 +102,9 @@ namespace PhotoryLogic.Classes
                new Claim(ClaimTypes.NameIdentifier, user.Id)
              };
 
-
             var roles = await _userManager.GetRolesAsync(user);
 
             claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
-
 
             var signinKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes("Paris Berlin Cairo Sydney Tokyo Beijing Rome London Athens"));
@@ -120,12 +116,11 @@ namespace PhotoryLogic.Classes
                 expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
                 );
-             return new TokenViewModel
-             {
+            return new TokenViewModel
+            {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = token.ValidTo
-             };
+            };
         }
-
     }
 }

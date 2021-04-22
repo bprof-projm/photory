@@ -14,10 +14,9 @@ namespace PhotoryLogic.Classes
 {
     public class AuthLogic
     {
-
-        UserManager<IdentityUser> _userManager; //user repó
-        RoleManager<IdentityRole> _roleManager; //role repó
-        IUserRepository userrepo;
+        private UserManager<IdentityUser> _userManager; //user repó
+        private RoleManager<IdentityRole> _roleManager; //role repó
+        private IUserRepository userrepo;
 
         public AuthLogic(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUserRepository userrepo)
         {
@@ -26,22 +25,18 @@ namespace PhotoryLogic.Classes
             this.userrepo = userrepo;
         }
 
-
         public IEnumerable<IdentityUser> GetAllUser()
         {
             return _userManager.Users;
         }
 
-        public async Task<string []> RegisterUser(RegisterViewModel model)
+        public async Task<string[]> RegisterUser(RegisterViewModel model)
         {
             var user2 = await _userManager.FindByEmailAsync(model.Email);
 
             if (user2 == null)
             {
-
                 var guidId = Guid.NewGuid().ToString();
-
-               
 
                 var user = new IdentityUser
                 {
@@ -85,21 +80,15 @@ namespace PhotoryLogic.Classes
 
             if (validemail)
             {
-                 user = await _userManager.FindByEmailAsync(model.ValidationName);
+                user = await _userManager.FindByEmailAsync(model.ValidationName);
             }
             else
-            { 
-            
-              user = await _userManager.FindByNameAsync(model.ValidationName);
+            {
+                user = await _userManager.FindByNameAsync(model.ValidationName);
             }
-
-           
-           
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-
-
                 var claims = new List<Claim>
                 {
                   new Claim(JwtRegisteredClaimNames.Sub, model.ValidationName),
@@ -107,11 +96,9 @@ namespace PhotoryLogic.Classes
                   new Claim(ClaimTypes.NameIdentifier, user.Id)
                 };
 
-
                 var roles = await _userManager.GetRolesAsync(user);
 
                 claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
-
 
                 var signinKey = new SymmetricSecurityKey(
                   Encoding.UTF8.GetBytes("Paris Berlin Cairo Sydney Tokyo Beijing Rome London Athens"));
@@ -131,8 +118,6 @@ namespace PhotoryLogic.Classes
             }
             throw new ArgumentException("Login failed");
         }
-
-
 
         private bool IsValidEmail(string email)
         {
