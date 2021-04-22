@@ -33,7 +33,7 @@ namespace PhotoryRepository.Classes
             return entities;
         }
 
-        public Photo GetOnePhoto(string PhotoID)
+        public Photo GetOnePhoto(string PhotoID)//Rendes méret
         {
             var entities = (from x in context.Photos
                            where x.PhotoID == PhotoID
@@ -41,5 +41,17 @@ namespace PhotoryRepository.Classes
 
             return entities;
         }
+
+
+        public Photo GetOneRescaledPhoto(string PhotoID)//Kicsi Fotó
+        {
+            var entities = (from x in context.Photos
+                            where x.PhotoID == PhotoID && x.IsRescaled == true
+                            select x).FirstOrDefault();
+
+            return entities;
+        }
+
+
     }
 }
