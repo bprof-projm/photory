@@ -12,11 +12,13 @@ namespace PhotoryModels
         [Key]
         public string CommentID { get; set; }
 
-
+        [Required]
         public string UserId { get; set; }
 
+        [Required]
         public string CommentContent { get; set; }
 
+        [Required]
         public string PhotoID { get; set; }
 
         [NotMapped]
