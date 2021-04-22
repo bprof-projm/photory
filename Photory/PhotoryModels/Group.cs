@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,6 +13,8 @@ namespace PhotoryModels
         [Key]
         public string GroupName { get; set; }
 
+        [Unique]
+        [System.ComponentModel.DataAnnotations.Required]
         public string GroupAdminID { get; set; }
 
         public int Age { get; set; }
