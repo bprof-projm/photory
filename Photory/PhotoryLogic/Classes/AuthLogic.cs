@@ -34,37 +34,48 @@ namespace PhotoryLogic.Classes
 
         public async Task<string []> RegisterUser(RegisterViewModel model)
         {
-            //Aki beregisztál, az bekerül a User táblába is (szinkron)
-            User u = new User();
-            u.FullName = model.FullName;
-            u.BirthDate = model.BirthDate;
-            u.Email = model.Email;
-            //u.Password = model.Password;
-            u.UserAccess = UserAccess.RegularUser;
-            u.UserId = Guid.NewGuid().ToString();
-            u.UserName = model.UserName;
+            var user2 = await _userManager.FindByEmailAsync(model.Email);
 
-            userrepo.Add(u);
+            if (user2 == null)
+            {
 
-            var user = new IdentityUser
-            {
-                Id= u.UserId,//update
-                Email = model.Email,
-                UserName = model.UserName,
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
-            string psswrd = Guid.NewGuid().ToString();
-            var result = await _userManager.CreateAsync(user, psswrd);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "Customer");
+                var guidId = Guid.NewGuid().ToString();
+
+               
+
+                var user = new IdentityUser
+                {
+                    Id = guidId,//update
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+                string psswrd = Guid.NewGuid().ToString();
+                var result = await _userManager.CreateAsync(user, psswrd);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "Customer");
+                    //Aki beregisztál, az bekerül a User táblába is (szinkron)
+                    User u = new User();
+                    u.FullName = model.FullName;
+                    u.BirthDate = model.BirthDate;
+                    u.Email = model.Email;
+                    //u.Password = model.Password;
+                    u.UserAccess = UserAccess.RegularUser;
+                    u.UserId = guidId;
+                    u.UserName = model.UserName;
+
+                    userrepo.Add(u);
+                }
+
+                string[] returnarray = new string[3];
+                returnarray[0] = user.UserName;
+                returnarray[1] = user.Email;
+                returnarray[2] = psswrd;
+                return returnarray;
             }
 
-            string[] returnarray = new string[3];
-            returnarray[0] = user.UserName;
-            returnarray[1] = user.Email;
-            returnarray[2] = psswrd;
-            return returnarray;
+            throw new ArgumentException("Email Alredy Exists");
         }
 
         public async Task<TokenViewModel> LoginUser(LoginViewModel model)
