@@ -14,16 +14,19 @@ namespace PhotoryModels
 
     public class User
     {
+        [Required]
         public string Email { get; set; }
 
+        [Required]
         public string FullName { get; set; }
         
         [Key]
         public string UserId { get; set; }
 
-
+        [Required]
         public string UserName { get; set; }
 
+        [Required]
         public DateTime BirthDate { get; set; }
 
         public UserAccess UserAccess { get; set; }
