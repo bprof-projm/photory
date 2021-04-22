@@ -15,12 +15,14 @@ namespace PhotoryModels
         public string PhotoTitle { get; set; }
         public byte[] PhotoData { get; set; }
 
+        [Required]
         public string UserName { get; set; }
 
         //public List<string> CommentIDs{ get; set; }
 
         public DateTime PostTime { get; set; }
 
+        [Required]
         public string GroupId { get; set; }
 
         [NotMapped]
