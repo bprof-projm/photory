@@ -2,10 +2,7 @@
 using PhotoryModels;
 using PhotoryRepository.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoryRepository
 {
@@ -18,15 +15,12 @@ namespace PhotoryRepository
             this.context = context;
         }
 
-
-
         public void Add(User entity)
         {
             entity.UserId = Guid.NewGuid().ToString();
             entity.UserAccess = UserAccess.GroupAdmin;
             this.context.MyUsers.Add(entity);
             SaveDatabase();
-
         }
 
         public void Delete(string id)
@@ -35,10 +29,7 @@ namespace PhotoryRepository
 
             this.context.MyUsers.Remove(entity);
             SaveDatabase();
-
         }
-
-
 
         public IQueryable<User> GetAll()
         {
@@ -66,8 +57,6 @@ namespace PhotoryRepository
         {
             this.context.SaveChanges();
         }
-
-
 
         public void Update(string oldid, User entity)
         {
@@ -103,7 +92,6 @@ namespace PhotoryRepository
             //                   select x).FirstOrDefault();
 
             //groupentity.PendingUserIDList.Remove(userID);
-
 
             var entity = (from x in context.UserOfGroup
                           where x.GroupName == userID
