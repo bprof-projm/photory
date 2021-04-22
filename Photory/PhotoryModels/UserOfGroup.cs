@@ -14,17 +14,18 @@ namespace PhotoryModels
         [Key]
         public string ID { get; set; }
 
+        [Required]
         public string UserName { get; set; }
 
         [NotMapped]
         [JsonIgnore]
         public virtual User User { get; set; }
 
-
+        
         public bool IsPending { get; set; }
 
 
-        
+        [Required]
         public string GroupName { get; set; }
 
         [NotMapped]
