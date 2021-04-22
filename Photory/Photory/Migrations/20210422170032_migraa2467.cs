@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Photory.Migrations
 {
-    public partial class mig456674 : Migration
+    public partial class migraa2467 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,6 +194,8 @@ namespace Photory.Migrations
                     UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Width = table.Column<int>(type: "int", nullable: false),
+                    IsRescaled = table.Column<bool>(type: "bit", nullable: false),
+                    ConnectionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -269,9 +271,9 @@ namespace Photory.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "4b03caa6-ae33-4b4b-8e5e-287b7f0d07c6", "hegedus.mate@nik.uni-obuda.hu", true, false, null, "hegedus.mate@nik.uni-obuda.hu", "HEGEDUSMATE", "AQAAAAEAACcQAAAAEBaAZ9LWnILrzfqr7ZIk3JpnDrP0iODl7TW8PY2JyCQ5mpYxFduzm9PWPrBWRi+CTw==", null, false, "", false, "HegedusMate" },
-                    { "e2174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "43a6da35-0d82-4f4d-953d-47656e800afc", "gadacsi.akos@nik.uni-obuda.hu", true, false, null, "gadacsi.akos@nik.uni-obuda.hu", "GADACSIAKOS", "AQAAAAEAACcQAAAAEAUTW78HrNe5g4baLf8I/OU4aXloNDsWh0bLmEnYSTuhdnjS9RC1Rbg0A3huOAklxQ==", null, false, "", false, "GadacsiAkos" },
-                    { "e3894cf0–9412–4cfe-afbf-59f706d72cf6", 0, "6ab95efc-5189-4284-863d-07d0e5b4a06c", "veres.levente@nik.uni-obuda.hu", true, false, null, "veres.levente@nik.uni-obuda.hu", "VERESLEVENTE", "AQAAAAEAACcQAAAAEMBc46eRSiVVTJBFo7KRns9Kj0+zE8pki84j0IBUMgzg9p9oaEz5OjzUYtzH8MZ4hw==", null, false, "", false, "VeresLevente" }
+                    { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "a08ae19f-c432-404d-80b9-3465487f32cb", "hegedus.mate@nik.uni-obuda.hu", true, false, null, "hegedus.mate@nik.uni-obuda.hu", "HEGEDUSMATE", "AQAAAAEAACcQAAAAEGDvtcQJVFRJOdPUO6w6OGu4FMHKW9GxRh8RrONqhrbF3KyykLA+mSUCtZgHFd3p3w==", null, false, "", false, "HegedusMate" },
+                    { "e2174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "4453e385-c86d-4648-a557-b9c76ea7d474", "gadacsi.akos@nik.uni-obuda.hu", true, false, null, "gadacsi.akos@nik.uni-obuda.hu", "GADACSIAKOS", "AQAAAAEAACcQAAAAEKMC/0C2CJ21jbt4k+ReUj/Abhtbr8vTyhM02lncn3mU/7le8sPp/396itsFzKyErA==", null, false, "", false, "GadacsiAkos" },
+                    { "e3894cf0–9412–4cfe-afbf-59f706d72cf6", 0, "3628c676-5a1c-4802-92dd-455ee0012b65", "veres.levente@nik.uni-obuda.hu", true, false, null, "veres.levente@nik.uni-obuda.hu", "VERESLEVENTE", "AQAAAAEAACcQAAAAELostcMOT+R9t9KtjKPprlOjvqMK8G3bvgfFUrHuUWGX3D8Jpbb9CRcuri0uGGrr2A==", null, false, "", false, "VeresLevente" }
                 });
 
             migrationBuilder.InsertData(

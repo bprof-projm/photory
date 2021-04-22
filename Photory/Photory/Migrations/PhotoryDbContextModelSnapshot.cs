@@ -159,13 +159,13 @@ namespace Photory.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4b03caa6-ae33-4b4b-8e5e-287b7f0d07c6",
+                            ConcurrencyStamp = "a08ae19f-c432-404d-80b9-3465487f32cb",
                             Email = "hegedus.mate@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "hegedus.mate@nik.uni-obuda.hu",
                             NormalizedUserName = "HEGEDUSMATE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBaAZ9LWnILrzfqr7ZIk3JpnDrP0iODl7TW8PY2JyCQ5mpYxFduzm9PWPrBWRi+CTw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGDvtcQJVFRJOdPUO6w6OGu4FMHKW9GxRh8RrONqhrbF3KyykLA+mSUCtZgHFd3p3w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -175,13 +175,13 @@ namespace Photory.Migrations
                         {
                             Id = "e2174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "43a6da35-0d82-4f4d-953d-47656e800afc",
+                            ConcurrencyStamp = "4453e385-c86d-4648-a557-b9c76ea7d474",
                             Email = "gadacsi.akos@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "gadacsi.akos@nik.uni-obuda.hu",
                             NormalizedUserName = "GADACSIAKOS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAUTW78HrNe5g4baLf8I/OU4aXloNDsWh0bLmEnYSTuhdnjS9RC1Rbg0A3huOAklxQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKMC/0C2CJ21jbt4k+ReUj/Abhtbr8vTyhM02lncn3mU/7le8sPp/396itsFzKyErA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -191,13 +191,13 @@ namespace Photory.Migrations
                         {
                             Id = "e3894cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6ab95efc-5189-4284-863d-07d0e5b4a06c",
+                            ConcurrencyStamp = "3628c676-5a1c-4802-92dd-455ee0012b65",
                             Email = "veres.levente@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "veres.levente@nik.uni-obuda.hu",
                             NormalizedUserName = "VERESLEVENTE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMBc46eRSiVVTJBFo7KRns9Kj0+zE8pki84j0IBUMgzg9p9oaEz5OjzUYtzH8MZ4hw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELostcMOT+R9t9KtjKPprlOjvqMK8G3bvgfFUrHuUWGX3D8Jpbb9CRcuri0uGGrr2A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -357,12 +357,18 @@ namespace Photory.Migrations
                     b.Property<string>("PhotoID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("GroupId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Height")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsRescaled")
+                        .HasColumnType("bit");
 
                     b.Property<byte[]>("PhotoData")
                         .HasColumnType("varbinary(max)");
