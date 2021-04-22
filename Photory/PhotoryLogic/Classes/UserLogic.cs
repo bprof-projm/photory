@@ -84,7 +84,18 @@ namespace PhotoryLogic.Classes
         }
         public void RequestJoin(string userID, string GroupID)
         {
-                this.userRepo.RequestJoin(userID,GroupID);
+            var user = userRepo.GetOne(userID);
+            var group = groupRepo.GetOne(GroupID);
+
+            if ((DateTime.Now - user.BirthDate).Days > group.Age*365)
+            {
+                this.userRepo.RequestJoin(userID, GroupID);
+            }
+            else
+            {
+                throw new ArgumentException("Age restrection validation error");
+            }
+            
 
         }
 
