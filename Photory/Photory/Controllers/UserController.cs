@@ -232,7 +232,26 @@ namespace Photory.Controllers
         }
 
 
+        [HttpGet("GetOnePhoto/{photoID}")]
+        public Photo GetOnePhoto(string photoID)
+        {
+            var p = photo.GetOnePhoto(photoID);
+            //byte[] allbytes = p.PhotoData;
 
+           return p;
+
+        }
+
+
+        [HttpGet("GetOneRescaledPhoto/{photoID}")]
+        public Photo GetOneRescaledPhoto(string photoID)
+        {
+            var p = photo.GetOneRescaledPhoto(photoID);
+            //byte[] allbytes = p.PhotoData;
+
+            return p;
+
+        }
 
     }
 }
