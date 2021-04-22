@@ -1,9 +1,11 @@
-﻿using PhotoryLogic.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using PhotoryLogic.Interfaces;
 using PhotoryModels;
 using PhotoryRepository;
 using PhotoryRepository.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +15,11 @@ namespace PhotoryLogic.Classes
     public class GroupAdminLogic : IGroupAdminLogic
     {
         private IGroupAdminRepository groupadminRepo;
-        public GroupAdminLogic(IGroupAdminRepository groupadminRepo)
+        private IGroupRepository groupRepo;
+        public GroupAdminLogic(IGroupAdminRepository groupadminRepo, IGroupRepository groupRepo)
         {
             this.groupadminRepo = groupadminRepo;
+            this.groupRepo = groupRepo;
         }
         public void CreateGroupAdmin(User groupadmin)
         {
@@ -61,5 +65,39 @@ namespace PhotoryLogic.Classes
                 this.groupadminRepo.DenyUser(userID, GroupID);
 
         }
+
+
+        public void SetGroupPicture(string fileName, string GroupID)
+        {
+            var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
+            if (File.Exists(fullpath) && groupRepo.GetOne(GroupID) != null)
+            {
+
+                var groupentity = groupRepo.GetOne(GroupID);
+               FileInfo f = new FileInfo(fullpath);
+               groupentity.PhotoData = File.ReadAllBytes(f.FullName);
+               groupRepo.SaveDatabase();
+               File.Delete(fullpath);
+                //Photo p = new Photo();
+                //p.PhotoID = Guid.NewGuid().ToString();
+                //p.PhotoTitle = fileName;
+                //p.GroupId = groupID;
+                //p.UserID = userid;
+                //var optimizer = new ImageOptimizer();
+                //FileInfo f = new FileInfo(fullpath);
+                //optimizer.Compress(f);
+                //f.Refresh();
+                //p.PhotoData = File.ReadAllBytes(f.FullName);
+                //userRepo.AddPhoto(p);
+                //File.Delete(fullpath);
+                return;
+            }
+            throw new Exception("file was not found");
+
+
+
+        }
+
+
     }
 }

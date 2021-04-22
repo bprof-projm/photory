@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -106,8 +108,12 @@ namespace Photory.Controllers
         {
             try
             {
-                adminLogic.CreateGroup(group);
-                return Ok();
+                
+                    
+                    adminLogic.CreateGroup(group);
+                    return Ok();
+                
+                
             }
             catch (Exception ex)
             {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Photory.Migrations
 {
-    public partial class mig456672 : Migration
+    public partial class mig456672622 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,6 +53,8 @@ namespace Photory.Migrations
                 {
                     GroupName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GroupAdminID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    PhotoData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -189,7 +191,7 @@ namespace Photory.Migrations
                     PhotoID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PhotoTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -265,9 +267,9 @@ namespace Photory.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "8ee2ee24-39ae-420f-ae09-c630f4c33a36", "hegedus.mate@nik.uni-obuda.hu", true, false, null, "hegedus.mate@nik.uni-obuda.hu", "HEGEDUSMATE", "AQAAAAEAACcQAAAAEH8dUEhXCyZ22jffAR5dEKyyv7nn6cxGfJgoB6+J+q6vu7hHAK+xvGdN4vDp7YlnVw==", null, false, "", false, "HegedusMate" },
-                    { "e2174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "16f2c92c-cbd6-49e3-90cc-55bbda09bae3", "gadacsi.akos@nik.uni-obuda.hu", true, false, null, "gadacsi.akos@nik.uni-obuda.hu", "GADACSIAKOS", "AQAAAAEAACcQAAAAEA7quFQc9s9f42VqVXtixguTJdQf3rGxxqOAcfHEWpMRrvRXOFxvmiIkxNP/pt6ZLw==", null, false, "", false, "GadacsiAkos" },
-                    { "e3894cf0–9412–4cfe-afbf-59f706d72cf6", 0, "fa04458e-0b1e-4ae9-a307-2816dfe68ee5", "veres.levente@nik.uni-obuda.hu", true, false, null, "veres.levente@nik.uni-obuda.hu", "VERESLEVENTE", "AQAAAAEAACcQAAAAEC8/k5NPvKBjOW7wYEZGqs+IH4vc/jFpmnMdt5HtsGMzByCRsDCfUPSXb97qncwt6w==", null, false, "", false, "VeresLevente" }
+                    { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "e0a079b4-ccb1-4142-bdc3-993e312158c8", "hegedus.mate@nik.uni-obuda.hu", true, false, null, "hegedus.mate@nik.uni-obuda.hu", "HEGEDUSMATE", "AQAAAAEAACcQAAAAEDJ9n6OlyjXr38jfJ8EAjpwWvrYYPkRGr1PGiRe/g/ijjRS04+dkUCcd+t3nvzvtAQ==", null, false, "", false, "HegedusMate" },
+                    { "e2174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "64a1c7c3-aa62-4cf7-81e3-0c222c990136", "gadacsi.akos@nik.uni-obuda.hu", true, false, null, "gadacsi.akos@nik.uni-obuda.hu", "GADACSIAKOS", "AQAAAAEAACcQAAAAEDlKr/84d3zVVj1xn/UpFBR6z+pkh+hYQrNh/2a86W8AojyzcI+7fJzdUwI1bzGGBg==", null, false, "", false, "GadacsiAkos" },
+                    { "e3894cf0–9412–4cfe-afbf-59f706d72cf6", 0, "948d4000-7f15-423c-9ba2-c240ec6ce605", "veres.levente@nik.uni-obuda.hu", true, false, null, "veres.levente@nik.uni-obuda.hu", "VERESLEVENTE", "AQAAAAEAACcQAAAAEFe1pfFGJVKBq7pJnIbmW16rdE68932Rc6MEgWJ83CsNOiZ3xLLhmcnCbjfdy/AjxA==", null, false, "", false, "VeresLevente" }
                 });
 
             migrationBuilder.InsertData(

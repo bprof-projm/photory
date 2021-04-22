@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace PhotoryLogic.Classes
 {
@@ -79,7 +80,7 @@ namespace PhotoryLogic.Classes
      
         public void CreateGroup(Group group)
         {
-
+          
            this.adminRepo.CreateGroup(group);
 
         }

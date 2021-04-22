@@ -53,7 +53,8 @@ namespace PhotoryLogic.Classes
         public void AddComment(Comment m)
         {
 
-                this.userRepo.AddComment(m);
+            m.CommentID = Guid.NewGuid().ToString();
+            this.userRepo.AddComment(m);
         }
         
         public void DeleteComment(string CommentID)
@@ -103,7 +104,7 @@ namespace PhotoryLogic.Classes
             return userentity;
         }
 
-        public void UploadtoData(string fileName, string groupID)
+        public void UploadtoData(string fileName, string groupID,string userid)
         {
             var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
             if (File.Exists(fullpath) && groupRepo.GetOne(groupID) != null)
@@ -112,6 +113,7 @@ namespace PhotoryLogic.Classes
                 p.PhotoID = Guid.NewGuid().ToString();
                 p.PhotoTitle = fileName;
                 p.GroupId = groupID;
+                p.UserID = userid;
                 var optimizer = new ImageOptimizer();
                 FileInfo f = new FileInfo(fullpath);
                 optimizer.Compress(f);

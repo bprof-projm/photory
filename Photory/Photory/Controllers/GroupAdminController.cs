@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -121,6 +123,39 @@ namespace Photory.Controllers
             }
 
         }
+
+
+
+        [HttpPost("SetGroupPicture/{GroupID}"), DisableRequestSizeLimit]
+        public IActionResult SetGroupPicture(IFormFile FileToUpload,string GroupID)
+        {
+            try
+            {
+                var folderName = "Photos";
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (FileToUpload != null || FileToUpload.Length > 0)
+                {
+                    var fullpath = Path.Combine(pathToSave, FileToUpload.FileName);
+
+                    using (var stream = new FileStream(fullpath, FileMode.Create))
+                    {
+                        FileToUpload.CopyTo(stream);
+                    }
+                    groupAdminLogic.SetGroupPicture(FileToUpload.FileName, GroupID);
+                    return Ok();
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+
+        }
+
+
 
 
     }

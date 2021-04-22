@@ -10,8 +10,8 @@ using PhotoryData;
 namespace Photory.Migrations
 {
     [DbContext(typeof(PhotoryDbContext))]
-    [Migration("20210422092321_mig456672")]
-    partial class mig456672
+    [Migration("20210422131942_mig456672622")]
+    partial class mig456672622
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,13 +161,13 @@ namespace Photory.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8ee2ee24-39ae-420f-ae09-c630f4c33a36",
+                            ConcurrencyStamp = "e0a079b4-ccb1-4142-bdc3-993e312158c8",
                             Email = "hegedus.mate@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "hegedus.mate@nik.uni-obuda.hu",
                             NormalizedUserName = "HEGEDUSMATE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH8dUEhXCyZ22jffAR5dEKyyv7nn6cxGfJgoB6+J+q6vu7hHAK+xvGdN4vDp7YlnVw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDJ9n6OlyjXr38jfJ8EAjpwWvrYYPkRGr1PGiRe/g/ijjRS04+dkUCcd+t3nvzvtAQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -177,13 +177,13 @@ namespace Photory.Migrations
                         {
                             Id = "e2174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "16f2c92c-cbd6-49e3-90cc-55bbda09bae3",
+                            ConcurrencyStamp = "64a1c7c3-aa62-4cf7-81e3-0c222c990136",
                             Email = "gadacsi.akos@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "gadacsi.akos@nik.uni-obuda.hu",
                             NormalizedUserName = "GADACSIAKOS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA7quFQc9s9f42VqVXtixguTJdQf3rGxxqOAcfHEWpMRrvRXOFxvmiIkxNP/pt6ZLw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDlKr/84d3zVVj1xn/UpFBR6z+pkh+hYQrNh/2a86W8AojyzcI+7fJzdUwI1bzGGBg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -193,13 +193,13 @@ namespace Photory.Migrations
                         {
                             Id = "e3894cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa04458e-0b1e-4ae9-a307-2816dfe68ee5",
+                            ConcurrencyStamp = "948d4000-7f15-423c-9ba2-c240ec6ce605",
                             Email = "veres.levente@nik.uni-obuda.hu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "veres.levente@nik.uni-obuda.hu",
                             NormalizedUserName = "VERESLEVENTE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC8/k5NPvKBjOW7wYEZGqs+IH4vc/jFpmnMdt5HtsGMzByCRsDCfUPSXb97qncwt6w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFe1pfFGJVKBq7pJnIbmW16rdE68932Rc6MEgWJ83CsNOiZ3xLLhmcnCbjfdy/AjxA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -338,9 +338,16 @@ namespace Photory.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<string>("GroupAdminID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PhotoData")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("GroupName");
 
@@ -365,7 +372,7 @@ namespace Photory.Migrations
                     b.Property<DateTime>("PostTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -194,8 +194,8 @@ namespace Photory.Controllers
             }
         }
 
-        [HttpPost("PhotoUpload/{groupID}"), DisableRequestSizeLimit]
-        public IActionResult PhotoUpload(IFormFile FileToUpload , string groupID)
+        [HttpPost("PhotoUpload/{groupID}&{userid}"), DisableRequestSizeLimit]
+        public IActionResult PhotoUpload(IFormFile FileToUpload , string groupID,string userid)
         {
             try
             {
@@ -210,7 +210,7 @@ namespace Photory.Controllers
                     {
                         FileToUpload.CopyTo(stream);
                     }
-                    userlogic.UploadtoData(FileToUpload.FileName, groupID);
+                    userlogic.UploadtoData(FileToUpload.FileName, groupID,userid);
                     return Ok();
                 }
                 return BadRequest();

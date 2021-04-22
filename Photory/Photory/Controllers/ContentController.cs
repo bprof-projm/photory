@@ -112,5 +112,23 @@ namespace Photory.Controllers
             }
         }
 
+
+        [HttpGet("GetAllUser")]
+        public ActionResult<IEnumerable<User>> GetAllUser()
+        {
+            try
+            {
+                var users = userlogic.GetAllUser();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
+
+
+
     }
 }

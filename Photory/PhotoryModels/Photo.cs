@@ -16,7 +16,7 @@ namespace PhotoryModels
         public byte[] PhotoData { get; set; }
 
         [Required]
-        public string UserName { get; set; }
+        public string UserID { get; set; }
 
         //public List<string> CommentIDs{ get; set; }
 

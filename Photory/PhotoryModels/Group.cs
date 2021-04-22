@@ -17,6 +17,13 @@ namespace PhotoryModels
         [System.ComponentModel.DataAnnotations.Required]
         public string GroupAdminID { get; set; }
 
+        [MaxLength(40)]
+        public string Description { get; set; }
+
+        [JsonIgnore]
+        public byte[] PhotoData { get; set; }
+
+
         public int Age { get; set; }
 
         //public List<string> PendingUserIDList { get; set; }
