@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PhotoryModels
@@ -25,9 +24,6 @@ namespace PhotoryModels
 
         public string ConnectionId { get; set; }
 
-
-        //public List<string> CommentIDs{ get; set; }
-
         public DateTime PostTime { get; set; }
 
         [Required]
@@ -41,10 +37,8 @@ namespace PhotoryModels
         [JsonIgnore]
         public virtual Group Group { get; set; }
 
-
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
-
     }
 }
