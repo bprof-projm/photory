@@ -19,7 +19,7 @@ namespace PhotoryRepository
 
         public void Add(User entity)
         {
-            entity.UserId = Guid.NewGuid().ToString();
+            //entity.UserId = Guid.NewGuid().ToString();
             entity.UserAccess = UserAccess.RegularUser;
             this.context.MyUsers.Add(entity);
             SaveDatabase();
@@ -104,7 +104,8 @@ namespace PhotoryRepository
         {
             var entity = (from x in context.Photos
                           where x.PhotoID == PhotoID
-                          select x).FirstOrDefault();
+                          select x).FirstOrDefault(); // nagy fotó
+
 
             this.context.Photos.Remove(entity);
             SaveDatabase();

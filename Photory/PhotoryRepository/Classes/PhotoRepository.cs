@@ -40,5 +40,24 @@ namespace PhotoryRepository.Classes
 
             return entities;
         }
+
+        public void DeletePhoto(string PhotoID)
+        {
+            var entity = (from x in context.Photos
+                          where x.PhotoID == PhotoID
+                          select x).FirstOrDefault(); // nagy fotó
+
+            var miniphoto = (from x in context.Photos
+                             where x.ConnectionId == entity.ConnectionId && x.IsRescaled == true
+                             select x).FirstOrDefault();
+
+
+
+            this.context.Photos.Remove(miniphoto);
+            this.context.Photos.Remove(entity);
+            this.context.SaveChanges();
+        }
+
+
     }
 }

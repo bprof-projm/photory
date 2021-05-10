@@ -34,7 +34,8 @@ namespace PhotoryModels
         public virtual User User { get; set; }
 
         [NotMapped]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Group Group { get; set; }
 
         [NotMapped]

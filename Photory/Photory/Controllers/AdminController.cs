@@ -75,7 +75,7 @@ namespace Photory.Controllers
             }
         }
 
-        [HttpPost("{userID}&{GroupID}")]
+        [HttpPost("AddMember/{userID}&{GroupID}")]
         public IActionResult AddMembers(string userID, string GroupID)
         {
             try
@@ -103,7 +103,7 @@ namespace Photory.Controllers
             }
         }
 
-        [HttpPost("DeletePhoto/{groupid}")]
+        [HttpPost("DeleteGroup/{groupid}")]
         public IActionResult DeleteGroup(string groupid)
         {
             try

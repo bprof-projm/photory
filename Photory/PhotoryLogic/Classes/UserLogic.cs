@@ -71,8 +71,15 @@ namespace PhotoryLogic.Classes
             this.userRepo.AddPhoto(p);
         }
 
-        public void DeletePhoto(string PhotoID)
+        public void DeletePhoto(string PhotoID)// nagy kép id-ja
         {
+
+            var photo = photorepo.GetOnePhoto(PhotoID);
+
+
+            //var miniphoto = 
+
+
             this.userRepo.DeletePhoto(PhotoID);
         }
 

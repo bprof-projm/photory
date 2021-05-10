@@ -10,5 +10,7 @@ namespace PhotoryRepository.Interfaces
         IQueryable<Comment> GetAllCommentsFromPhoto(string PhotoID);
 
         Photo GetOneRescaledPhoto(string PhotoID);
+
+        void DeletePhoto(string PhotoID);
     }
 }

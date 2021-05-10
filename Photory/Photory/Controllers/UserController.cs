@@ -129,7 +129,8 @@ namespace Photory.Controllers
         {
             try
             {
-                userlogic.DeletePhoto(id);
+                //userlogic.DeletePhoto(id);
+                photo.DeletePhoto(id);
                 return Ok();
             }
             catch (Exception ex)

@@ -56,7 +56,7 @@ namespace PhotoryLogic.Classes
             uog.Group = groupentity;
             uog.GroupName = groupentity.GroupName;
             uog.User = userentity;
-            uog.UserName = userentity.UserId;
+            uog.UserName = userentity.UserName;
             uog.ID = Guid.NewGuid().ToString();
             uog.IsPending = false;
 
