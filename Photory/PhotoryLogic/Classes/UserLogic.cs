@@ -109,59 +109,70 @@ namespace PhotoryLogic.Classes
 
         public void UploadtoData(string fileName, string groupID, string userid)
         {
-            var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
-            if (File.Exists(fullpath) && groupRepo.GetOne(groupID) != null)
+            var user = userofgrouprepo.GetOne(userid);
+            if (user.IsPending == false)
             {
-                var image = Image.Load(fullpath);
 
-                Photo p1 = new Photo();
-                p1.PhotoID = Guid.NewGuid().ToString();
-                p1.PhotoTitle = fileName;
-                p1.GroupId = groupID;
-                p1.IsRescaled = true;
-                p1.ConnectionId = Guid.NewGuid().ToString();
-                p1.UserID = userid;
 
-                Photo p2 = new Photo();
-                p2.PhotoID = Guid.NewGuid().ToString();
-                p2.PhotoTitle = "original_" + fileName;
-                p2.GroupId = groupID;
-                p2.ConnectionId = p1.ConnectionId;
-                p2.UserID = userid;
-                p2.IsRescaled = false;
-                p2.Height = image.Height;
-                p2.Width = image.Width;
 
-                var originaltmppath = Path.Combine(Environment.CurrentDirectory + @"\Photos", "Data_" + p2.PhotoTitle);
-                image.Save(originaltmppath);
-                FileInfo ff = new FileInfo(originaltmppath);
-                ff.Refresh();
-                p2.PhotoData = File.ReadAllBytes(ff.FullName);
+                var fullpath = Path.Combine(Environment.CurrentDirectory + @"\Photos", fileName);
+                if (File.Exists(fullpath) && groupRepo.GetOne(groupID) != null)
+                {
+                    var image = Image.Load(fullpath);
 
-                image.Mutate(x => x.Resize(200, 200));
+                    Photo p1 = new Photo();
+                    p1.PhotoID = Guid.NewGuid().ToString();
+                    p1.PhotoTitle = fileName;
+                    p1.GroupId = groupID;
+                    p1.IsRescaled = true;
+                    p1.ConnectionId = Guid.NewGuid().ToString();
+                    p1.UserID = userid;
 
-                var tmppath = Path.Combine(Environment.CurrentDirectory + @"\Photos", "Data_" + fileName);
-                image.Save(tmppath);
-                FileInfo f = new FileInfo(tmppath);
-                f.Refresh();
-                p1.PhotoData = File.ReadAllBytes(f.FullName);
+                    Photo p2 = new Photo();
+                    p2.PhotoID = Guid.NewGuid().ToString();
+                    p2.PhotoTitle = "original_" + fileName;
+                    p2.GroupId = groupID;
+                    p2.ConnectionId = p1.ConnectionId;
+                    p2.UserID = userid;
+                    p2.IsRescaled = false;
+                    p2.Height = image.Height;
+                    p2.Width = image.Width;
 
-                //var optimizer = new ImageOptimizer();
-                //FileInfo f = new FileInfo();
-                //optimizer.Compress(f);
-                //f.Refresh();
-                //p.PhotoData = File.ReadAllBytes(f.FullName);
+                    var originaltmppath = Path.Combine(Environment.CurrentDirectory + @"\Photos", "Data_" + p2.PhotoTitle);
+                    image.Save(originaltmppath);
+                    FileInfo ff = new FileInfo(originaltmppath);
+                    ff.Refresh();
+                    p2.PhotoData = File.ReadAllBytes(ff.FullName);
 
-                p1.Height = image.Height;
-                p1.Width = image.Width;
-                userRepo.AddPhoto(p1);
-                userRepo.AddPhoto(p2);
-                File.Delete(tmppath);
-                File.Delete(fullpath);
-                File.Delete(originaltmppath);
-                return;
+                    image.Mutate(x => x.Resize(200, 200));
+
+                    var tmppath = Path.Combine(Environment.CurrentDirectory + @"\Photos", "Data_" + fileName);
+                    image.Save(tmppath);
+                    FileInfo f = new FileInfo(tmppath);
+                    f.Refresh();
+                    p1.PhotoData = File.ReadAllBytes(f.FullName);
+
+                    //var optimizer = new ImageOptimizer();
+                    //FileInfo f = new FileInfo();
+                    //optimizer.Compress(f);
+                    //f.Refresh();
+                    //p.PhotoData = File.ReadAllBytes(f.FullName);
+
+                    p1.Height = image.Height;
+                    p1.Width = image.Width;
+                    userRepo.AddPhoto(p1);
+                    userRepo.AddPhoto(p2);
+                    File.Delete(tmppath);
+                    File.Delete(fullpath);
+                    File.Delete(originaltmppath);
+                    return;
+                }
+                throw new Exception("file was not found");
             }
-            throw new Exception("file was not found");
+            else
+            {
+                throw new ArgumentException("You are not a member");
+            }
         }
 
         public void GetOnePhoto(string PhotoID)
