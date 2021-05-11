@@ -28,10 +28,10 @@ class Register extends React.Component{
         e.preventDefault();
 
         const data ={
-            Email: this.state.email,
-            FullName: this.state.fullname,
-            UserName: this.state.username,
-            BirthDate: this.state.birthdate
+            email: this.state.email,
+            fullName: this.state.fullname,
+            userName: this.state.username,
+            birthDate: this.state.birthdate
         }
         axios.post('/Auth/Register', data)
         .then(res => {
