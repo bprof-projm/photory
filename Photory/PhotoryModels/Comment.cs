@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PhotoryModels
@@ -12,11 +9,13 @@ namespace PhotoryModels
         [Key]
         public string CommentID { get; set; }
 
-
+        [Required]
         public string UserId { get; set; }
 
+        [Required]
         public string CommentContent { get; set; }
 
+        [Required]
         public string PhotoID { get; set; }
 
         [NotMapped]
@@ -26,6 +25,5 @@ namespace PhotoryModels
         [NotMapped]
         [JsonIgnore]
         public virtual User User { get; set; }
-
     }
 }
