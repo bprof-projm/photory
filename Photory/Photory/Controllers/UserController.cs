@@ -7,8 +7,6 @@ using PhotoryRepository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
@@ -17,15 +15,14 @@ namespace Photory.Controllers
     [Route("User")]
     public class UserController : ControllerBase
     {
-        UserLogic userlogic;
- 
+        private UserLogic userlogic;
+        private IPhotoRepository photo;
 
-        public UserController(UserLogic userlogic)
+        public UserController(UserLogic userlogic, IPhotoRepository photo)
         {
             this.userlogic = userlogic;
+            this.photo = photo;
         }
-
-
 
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAllUser()
@@ -37,7 +34,6 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
@@ -52,13 +48,11 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
         [HttpPut("{oldid}")]
-
         public IActionResult UpdateUser(string oldid, [FromBody] User user)
         {
             try
@@ -68,15 +62,13 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
-
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(string id)
-        {          
+        {
             try
             {
                 userlogic.DeleteUser(id);
@@ -84,16 +76,13 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
-
 
         [HttpPost("{userID}&{GroupID}")]
         public IActionResult RequestJoin(string userID, string GroupID)
-        { 
+        {
             try
             {
                 userlogic.RequestJoin(userID, GroupID);
@@ -101,17 +90,29 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
 
+        [HttpPost]
+        [Route("LeaveGroup")]
+        public IActionResult LeaveGroup([FromBody] UserOfGroup uog)
+        {
+            try
+            {
+                userlogic.LeaveGroup(uog.ID, uog.GroupName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
 
         [HttpPost]
         [Route("AddPhoto")]
         public IActionResult AddPhoto([FromBody] Photo p)
-        {  
+        {
             try
             {
                 userlogic.AddPhoto(p);
@@ -119,30 +120,24 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
-
-        
 
         [HttpDelete("DeletePhoto/{id}")]
         public IActionResult DeletePhoto(string id)
-        {  
+        {
             try
             {
-                userlogic.DeletePhoto(id);
+                //userlogic.DeletePhoto(id);
+                photo.DeletePhoto(id);
                 return Ok();
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
-
-
 
         [HttpPost]
         [Route("AddComment")]
@@ -155,16 +150,13 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
-
-
         [HttpDelete("DeleteComment/{id}")]
         public IActionResult DeleteComment(string id)
-        {            
+        {
             try
             {
                 userlogic.DeleteComment(id);
@@ -172,17 +164,15 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
-        [HttpPost("PhotoUpload/{groupID}"), DisableRequestSizeLimit]
-        public IActionResult PhotoUpload(IFormFile FileToUpload , string groupID)
+        [HttpPost("PhotoUpload/{groupID}&{userid}"), DisableRequestSizeLimit]
+        public IActionResult PhotoUpload(IFormFile FileToUpload, string groupID, string userid)
         {
             try
             {
-
                 var folderName = "Photos";
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (FileToUpload != null || FileToUpload.Length > 0)
@@ -193,29 +183,41 @@ namespace Photory.Controllers
                     {
                         FileToUpload.CopyTo(stream);
                     }
-                    userlogic.UploadtoData(FileToUpload.FileName, groupID);
+                    userlogic.UploadtoData(FileToUpload.FileName, groupID, userid);
                     return Ok();
                 }
                 return BadRequest();
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
-        //[HttpGet("PhotoDownload/{photoID}")]
-        //public FileResult Download(string photoID)
-        //{
-        //    var p = photoOfGroup.GetOnePhoto(photoID);
-        //    byte[] allbytes = p.PhotoData;
-        //    return File(allbytes, "application/octet-stream", "teszt");
-        //}
+        [HttpGet("PhotoDownload/{photoID}")]
+        public FileResult Download(string photoID)
+        {
+            var p = photo.GetOnePhoto(photoID);
+            byte[] allbytes = p.PhotoData;
+            return File(allbytes, "application/octet-stream", "teszt.jpg");
+        }
 
+        [HttpGet("GetOnePhoto/{photoID}")]
+        public Photo GetOnePhoto(string photoID)
+        {
+            var p = photo.GetOnePhoto(photoID);
+            //byte[] allbytes = p.PhotoData;
 
+            return p;
+        }
 
+        [HttpGet("GetOneRescaledPhoto/{photoID}")]
+        public Photo GetOneRescaledPhoto(string photoID)
+        {
+            var p = photo.GetOneRescaledPhoto(photoID);
+            //byte[] allbytes = p.PhotoData;
 
+            return p;
+        }
     }
 }
-

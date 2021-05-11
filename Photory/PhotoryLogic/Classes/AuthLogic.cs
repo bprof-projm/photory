@@ -14,10 +14,9 @@ namespace PhotoryLogic.Classes
 {
     public class AuthLogic
     {
-
-        UserManager<IdentityUser> _userManager; //user repó
-        RoleManager<IdentityRole> _roleManager; //role repó
-        IUserRepository userrepo;
+        private UserManager<IdentityUser> _userManager; //user repó
+        private RoleManager<IdentityRole> _roleManager; //role repó
+        private IUserRepository userrepo;
 
         public AuthLogic(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUserRepository userrepo)
         {
@@ -26,45 +25,52 @@ namespace PhotoryLogic.Classes
             this.userrepo = userrepo;
         }
 
-
         public IEnumerable<IdentityUser> GetAllUser()
         {
             return _userManager.Users;
         }
 
-        public async Task<string []> RegisterUser(RegisterViewModel model)
+        public async Task<string[]> RegisterUser(RegisterViewModel model)
         {
-            //Aki beregisztál, az bekerül a User táblába is (szinkron)
-            User u = new User();
-            u.FullName = model.FullName;
-            u.BirthDate = model.BirthDate;
-            u.Email = model.Email;
-            //u.Password = model.Password;
-            u.UserAccess = UserAccess.RegularUser;
-            u.UserId = Guid.NewGuid().ToString();
-            u.UserName = model.UserName;
+            var user2 = await _userManager.FindByEmailAsync(model.Email);
 
-            userrepo.Add(u);
+            if (user2 == null)
+            {
+                var guidId = Guid.NewGuid().ToString();
 
-            var user = new IdentityUser
-            {
-                Id= u.UserId,//update
-                Email = model.Email,
-                UserName = model.UserName,
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
-            string psswrd = Guid.NewGuid().ToString();
-            var result = await _userManager.CreateAsync(user, psswrd);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "Customer");
+                var user = new IdentityUser
+                {
+                    Id = guidId,//update
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+                string psswrd = Guid.NewGuid().ToString();
+                var result = await _userManager.CreateAsync(user, psswrd);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "Customer");
+                    //Aki beregisztál, az bekerül a User táblába is (szinkron)
+                    User u = new User();
+                    u.FullName = model.FullName;
+                    u.BirthDate = model.BirthDate;
+                    u.Email = model.Email;
+                    //u.Password = model.Password;
+                    u.UserAccess = UserAccess.RegularUser;
+                    u.UserId = guidId;
+                    u.UserName = model.UserName;
+
+                    userrepo.Add(u);
+                }
+
+                string[] returnarray = new string[3];
+                returnarray[0] = user.UserName;
+                returnarray[1] = user.Email;
+                returnarray[2] = psswrd;
+                return returnarray;
             }
 
-            string[] returnarray = new string[3];
-            returnarray[0] = user.UserName;
-            returnarray[1] = user.Email;
-            returnarray[2] = psswrd;
-            return returnarray;
+            throw new ArgumentException("Email Alredy Exists");
         }
 
         public async Task<TokenViewModel> LoginUser(LoginViewModel model)
@@ -74,21 +80,15 @@ namespace PhotoryLogic.Classes
 
             if (validemail)
             {
-                 user = await _userManager.FindByEmailAsync(model.ValidationName);
+                user = await _userManager.FindByEmailAsync(model.ValidationName);
             }
             else
-            { 
-            
-              user = await _userManager.FindByNameAsync(model.ValidationName);
+            {
+                user = await _userManager.FindByNameAsync(model.ValidationName);
             }
-
-           
-           
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-
-
                 var claims = new List<Claim>
                 {
                   new Claim(JwtRegisteredClaimNames.Sub, model.ValidationName),
@@ -96,11 +96,9 @@ namespace PhotoryLogic.Classes
                   new Claim(ClaimTypes.NameIdentifier, user.Id)
                 };
 
-
                 var roles = await _userManager.GetRolesAsync(user);
 
                 claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
-
 
                 var signinKey = new SymmetricSecurityKey(
                   Encoding.UTF8.GetBytes("Paris Berlin Cairo Sydney Tokyo Beijing Rome London Athens"));
@@ -120,8 +118,6 @@ namespace PhotoryLogic.Classes
             }
             throw new ArgumentException("Login failed");
         }
-
-
 
         private bool IsValidEmail(string email)
         {

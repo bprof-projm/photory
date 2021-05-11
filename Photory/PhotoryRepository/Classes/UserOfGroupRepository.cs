@@ -2,10 +2,7 @@
 using PhotoryModels;
 using PhotoryRepository.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoryRepository.Classes
 {
@@ -37,15 +34,11 @@ namespace PhotoryRepository.Classes
             return context.UserOfGroup.AsQueryable();
         }
 
-
-
-
         public UserOfGroup GetOne(string id)
         {
             var entity = (from x in context.UserOfGroup
                           where id == x.ID
                           select x).FirstOrDefault();
-
 
             return entity;
         }
@@ -59,7 +52,6 @@ namespace PhotoryRepository.Classes
         {
             throw new NotImplementedException();
         }
-
 
         //NON-CRUD
 

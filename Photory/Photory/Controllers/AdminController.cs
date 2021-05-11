@@ -4,8 +4,6 @@ using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Photory.Controllers
 {
@@ -14,17 +12,16 @@ namespace Photory.Controllers
     [Route("Admin")]
     public class AdminController : ControllerBase
     {
-        AdminLogic adminLogic;
+        private AdminLogic adminLogic;
 
         public AdminController(AdminLogic adminLogic)
         {
             this.adminLogic = adminLogic;
         }
-       
+
         [HttpDelete("{id}")]
         public IActionResult DeleteGroupAdmin(string id)
         {
-
             try
             {
                 adminLogic.DeleteAdmin(id);
@@ -32,10 +29,8 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
 
         [HttpGet]
@@ -48,7 +43,6 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
@@ -63,13 +57,11 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
         [HttpPut("{oldid}")]
-
         public IActionResult UpdateUser(string oldid, [FromBody] User user)
         {
             try
@@ -79,13 +71,11 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
-
-        [HttpPost("{userID}&{GroupID}")]
+        [HttpPost("AddMember/{userID}&{GroupID}")]
         public IActionResult AddMembers(string userID, string GroupID)
         {
             try
@@ -95,10 +85,8 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
 
         [HttpPost("/CreateGroup")]
@@ -111,16 +99,11 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
 
-
-
-
-
-        [HttpPost("DeletePhoto/{groupid}")]
+        [HttpPost("DeleteGroup/{groupid}")]
         public IActionResult DeleteGroup(string groupid)
         {
             try
@@ -130,12 +113,8 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
-
-
-
     }
 }

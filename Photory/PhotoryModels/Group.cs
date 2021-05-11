@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PhotoryModels
@@ -12,7 +11,15 @@ namespace PhotoryModels
         [Key]
         public string GroupName { get; set; }
 
+        [Unique]
+        [System.ComponentModel.DataAnnotations.Required]
         public string GroupAdminID { get; set; }
+
+        [MaxLength(40)]
+        public string Description { get; set; }
+
+        [JsonIgnore]
+        public byte[] PhotoData { get; set; }
 
         public int Age { get; set; }
 
@@ -26,11 +33,8 @@ namespace PhotoryModels
         [JsonIgnore]
         public virtual ICollection<UserOfGroup> UserGroups { get; set; }
 
-
         [NotMapped]
         [JsonIgnore]
-        public virtual ICollection<Photo>  Photos { get; set; }
-
-
+        public virtual ICollection<Photo> Photos { get; set; }
     }
 }
