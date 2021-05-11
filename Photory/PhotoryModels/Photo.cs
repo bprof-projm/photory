@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PhotoryModels
@@ -15,12 +14,19 @@ namespace PhotoryModels
         public string PhotoTitle { get; set; }
         public byte[] PhotoData { get; set; }
 
-        public string UserName { get; set; }
+        [Required]
+        public string UserID { get; set; }
 
-        //public List<string> CommentIDs{ get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
+
+        public bool IsRescaled { get; set; }
+
+        public string ConnectionId { get; set; }
 
         public DateTime PostTime { get; set; }
 
+        [Required]
         public string GroupId { get; set; }
 
         [NotMapped]
@@ -28,13 +34,12 @@ namespace PhotoryModels
         public virtual User User { get; set; }
 
         [NotMapped]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Group Group { get; set; }
-
 
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
-
     }
 }

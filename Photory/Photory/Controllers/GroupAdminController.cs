@@ -1,28 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoryLogic.Classes;
 using PhotoryModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Photory.Controllers
 {
     [Authorize(Roles = "GroupAdmin")]
     [ApiController]
     [Route("GroupAdmin")]
-    public class GroupAdminController :ControllerBase
+    public class GroupAdminController : ControllerBase
     {
-        GroupAdminLogic groupAdminLogic;
-
+        private GroupAdminLogic groupAdminLogic;
 
         public GroupAdminController(GroupAdminLogic groupAdminLogic)
         {
             this.groupAdminLogic = groupAdminLogic;
         }
-
-
 
         [HttpDelete("{id}")]
         public IActionResult DeleteGroupAdmin(string id)
@@ -34,10 +31,8 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
 
         [HttpGet]
@@ -50,11 +45,9 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
-
 
         [HttpGet("{id}")]
         public ActionResult<User> GetGroupAdmin(string id)
@@ -66,11 +59,9 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
         }
-
 
         [HttpPut("{oldid}")]
         public IActionResult UpdateGroupAdmin(string oldid, [FromBody] User u)
@@ -82,10 +73,8 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
 
         [HttpPost("AcceptUser/{userID}&{GroupID}")]
@@ -98,13 +87,9 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
-
-
 
         [HttpPost("DenyUser/{userID}&{GroupID}")]
         public IActionResult DenyUser(string userID, string GroupID)
@@ -116,12 +101,35 @@ namespace Photory.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error : {ex}");
             }
-
         }
 
+        [HttpPost("SetGroupPicture/{GroupID}"), DisableRequestSizeLimit]
+        public IActionResult SetGroupPicture(IFormFile FileToUpload, string GroupID)
+        {
+            try
+            {
+                var folderName = "Photos";
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (FileToUpload != null || FileToUpload.Length > 0)
+                {
+                    var fullpath = Path.Combine(pathToSave, FileToUpload.FileName);
 
+                    using (var stream = new FileStream(fullpath, FileMode.Create))
+                    {
+                        FileToUpload.CopyTo(stream);
+                    }
+                    groupAdminLogic.SetGroupPicture(FileToUpload.FileName, GroupID);
+                    return Ok();
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error : {ex}");
+            }
+        }
     }
 }
