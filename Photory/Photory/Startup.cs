@@ -122,7 +122,7 @@ namespace WebApi
             }
 
             //app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
+            app.UseCors();
             app.UseRouting();
             app.UseSwagger();
 

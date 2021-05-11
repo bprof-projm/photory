@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './Home.css';
-import Szívem from '../assets/szívem.jpg'
+import Szívem from '../assets/Szívem.png'
 import { TextField , Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import axios from '../axios';
@@ -12,8 +12,8 @@ function Home() {
 
     const loginHandler = () =>{
         const data = {
-            ValidationName:email,
-            Password:password
+            validationName:email,
+            password:password
         }
 
         axios.put('/Auth/Login', data).then((res)=>{
