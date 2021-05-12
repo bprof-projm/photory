@@ -1,8 +1,9 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Register.css";
 import Szívem from "../assets/Szívem.png";
 import { TextField, Button, Date } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "../axios";
 
 function Register() {
@@ -10,18 +11,18 @@ function Register() {
   const [userName, setUserName] = useState("");
   const [birthDate, setBirthDate] = useState();
   const [fullName, setFullName] = useState("");
+  const history = useHistory();
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(birthDate);
-  },[birthDate]);
+  }, [birthDate]);
 
   const registerHandler = () => {
     const data = {
-        email: email,
-        userName: userName,
+      email: email,
+      userName: userName,
       fullName: fullName,
-      birthDate: birthDate
-
+      birthDate: birthDate,
     };
 
     console.log(data);
@@ -29,7 +30,7 @@ function Register() {
     axios
       .post("/Auth/Register", data)
       .then((res) => {
-        console.log(res);
+        history.push("/");
       })
       .catch((err) => {
         console.log(err.message);
@@ -41,6 +42,17 @@ function Register() {
       <div className="register_left">
         <img loading="lazy" src={Szívem} />
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="register_right">
         <TextField
           label="Email"
@@ -64,13 +76,12 @@ function Register() {
           }}
         />
         <TextField
-        
           label="Birthday"
           type="date"
           defaultValue="2021-01-01"
           InputLabelProps={{ shrink: true }}
           value={birthDate}
-          onChange={(e)=>{
+          onChange={(e) => {
             setBirthDate(e.target.value);
           }}
         />
