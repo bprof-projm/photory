@@ -22,7 +22,6 @@ function Home() {
       .put("/Auth/Login", data)
       .then((res) => {
         history.push('/main');
-
         console.log(res);
       })
       .catch((err) => {
@@ -35,7 +34,17 @@ function Home() {
   }
 
   const responseFacebook = (response) => {
-    console.log(response);
+    // console.log(response);
+    // console.log(response.accessToken);
+    const data = {
+       accessToken: response.accessToken
+    }
+    axios.post("/ExternalAuth", data).then((res)=>{
+      history.push('/main');
+    }).catch((err)=>{
+      console.log(err.message);
+    });
+
   };
 
   return (
@@ -69,7 +78,7 @@ function Home() {
 
         <FacebookLogin
           appId="287947399346523"
-          autoLoad={true}
+          autoLoad={false}
           fields="name,email,picture"
           onClick={componentClicked}
           callback={responseFacebook}
