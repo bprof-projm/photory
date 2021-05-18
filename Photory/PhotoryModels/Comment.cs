@@ -19,7 +19,8 @@ namespace PhotoryModels
         public string PhotoID { get; set; }
 
         [NotMapped]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Photo Photo { get; set; }
 
         [NotMapped]

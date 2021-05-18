@@ -39,7 +39,8 @@ namespace PhotoryModels
         public virtual Group Group { get; set; }
 
         [NotMapped]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }
