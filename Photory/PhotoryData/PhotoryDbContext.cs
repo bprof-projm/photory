@@ -22,8 +22,11 @@ namespace PhotoryData
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseLazyLoadingProxies().
-                    UseSqlServer(@"Server=tcp:photorydatabase.database.windows.net,1433;Initial Catalog=PhotoryDataBase;Persist Security Info=False;User ID=PhotoryAdmin;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
+                  //UseSqlServer(@"Server=tcp:photorydatabase.database.windows.net,1433;Initial Catalog=PhotoryDataBase;Persist Security Info=False;User ID=PhotoryAdmin;Password=Passw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", b => b.MigrationsAssembly("Photory"));
+                  // UseSqlServer(@"data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\UsersDb.mdf;integrated security=True;MultipleActiveResultSets=True");
+                  UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
             }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

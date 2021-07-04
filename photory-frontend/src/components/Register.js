@@ -30,7 +30,7 @@ function Register() {
     axios
       .post("/Auth/Register", data)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.user);
         alert("Succesful registration , your password is : \n" + res.data.user[2]);
         history.push("/");
 

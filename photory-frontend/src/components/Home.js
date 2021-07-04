@@ -6,21 +6,35 @@ import { Link , useHistory } from "react-router-dom";
 import axios from "../axios";
 import ReactDOM from "react-dom";
 import FacebookLogin from "react-facebook-login";
+import {useDispatch , useSelector} from 'react-redux'
+import {setActiveUser , selectValidationName ,selectToken,  selectPassword} from '../features/userSlice'
 
 function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
+  const dispatch = useDispatch();
+  const validationName = useSelector(selectValidationName);
+  const statePassword = useSelector(selectPassword);
+  const token = useSelector(selectToken);
+
+
   const loginHandler = () => {
     const data = {
-      validationName: email,
-      password: password,
+      ValidationName: email,
+      Password: password,
     };
 
     axios
       .put("/Auth/Login", data)
       .then((res) => {
+        
+        dispatch(setActiveUser({
+          validationName:email,
+          password: password,
+          token:res.data.token,
+        }))
         history.push('/main');
         console.log(res);
       })

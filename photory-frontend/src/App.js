@@ -10,15 +10,9 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-        <Route path="/register" component={Register} >
-            
-        </Route>
-        <Route path="/main" component={Main} >
-
-        </Route>
-        <Route path="/" component={Home} >
-
-        </Route>
+        <Route path="/register" component={Register} />
+        <Route path="/main" component={Main} />
+        <Route path="/" component={Home} />
         </Switch>
       </Router>
     </div>
