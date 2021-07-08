@@ -7,18 +7,14 @@ import axios from "../axios";
 import ReactDOM from "react-dom";
 import FacebookLogin from "react-facebook-login";
 import {useDispatch , useSelector} from 'react-redux'
-import {setActiveUser , selectValidationName ,selectToken,  selectPassword} from '../features/userSlice'
+import {setActiveUser , selectValidationName ,selectToken,  selectPassword , selectRole} from '../features/userSlice'
 
 function Home() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("Tomi");
+  const [password, setPassword] = useState("bac4aac7-4d5e-48ba-9a31-e0352ba399dc");
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const validationName = useSelector(selectValidationName);
-  const statePassword = useSelector(selectPassword);
-  const token = useSelector(selectToken);
-
 
   const loginHandler = () => {
     const data = {
@@ -29,14 +25,17 @@ function Home() {
     axios
       .put("/Auth/Login", data)
       .then((res) => {
-        
+        console.log(res.data);
         dispatch(setActiveUser({
           validationName:email,
           password: password,
           token:res.data.token,
+          role:res.data.role,
+          id : res.data.id
         }))
+        console.log(res.data);
         history.push('/main');
-        console.log(res);
+        
       })
       .catch((err) => {
         console.log(err.message);
@@ -46,6 +45,9 @@ function Home() {
   const componentClicked = () =>{
       console.log();
   }
+
+
+  
 
   const responseFacebook = (response) => {
     // console.log(response);
@@ -73,14 +75,15 @@ function Home() {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-        />
-        <TextField
+        />     
+         <TextField
           label="Password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
+        
         <Button onClick={loginHandler}>Login</Button>
 
         <p>

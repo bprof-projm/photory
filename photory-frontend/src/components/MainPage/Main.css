@@ -1,0 +1,19 @@
+
+.MuiAppBar-positionFixed{
+    position:static !important;
+}
+
+.main__groups{
+    background-color: #d62828;
+    column-count: 2;
+    top: calc(100% - 80px);
+    height: calc( 100vh - 80px) !important;
+    row-gap: 40px;
+    
+}
+
+.main__groupAdminUi{
+    background-color: #d62828;
+    top: calc(100% - 80px);
+    height: calc( 100vh - 80px) !important;
+}

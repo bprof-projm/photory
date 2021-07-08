@@ -1,0 +1,41 @@
+.appBar{
+    color: #d62828 !important;
+    background-color: #eae2b7 !important;
+}
+
+.navBar__toolbar{
+    display: flex !important ;
+    justify-content: space-between ;
+}
+
+.navBar__left{
+    width: 236px;
+    display: flex !important ;
+    justify-content: space-between ;
+    
+}
+
+.title{
+ 
+    vertical-align: auto !important;
+    font-size: 50px !important;
+}
+
+.newGroupBtn{
+    height: 50px !important;
+    font-size:larger;
+    background-color: crimson !important;
+    color:gold !important;
+}
+
+.navBar__right{
+    
+    width: 236px;
+    text-align: right;
+}
+
+
+ .navBar__mid{
+    width: 236px;
+}
+

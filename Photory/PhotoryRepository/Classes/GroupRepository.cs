@@ -9,10 +9,10 @@ namespace PhotoryRepository.Classes
     public class GroupRepository : IGroupRepository
     {
         private PhotoryDbContext context = new PhotoryDbContext();
-
-        public GroupRepository(PhotoryDbContext context)
+        public GroupRepository(PhotoryDbContext context )
         {
             this.context = context;
+            
         }
 
         public void Add(Group entity)
@@ -24,7 +24,10 @@ namespace PhotoryRepository.Classes
         public void Delete(string id)
         {
             var entity = GetOne(id);
-
+            var groupAdmin = (from x in context.MyUsers
+                              where x.UserId == entity.GroupAdminID
+                              select x).FirstOrDefault();
+            groupAdmin.UserAccess = UserAccess.RegularUser;
             this.context.Groups.Remove(entity);
             SaveDatabase();
         }

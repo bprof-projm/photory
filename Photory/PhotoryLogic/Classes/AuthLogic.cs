@@ -67,6 +67,7 @@ namespace PhotoryLogic.Classes
                 returnarray[0] = user.UserName;
                 returnarray[1] = user.Email;
                 returnarray[2] = psswrd;
+                
                 return returnarray;
             }
 
@@ -107,13 +108,16 @@ namespace PhotoryLogic.Classes
                   issuer: "http://www.security.org",
                   audience: "http://www.security.org",
                   claims: claims,
-                  expires: DateTime.Now.AddMinutes(60),
+                  expires: DateTime.Now.AddMinutes(600),
                   signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
                 );
                 return new TokenViewModel
                 {
                     Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Expiration = token.ValidTo
+                    Expiration = token.ValidTo ,
+                    Role = roles[0] ,
+                    Id = user.Id
+                   
                 };
             }
             throw new ArgumentException("Login failed");

@@ -97,6 +97,7 @@ namespace WebApi
                 options.RequireHttpsMetadata = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
+
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidAudience = "http://www.security.org",

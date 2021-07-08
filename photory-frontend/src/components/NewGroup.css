@@ -1,0 +1,9 @@
+.newGroup__form{
+    columns: 1;
+}
+
+.newGroup__register{
+    background-color:#d62828 ;
+    top: calc(100% - 80px);
+    height: calc( 100vh) !important;
+}

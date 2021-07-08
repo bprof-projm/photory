@@ -26,7 +26,6 @@ namespace PhotoryRepository.Classes
         public void Delete(string id)
         {
             var entity = GetOne(id);
-
             this.context.MyUsers.Remove(entity);
             SaveDatabase();
         }
